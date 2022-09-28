@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -11,6 +12,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
         "uz.pdp.appproduct.entity",
         "uz.pdp.telegrambot.entity"
 })
+//@EnableJpaRepositories(basePackages ="uz.pdp.telegrambot")
 public class AppOrderApplication {
 
     public static void main(String[] args) {
