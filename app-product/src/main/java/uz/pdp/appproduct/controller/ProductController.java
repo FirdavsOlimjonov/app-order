@@ -1,7 +1,7 @@
 package uz.pdp.appproduct.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.appproduct.DTO.ProductDTO;
+import uz.pdp.appproduct.dto.ProductDTO;
 import uz.pdp.appproduct.entity.Product;
 
 import java.util.List;
