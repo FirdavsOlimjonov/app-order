@@ -1,14 +1,14 @@
 package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderProductsDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
+import uz.pdp.apporder.exception.RestException;
+import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Category;
@@ -31,10 +31,24 @@ public class OrderService {
     public ApiResult<?> saveOrder(OrderUserDTO orderAddDTO) {
 
         // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-        UUID userId = UUID.randomUUID();
+        ClientDTO clientDTO = new ClientDTO();
 
-        // product
-        List<Product> products = productRepository.findAllById(
+
+        // TODO: 9/27/22 Operator Idsini  aniqlash
+        OperatorDTO operatorDTO = new OperatorDTO();
+
+
+        // TODO: 9/27/22 Filial Id ni aniqlash
+        Short filialId = 1;
+
+
+
+        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
+        Float shippingPrice = findShippingPrice(filialId,orderAddDTO.getLocation());
+
+
+        Order order = new Order();
+        List<Product> productList = productRepository.findAllById(
                 orderAddDTO
                         .getOrderProductsDTOList()
                         .stream()
@@ -42,38 +56,20 @@ public class OrderService {
                         .collect(Collectors.toList())
         );
 
-        // TODO: 9/27/22 total sumni topish
-        float totalSum = 0;
-
-        // TODO: 9/27/22 Operator Idsini  aniqlash
-        UUID operatorId = UUID.randomUUID();
-
-        // TODO: 9/27/22 Filial Id ni aniqlash
-        Short filialId = 1;
-
-        // TODO: 9/28/22 Shipping narxini aniqlash
-        float shippingPrice = 5000F;
-
-        // TODO: 9/27/22 bazadan maxsulotlarni olib kelish va orderproduct yasash
-
-        Order order = new Order();
-
+        Float totalSum = totalSum(productList);
 
         ArrayList<OrderProduct> orderProducts = new ArrayList<>();
-        orderProducts.add(new OrderProduct(
-                null,order,
-
-                new Product(
-                        null,true,100F,"smbrfm",new Category()),
-                10F,100F));
-
+        for (int i = 0; i < productList.size(); i++) {
+            orderProducts.add(new OrderProduct(null,order,productList.get(i),
+                    orderAddDTO.getOrderProductsDTOList().get(i).getQuantity(),
+                    productList.get(i).getPrice()));
+        }
 
         order.setFilialId(filialId);
         order.setStatusEnum(OrderEnum.NEW);
-        // TODO: 9/28/22 payment typini aniqlash
-        order.setPaymentType(PaymentType.PAYME);
-        order.setUserID(userId);
-        order.setOperatorId(operatorId);
+        order.setPaymentType(orderAddDTO.getPaymentType());
+        order.setUserID(clientDTO.getId());
+        order.setOperatorId(operatorDTO.getId());
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
         order.setTotalProductsSum(totalSum);
@@ -83,6 +79,20 @@ public class OrderService {
         orderRepository.save(order);
 
         return ApiResult.successResponse("Buyurtma Saqlandi");
+    }
+
+
+
+    // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
+    private Float findShippingPrice(Short filialId, String location) {
+        return 500F;
+    }
+
+
+    private Float totalSum(List<Product> products){
+        return products.stream().map(Product::getPrice).reduce(Float::sum).orElseThrow(() ->
+                RestException.restThrow("??", HttpStatus.BAD_REQUEST)
+        );
     }
 
 
