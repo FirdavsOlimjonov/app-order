@@ -1,4 +1,4 @@
-package com.example.telegrambot.bot;
+package uz.pdp.telegrambot.bot;
 
 public enum State {
     NONE,
