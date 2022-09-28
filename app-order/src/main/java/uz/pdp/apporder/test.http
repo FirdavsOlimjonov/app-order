@@ -1,0 +1,12 @@
+POST http://localhost:8081/api/order/save-app
+Content-Type: application/json
+
+{
+  "orderProductsDTOList": [
+    {
+      "productId": 1,
+      "quantity": 2
+    }
+  ],
+  "location": "Tashkent"
+}

@@ -1,5 +1,5 @@
 server:
-    port: 82
+    port: 8081
 spring:
     application:
         name: ORDER-PARENT-SERVICE
