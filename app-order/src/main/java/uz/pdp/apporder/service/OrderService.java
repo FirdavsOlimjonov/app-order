@@ -3,6 +3,7 @@ package uz.pdp.apporder.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import uz.pdp.apporder.entity.Branch;
 import uz.pdp.apporder.entity.ClientAddress;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
@@ -10,16 +11,14 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +26,8 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
+    private final BranchRepository branchRepository;
 
     private final ProductRepository productRepository;
 
@@ -51,12 +52,10 @@ public class OrderService {
         Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
 
 
-
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
 
 
         List<Product> productList = productRepository.findAllById(
@@ -78,7 +77,6 @@ public class OrderService {
         }
 
 
-
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
             order.setStatusEnum(OrderStatusEnum.NEW);
@@ -86,7 +84,7 @@ public class OrderService {
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
         // TODO: 9/29/22 branch qoshilishi kerak
-        order.setFilialId(filialId);
+        order.setBranch(null);
 
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientUUID);
@@ -120,12 +118,10 @@ public class OrderService {
         Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
 
 
-
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
 
 
         List<Product> productList = productRepository.findAllById(
@@ -147,7 +143,6 @@ public class OrderService {
         }
 
 
-
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
             order.setStatusEnum(OrderStatusEnum.NEW);
@@ -155,7 +150,7 @@ public class OrderService {
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
         // branch qoshilishi kerak
-        order.setFilialId(filialId);
+        order.setBranch(null);
 
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientUUID);
@@ -195,9 +190,9 @@ public class OrderService {
             throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
 
         if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
-                &&!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
+                && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
-                    ,HttpStatus.NOT_FOUND);
+                    , HttpStatus.NOT_FOUND);
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
@@ -214,25 +209,65 @@ public class OrderService {
 
     }
 
-    public ApiResult<List<OrderStatisticsDTO>> getOrdersForList() {
+    /**
+     * <p>Show Statistics for admin with list</p>
+     *
+     * @param orderListDTO
+     * @return
+     */
+    public ApiResult<List<OrderStatisticsDTO>> getOrdersForList(OrderListDTO orderListDTO) {
 
-        List<Order> orders = orderRepository.findAll();
+//        if (Objects.isNull(orderListDTO)) {
 
-        for (Order order : orders) {
-            OrderStatisticsDTO  orderStatisticsDTO = mapOrderToOrderStatisticsDTO(order);
-        }
+            List<Order> orders = orderRepository.getOrdersByOrderByOrderedAt();
 
-        return null;
+            List<OrderStatisticsDTO> orderStatisticsDTOS = mapOrdersToOrderStatisticsDTOs(orders);
+
+            return ApiResult.successResponse(orderStatisticsDTOS);
+//        }
+
+
 
 
     }
 
+    private List<OrderStatisticsDTO> mapOrdersToOrderStatisticsDTOs(List<Order> orders) {
+        List<OrderStatisticsDTO> orderStatisticsDTOS = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderStatisticsDTO orderStatisticsDTO = mapOrderToOrderStatisticsDTO(order);
+            orderStatisticsDTOS.add(orderStatisticsDTO);
+        }
+        return orderStatisticsDTOS;
+    }
+
     private OrderStatisticsDTO mapOrderToOrderStatisticsDTO(Order order) {
 
-        BranchDTO branchDTO = new BranchDTO();
-//        new OrderStatisticsDTO()
+        Branch branch = branchRepository.findById(order.getBranch().getId()).orElseThrow(
+                () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
+        );
 
-        return null;
+        BranchDTO branchDTO = BranchDTO.mapBranchToBranchDTO(branch);
+
+//        todo client malumotlarini authdan olib kelish
+
+        ClientDTO yusufbek = new ClientDTO("Yusufbek", "+998 90 380 63 35");
+
+
+        Double sum = 0D;
+        for (OrderProduct orderProduct : order.getOrderProducts())
+            sum += orderProduct.getQuantity() * orderProduct.getUnitPrice();
+
+
+        return new OrderStatisticsDTO(
+                branchDTO,
+                yusufbek,
+                order.getStatusEnum(),
+                order.getPaymentType(),
+                sum,
+                order.getOrderedAt()
+        );
+
     }
 
 

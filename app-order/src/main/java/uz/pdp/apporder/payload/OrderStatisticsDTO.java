@@ -27,7 +27,4 @@ public class OrderStatisticsDTO {
 
     private LocalDateTime orderedAt;
 
-    private LocalDateTime readyAt;
-
-
 }
