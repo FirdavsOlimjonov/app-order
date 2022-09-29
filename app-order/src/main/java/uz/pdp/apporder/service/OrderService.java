@@ -94,11 +94,25 @@ public class OrderService {
         return 500F;
     }
 
-    public ApiResult<OrderStatisticsDTO> getOrdersForList() {
+    public ApiResult<List<OrderStatisticsDTO>> getOrdersForList() {
+
+        List<Order> orders = orderRepository.findAll();
+
+        for (Order order : orders) {
+             OrderStatisticsDTO  orderStatisticsDTO = mapOrderToOrderStatisticsDTO(order);
+        }
 
         return null;
 
 
+    }
+
+    private OrderStatisticsDTO mapOrderToOrderStatisticsDTO(Order order) {
+
+        BranchDTO branchDTO = new BranchDTO();
+//        new OrderStatisticsDTO()
+
+        return null;
     }
 
 

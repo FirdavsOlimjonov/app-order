@@ -20,11 +20,11 @@ public class Branch {
     private Address address;
 
     @Column(nullable = false)
-    private Double standartDictance;
+    private Double standardDistance;
 
     @Column(nullable = false)
-    private Double standartDictancePrice;
+    private Double standardDistancePrice;
 
     @Column(nullable = false)
-    private Double standartDictanceMorePrice;
+    private Double standardDistanceMorePrice;
 }
