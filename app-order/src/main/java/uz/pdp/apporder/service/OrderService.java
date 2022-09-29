@@ -1,13 +1,23 @@
 package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import uz.pdp.apporder.entity.ClientAddress;
+import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.appproduct.entity.Product;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -86,7 +96,7 @@ public class OrderService {
 
         return ApiResult.successResponse("Order successfully saved!");
     }
-    
+
 
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 
@@ -154,11 +164,6 @@ public class OrderService {
 
         return ApiResult.successResponse("Order successfully saved!");
     }
-    
-
-    
-
-
 
     // TODO: 9/29/22 Webdan buyurtma bolganda client malumotlarinio authga yuborish
     private UUID findClientUUID(OrderWebDTO orderDTO) {
@@ -171,6 +176,37 @@ public class OrderService {
         return 500F;
     }
 
+
+    /**
+     * <p>Show Statistics for admin with chart diagram</p>
+     *
+     * @param orderChartDTO
+     * @return
+     */
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+        if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
+            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
+
+        if (orderChartDTO.getTillDate().isAfter(LocalDate.now()))
+            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
+
+        if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
+                &&!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
+            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
+                    ,HttpStatus.NOT_FOUND);
+
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
+
+        orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
+
+        List<Integer> list = new LinkedList<>();
+
+        
+
+        return ApiResult.successResponse();
+
+    }
 
 
 }

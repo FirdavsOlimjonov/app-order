@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.appproduct.entity.Product;
 
 import javax.persistence.*;
 
@@ -24,7 +25,16 @@ public class OrderProduct {
     @ManyToOne(optional = false)
     private Product product;
 
+    @Column(nullable = false)
     private Short quantity;
 
+    @Column(nullable = false)
     private Float unitPrice;
+
+    public OrderProduct(Order order, Product product, Short quantity, Float unitPrice) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 }
