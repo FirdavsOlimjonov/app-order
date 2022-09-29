@@ -1,7 +1,7 @@
 package uz.pdp.telegrambot.bot;
 
 
-import uz.pdp.telegrambot.entity.User;
+import uz.pdp.telegrambot.entity.BotUser;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class Bot extends TelegramWebhookBot {
 
         response.setChatId(requestMessage.getChatId().toString());
 
-        var entity = new User(
+        var entity = new BotUser(
                 0, requestMessage.getChat().getUserName(),
                 requestMessage.getText());
 

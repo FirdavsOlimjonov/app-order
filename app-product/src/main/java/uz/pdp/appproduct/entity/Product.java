@@ -15,16 +15,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private boolean isValid;
+    private boolean stop;
 
-    private float price;
+    private Float price;
 
     private String name;
 
-    public Product(Integer id) {
-        this.id = id;
-    }
-
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Category category;
 }
