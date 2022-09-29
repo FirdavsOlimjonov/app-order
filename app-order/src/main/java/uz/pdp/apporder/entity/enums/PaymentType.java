@@ -5,5 +5,4 @@ public enum PaymentType {
     CLICK,
     TERMINAL,
     CASH
-
 }

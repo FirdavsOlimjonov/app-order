@@ -28,6 +28,12 @@
             <artifactId>telegrambots-spring-boot-starter</artifactId>
             <version>6.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>uz.pdp</groupId>
+            <artifactId>app-order</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>
