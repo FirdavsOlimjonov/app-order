@@ -78,7 +78,7 @@ public class OrderService {
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
-        // TODO: 9/29/22  branch qoshilishi kerak
+        // TODO: 9/29/22 branch qoshilishi kerak
         order.setFilialId(filialId);
 
         order.setPaymentType(orderDTO.getPaymentType());

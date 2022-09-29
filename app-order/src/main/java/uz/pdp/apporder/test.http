@@ -4,10 +4,15 @@ Content-Type: application/json
 {
   "orderProductsDTOList": [
     {
-      "productId": 1,
-      "quantity": 44.94
+      "productId": 75,
+      "quantity": 4
     }
   ],
-  "location": "test_336915ec3aa3",
-  "paymentType": "CASH"
+  "addressDTO": {
+    "lat": 2.98,
+    "lng": 40.65,
+    "address": "test_fd392723d30c",
+    "extraAddress": "test_f33c38dda40d"
+  },
+  "paymentType": "CLICK"
 }
