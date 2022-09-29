@@ -12,13 +12,10 @@ import java.util.List;
 @Setter
 @Getter
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    public Category(Integer id) {
-        this.id = id;
-    }
 
     private String nameUz;
 
@@ -26,7 +23,4 @@ public class Category {
 
     @ManyToOne
     private Category parentCategory;
-
-    @OneToMany
-    private List<Product> products;
 }
