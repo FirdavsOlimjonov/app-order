@@ -42,7 +42,9 @@ public class OrderService {
         Short filialId = 1;
 
 
-        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
+        /*
+        Shipping narxini aniqlash method parametrlar ozgarishi mumkin
+         */
         Float shippingPrice = findShippingPrice(filialId, orderAddDTO.getAddressDTO());
 
 
@@ -90,6 +92,13 @@ public class OrderService {
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
     private Float findShippingPrice(Short filialId, AddressDTO addressDTO) {
         return 500F;
+    }
+
+    public ApiResult<OrderStatisticsDTO> getOrdersForList() {
+
+        return null;
+
+
     }
 
 
