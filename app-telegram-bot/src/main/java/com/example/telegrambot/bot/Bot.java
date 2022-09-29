@@ -31,6 +31,7 @@ public class Bot extends TelegramWebhookBot {
     @Value("${bot.token}")
     private String botToken;
 
+    @SneakyThrows
     public Bot(TelegramBotsApi telegramBotsApi, UserService userService) {
         this.userService = userService;
         telegramBotsApi.registerBot(this, new SetWebhook());
@@ -54,7 +55,7 @@ public class Bot extends TelegramWebhookBot {
 
         if(requestMessage.getText().equals("\uD83C\uDDFA\uD83C\uDDFF O'zbek"));
 
-
+        return null;
 
 //        if (requestMessage.getText().equals("/start"))
 //            defaultMsg(response, "Напишите команду для показа списка мыслей: \n " + "/idea - показать мысли");
