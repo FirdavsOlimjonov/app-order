@@ -47,7 +47,7 @@ public class Order {
 
     private Integer number;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private ClientAddress address;
 
     @Column(columnDefinition = "text")
