@@ -10,16 +10,14 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +27,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final ProductRepository productRepository;
+
+    private final BranchRepository branchRepository;
 
     private final ClientRepository clientRepository;
 
@@ -51,12 +51,10 @@ public class OrderService {
         Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
 
 
-
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
 
 
         List<Product> productList = productRepository.findAllById(
@@ -78,7 +76,6 @@ public class OrderService {
         }
 
 
-
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
             order.setStatusEnum(OrderStatusEnum.NEW);
@@ -86,7 +83,6 @@ public class OrderService {
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
         // TODO: 9/29/22 branch qoshilishi kerak
-        order.setFilialId(filialId);
 
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientUUID);
@@ -120,12 +116,10 @@ public class OrderService {
         Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
 
 
-
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
 
 
         List<Product> productList = productRepository.findAllById(
@@ -147,7 +141,6 @@ public class OrderService {
         }
 
 
-
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
             order.setStatusEnum(OrderStatusEnum.NEW);
@@ -155,7 +148,6 @@ public class OrderService {
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
         // branch qoshilishi kerak
-        order.setFilialId(filialId);
 
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientUUID);
@@ -181,6 +173,7 @@ public class OrderService {
     }
 
 
+
     /**
      * <p>Show Statistics for admin with chart diagram</p>
      *
@@ -188,6 +181,56 @@ public class OrderService {
      * @return
      */
     public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
+    /**
+     * Bu getStatisticsForChart method qismi
+     * @param orderChartDTO
+     * @param list
+     */
+    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
+                                               List<Integer> list) {
+
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
+
+        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
+        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
+
+        while (!fromDate.isAfter(tillDate)) {
+            int count = 0;
+            for (Order order : all) {
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)){
+                    if (Objects.isNull(orderChartDTO.getBranchId()))
+                        count++;
+                    else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
+                        count++;
+                }
+                else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                    count++;
+            }
+            list.add(count);
+            fromDate = fromDate.plusDays(1);
+        }
+    }
+
+    /**
+     * Bu getStatisticsForChart methodi qismi
+     * @param orderChartDTO
+     */
+    private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
+        if (!Objects.isNull(orderChartDTO.getBranchId())&& !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!",HttpStatus.NOT_FOUND);
+
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
 
@@ -195,23 +238,9 @@ public class OrderService {
             throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
 
         if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
-                &&!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
+                && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
-                    ,HttpStatus.NOT_FOUND);
-
-        LocalDate fromDate = orderChartDTO.getFromDate();
-        LocalDate tillDate = orderChartDTO.getTillDate();
-
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
-
-        List<Integer> list = new LinkedList<>();
-
-        for (Order order : all) {
-
-        }
-
-        return ApiResult.successResponse();
-
+                    , HttpStatus.NOT_FOUND);
     }
 
 
