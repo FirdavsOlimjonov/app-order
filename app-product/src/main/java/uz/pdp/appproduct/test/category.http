@@ -1,0 +1,42 @@
+POST localhost/api/categeory/add
+Content-Type: application/json
+
+{
+  "nameUz": "ichimliklar",
+  "nameRu": "drinks"
+}
+
+###
+GET http://localhost/api/categeory/1
+
+###
+PUT http://localhost/api/categeory/1
+Content-Type: application/json
+Accept-Language: uz
+
+{
+  "id": 1,
+  "nameUz": "ichimliklar",
+  "nameRu": "drinks"
+}
+###
+DELETE http://localhost/api/categeory/1
+
+###
+POST http://localhost/api/categeory/list
+Content-Type: application/json
+
+{
+  "searching": {
+    "columns": [
+      "nameUz"
+    ],
+    "value": "ichim"
+  },
+  "sorting": [
+    {
+      "name": "nameRu",
+      "type": "DESC"
+    }
+  ]
+}

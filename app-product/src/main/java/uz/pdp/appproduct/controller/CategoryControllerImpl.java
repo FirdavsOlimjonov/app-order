@@ -2,10 +2,11 @@ package uz.pdp.appproduct.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
-import uz.pdp.appproduct.entity.Category;
+import uz.pdp.appproduct.dto.ViewDTO;
 import uz.pdp.appproduct.service.CategoryService;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class CategoryControllerImpl implements CategoryController {
     }
 
     @Override
-    public List<CategoryDTO> getCategories() {
-        return categoryService.getCategories();
+    public ApiResult<List<CategoryDTO>> getCategories(@RequestBody(required = false) ViewDTO viewDTO) {
+        return categoryService.getCategories(viewDTO);
     }
 
     @Override

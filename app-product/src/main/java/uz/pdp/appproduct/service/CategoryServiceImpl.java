@@ -4,14 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import uz.pdp.appproduct.controller.ApiResponse;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
+import uz.pdp.appproduct.dto.SortingDTO;
+import uz.pdp.appproduct.dto.ViewDTO;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.repository.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService{
     /**
      * Add new category
      * <p>
-     * An exception of type {@code java.lang.NullPointerException}
+     * An exception to type {@code java.lang.NullPointerException}
      * parameter if null
      *
      * @param categoryDTO being added category object
@@ -45,9 +49,13 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<CategoryDTO> getCategories() {
+    public ApiResult<List<CategoryDTO>> getCategories(ViewDTO viewDTO) {
 
-        return null;
+        List<Category> categoriesAfterSearching = searchingCategory(viewDTO);
+
+        List<CategoryDTO> categoryDTOListAfterSort=sortCategories(viewDTO,categoriesAfterSearching);
+
+        return ApiResult.successResponse("SUCCESSFULLY_SEARCHED-SORTED",categoryDTOListAfterSort);
     }
 
     @Override
@@ -110,5 +118,63 @@ public class CategoryServiceImpl implements CategoryService{
         categoryDTO.setNameUz(category.getNameUz());
 
         return categoryDTO;
+    }
+
+    private List<Integer> mapLanguageToCategoryIds(List<Category> categoryList){
+        List<Integer> categoryIds=new ArrayList<>();
+        for (Category language : categoryList) {
+            categoryIds.add(language.getId());
+        }
+        return categoryIds;
+    }
+
+    private List<Category> searchingCategory(ViewDTO viewDTO){
+        List<Category> categories=categoryRepository.findAll();
+
+        if (!Objects.isNull(viewDTO.getSearching())) {
+            for (String column : viewDTO.getSearching().getColumns()) {
+                List<Integer> idList = mapLanguageToCategoryIds(categories);
+                switch (column) {
+                    case "nameUz" :
+                        categories = categoryRepository.findAllByNameUzContainingIgnoreCaseAndIdIn(viewDTO.getSearching().getValue(), idList);
+                        break;
+                    case "nameRu" :
+                        categories = categoryRepository.findAllByNameRuContainingIgnoreCaseAndIdIn(viewDTO.getSearching().getValue(), idList);
+                        break;
+                }
+            }
+        }
+        return categories;
+    }
+    private List<CategoryDTO> sortCategories(ViewDTO viewDTO, List<Category> categoryList) {
+
+        if(!Objects.isNull(viewDTO.getSorting())){
+            for (SortingDTO sortingDTO : viewDTO.getSorting()) {
+                List<Integer> idList = mapLanguageToCategoryIds(categoryList);
+                switch (sortingDTO.getType()){
+                    case ASC :
+                        switch (sortingDTO.getName()) {
+                            case "nameUz" :
+                                categoryList=categoryRepository.findAllByIdInAndNameUzOrderByNameUzAsc(idList,sortingDTO.getName());
+                                break;
+                            case "nameRU" :
+                                categoryList=categoryRepository.findAllByIdInAndNameRuOrderByNameRuAsc(idList,sortingDTO.getName());
+                                break;
+                        }
+                        break;
+                    case DESC:
+                        switch (sortingDTO.getName()) {
+                            case "nameUz" :
+                                categoryList=categoryRepository.findAllByIdInAndNameUzOrderByNameUzDesc(idList,sortingDTO.getName());
+                                break;
+                            case "nameRU" :
+                                categoryList=categoryRepository.findAllByIdInAndNameRuOrderByNameRuDesc(idList,sortingDTO.getName());
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
+        return categoryList.stream().map(this::getCategoryDTOFromCategory).collect(Collectors.toList());
     }
 }

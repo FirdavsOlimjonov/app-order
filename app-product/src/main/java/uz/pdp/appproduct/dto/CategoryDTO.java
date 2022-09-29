@@ -4,7 +4,7 @@ import lombok.*;
 import uz.pdp.appproduct.entity.Category;
 
 /**
- * API DAN CLIENTL LARGA BORADIGAN HAR QANDAY SUCCESS VA ERROR RESPONSE LAR QAYTADIGAN CLASS
+ * This class is error and success returning class from api
  */
 
 @Setter

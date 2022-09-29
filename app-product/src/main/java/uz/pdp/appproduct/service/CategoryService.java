@@ -1,9 +1,8 @@
 package uz.pdp.appproduct.service;
 
-import uz.pdp.appproduct.controller.ApiResponse;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
-import uz.pdp.appproduct.entity.Category;
+import uz.pdp.appproduct.dto.ViewDTO;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface CategoryService {
 
     ApiResult<CategoryDTO> add(CategoryDTO categoryDTO);
 
-    List<CategoryDTO> getCategories();
+    ApiResult<List<CategoryDTO>> getCategories(ViewDTO viewDTO);
 
     ApiResult<CategoryDTO> get(Integer id);
 

@@ -3,19 +3,18 @@ package uz.pdp.appproduct.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
-import uz.pdp.appproduct.entity.Category;
-
+import uz.pdp.appproduct.dto.ViewDTO;
 import java.util.List;
 
 @RequestMapping("api/category")
 @RestController
 public interface CategoryController {
 
-    @PostMapping
+    @PostMapping(path = "/add")
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 
-    @GetMapping
-    List<CategoryDTO> getCategories();
+    @GetMapping(path = "/list")
+    ApiResult<List<CategoryDTO>> getCategories(@RequestBody(required = false) ViewDTO viewDTO);
 
     @GetMapping("/{id}")
     ApiResult<CategoryDTO> get(@PathVariable Integer id);

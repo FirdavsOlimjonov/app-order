@@ -31,11 +31,6 @@ public class ApiResult<E> {
         this.data = data;
     }
 
-
-    private ApiResult(List<ErrorData> errors) {
-        this.errors = errors;
-    }
-
     private ApiResult() {
         this.success = true;
     }
@@ -53,10 +48,6 @@ public class ApiResult<E> {
 
     public static <T> ApiResult<T> successResponse(String message, T data) {
         return new ApiResult<>(message, data);
-    }
-
-    public static <T> ApiResult<T> successResponse(String message) {
-        return new ApiResult<>(message, null);
     }
 
     public static <T> ApiResult<T> successResponse(T data) {
