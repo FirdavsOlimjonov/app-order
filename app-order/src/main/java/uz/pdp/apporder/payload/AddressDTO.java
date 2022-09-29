@@ -1,20 +1,23 @@
 package uz.pdp.apporder.payload;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class ClientDTO {
+public class AddressDTO {
 
-    private String name;
 
-    private String phoneNumber;
+    private Float lat;
+
+    private Float lng;
+
+    private String address;
+
+    private String extraAddress;
+
 }
