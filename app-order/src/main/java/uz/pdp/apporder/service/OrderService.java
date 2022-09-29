@@ -17,6 +17,7 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -196,7 +197,7 @@ public class OrderService {
     }
 
     /**
-     * Bu getStatisticsForChart method qismi
+     * Buu getStatisticsForChart method qismi
      * @param orderChartDTO
      * @param list
      */
@@ -227,7 +228,7 @@ public class OrderService {
     }
 
     /**
-     * Bu getStatisticsForChart methodi qismi
+     * Buu getStatisticsForChart methodi qismi
      * @param orderChartDTO
      */
     private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
@@ -246,5 +247,43 @@ public class OrderService {
                     , HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * @param orderStatus
+     * @return this method returns order list based on their status
+     */
+    public ApiResult<List<OrderDto>> getOrdersByStatus(String orderStatus) {
+
+        List<Order> orders = orderRepository.findByStatusEnum(OrderStatusEnum.valueOf(orderStatus));
+
+        List<OrderDto> orderDtoList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDto orderDto = mapOrderToOrderDTO(order);
+            orderDtoList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDtoList);
+    }
+
+
+
+    private OrderDto mapOrderToOrderDTO(Order order) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(order.getId());
+        orderDto.setBranch(order.getBranch());
+        orderDto.setAddress(order.getAddress());
+        orderDto.setComment(order.getComment());
+        orderDto.setNumber(order.getNumber());
+        orderDto.setServiceRate(order.getServiceRate());
+        orderDto.setClientId(order.getClientId());
+        orderDto.setCurrierId(order.getCurrierId());
+        orderDto.setTasteRate(order.getTasteRate());
+        orderDto.setOrderProducts(order.getOrderProducts());
+        orderDto.setStatusEnum(order.getStatusEnum());
+        orderDto.setPaymentType(order.getPaymentType());
+        orderDto.setDeliverySum(order.getDeliverySum());
+
+
+        return orderDto;
+    }
 
 }

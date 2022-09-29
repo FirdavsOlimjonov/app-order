@@ -1,4 +1,4 @@
-POST http://localhost:8081/api/order/save-mob-app
+POST http://localhost:8081/api/v1/order/save-mob-app
 Content-Type: application/json
 
 {
@@ -16,26 +16,8 @@ Content-Type: application/json
   },
   "paymentType": "CLICK"
 }
-
-
-
-
 ###
-POST http://localhost:8081/api/order/save-web
-Content-Type: application/json
 
-{
-  "orderProductsDTOList": [
-    {
-      "productId": 1,
-      "quantity": 18
-    }
-  ],
-  "addressDTO": {
-    "lat": 2.91,
-    "lng": 4.92,
-    "address": "test_3aa01a8b746e",
-    "extraAddress": "test_df849d5293dd"
-  },
-  "paymentType": "PAYME"
-}
+GET http://localhost:8081/api/v1/order/listbystatus
+
+
