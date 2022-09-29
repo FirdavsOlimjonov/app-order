@@ -8,6 +8,7 @@ import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
@@ -24,6 +25,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final ProductRepository productRepository;
+
+    private final ClientRepository clientRepository;
 
 
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -88,6 +91,7 @@ public class OrderService {
         order.setDeliverySum(shippingPrice);
         order.setAddress(clientAddress);
 
+        clientRepository.save(clientAddress);
         orderRepository.save(order);
 
         return ApiResult.successResponse("Order successfully saved!");
