@@ -1,4 +1,4 @@
-package uz.pdp.apporder.service;
+package uz.pdp.apporder.service.contract;
 
 import uz.pdp.apporder.payload.ApiResult;
 

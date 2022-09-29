@@ -1,14 +1,14 @@
-package uz.pdp.apporder.controller;
+package uz.pdp.apporder.controller.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.controller.contract.OrderStatusController;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderStatusDTO;
-import uz.pdp.apporder.service.OrderStatusService;
+import uz.pdp.apporder.service.contract.OrderStatusService;
 
 @RestController
 @RequiredArgsConstructor
-public class OrderStatusControllerImpl implements OrderStatusController{
+public class OrderStatusControllerImpl implements OrderStatusController {
 
     private final OrderStatusService orderStatusService;
 

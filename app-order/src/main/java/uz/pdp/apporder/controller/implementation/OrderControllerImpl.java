@@ -1,31 +1,23 @@
-package uz.pdp.apporder.controller;
+package uz.pdp.apporder.controller.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.controller.contract.OrderController;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
-import uz.pdp.apporder.payload.OrderWebDTO;
-import uz.pdp.apporder.service.OrderService;
-
-import javax.validation.Valid;
+import uz.pdp.apporder.service.contract.OrderService;
 
 @RestController
-@RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
-public class OrderController {
+public class OrderControllerImpl implements OrderController {
 
-    private final String STATISTICS_CHART_PATH = "/statistics-chart";
-    private final String SAVE_MOB_APP = "/save-mob-app";
 
     private final OrderService orderService;
 
-    @PostMapping(SAVE_MOB_APP)
 //    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order){
+    public ApiResult<?> saveOrderFromApp(OrderUserDTO order){
         return orderService.saveOrder(order);
     }
 
@@ -36,7 +28,7 @@ public class OrderController {
 //    }
 
     @PostMapping(STATISTICS_CHART_PATH)
-    public ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO){
+    public ApiResult<OrderChartDTO> showStatisticsForChart(OrderChartDTO orderChartDTO){
         return orderService.getStatisticsForChart(orderChartDTO);
     }
 

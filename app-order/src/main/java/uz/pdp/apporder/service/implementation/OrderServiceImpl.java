@@ -1,4 +1,4 @@
-package uz.pdp.apporder.service;
+package uz.pdp.apporder.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.service.contract.OrderService;
 import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
@@ -33,6 +34,7 @@ public class OrderService {
 
     private final ClientRepository clientRepository;
 
+    @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
 
@@ -95,6 +97,20 @@ public class OrderService {
 
         return ApiResult.successResponse("Order successfully saved!");
     }
+
+    @Override
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
@@ -177,17 +193,6 @@ public class OrderService {
      * @param orderChartDTO
      * @return
      */
-    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
-
-        chechOrderChartDTO(orderChartDTO);
-
-        List<Integer> list = new LinkedList<>();
-
-        countingOrderByStatusAndDate(orderChartDTO, list);
-
-        return ApiResult.successResponse();
-
-    }
 
     /**
      * Bu getStatisticsForChart method qismi

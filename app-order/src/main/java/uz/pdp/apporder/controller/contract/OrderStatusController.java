@@ -1,4 +1,4 @@
-package uz.pdp.apporder.controller;
+package uz.pdp.apporder.controller.contract;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,7 +49,6 @@ public interface OrderStatusController {
     @PutMapping(FINISHED_PATH)
     ApiResult<?> transferFinished(@PathVariable Long id);
 
-
     @PutMapping(REJECTED_PATH)
-    ApiResult<?> transferRejected(Long id);
+    ApiResult<?> transferRejected(@PathVariable Long id);
 }
