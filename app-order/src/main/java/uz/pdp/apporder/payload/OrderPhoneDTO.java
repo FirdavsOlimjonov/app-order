@@ -16,8 +16,6 @@ public class OrderPhoneDTO {
 
     private List<OrderProductsDTO> orderProductsDTOList;
 
-
-
     private String location;
 
     private PaymentType paymentType;
