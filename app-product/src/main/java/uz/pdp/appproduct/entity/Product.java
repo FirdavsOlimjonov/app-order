@@ -1,6 +1,7 @@
 package uz.pdp.appproduct.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,25 +1,25 @@
 package uz.pdp.apporder.payload;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.apporder.entity.enums.PaymentType;
 
-import java.util.UUID;
+import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class ClientDTO {
+public class OrderPhoneDTO {
 
-    private UUID userId;
+    private List<OrderProductsDTO> orderProductsDTOList;
 
-    private String name;
 
-    private String phoneNumber;
 
     private String location;
+
+    private PaymentType paymentType;
 
 }

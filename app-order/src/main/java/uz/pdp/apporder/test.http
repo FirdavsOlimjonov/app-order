@@ -5,8 +5,9 @@ Content-Type: application/json
   "orderProductsDTOList": [
     {
       "productId": 1,
-      "quantity": 2
+      "quantity": 44.94
     }
   ],
-  "location": "Tashkent"
+  "location": "test_336915ec3aa3",
+  "paymentType": "CASH"
 }

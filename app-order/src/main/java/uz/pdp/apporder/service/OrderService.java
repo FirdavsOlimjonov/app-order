@@ -6,17 +6,14 @@ import org.springframework.stereotype.Service;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderEnum;
-import uz.pdp.apporder.entity.enums.PaymentType;
-import uz.pdp.apporder.exception.RestException;
+import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
-import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,13 +65,13 @@ public class OrderService {
         order.setFilialId(filialId);
         order.setStatusEnum(OrderEnum.NEW);
         order.setPaymentType(orderAddDTO.getPaymentType());
-        order.setUserID(clientDTO.getId());
+        order.setUserID(clientDTO.getUserId());
         order.setOperatorId(operatorDTO.getId());
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
         order.setTotalProductsSum(totalSum);
         order.setTotalSum(totalSum+shippingPrice);
-        order.setLocation(order.getLocation());
+        order.setLocation(orderAddDTO.getLocation());
 
         orderRepository.save(order);
 

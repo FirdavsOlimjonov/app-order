@@ -9,17 +9,15 @@ import lombok.Setter;
 import java.util.UUID;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class ClientDTO {
+public class OperatorDTO {
 
-    private UUID userId;
+    private UUID id;
 
-    private String name;
+    private String firstName;
 
-    private String phoneNumber;
-
-    private String location;
+    private String lastName;
 
 }
