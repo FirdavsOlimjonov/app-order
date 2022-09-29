@@ -16,6 +16,7 @@ import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -164,11 +165,6 @@ public class OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
-
-
-
-
-
     // TODO: 9/29/22 Webdan buyurtma bolganda client malumotlarinio authga yuborish
     private UUID findClientUUID(OrderWebDTO orderDTO) {
         return UUID.randomUUID();
@@ -201,6 +197,14 @@ public class OrderService {
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
+
+        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
+
+        List<Integer> list = new LinkedList<>();
+
+        for (Order order : all) {
+
+        }
 
         return ApiResult.successResponse();
 
