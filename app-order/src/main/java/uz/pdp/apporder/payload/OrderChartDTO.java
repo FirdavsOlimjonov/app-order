@@ -34,4 +34,5 @@ public class OrderChartDTO {
 
     @Enumerated(value = EnumType.STRING)
     private OrderStatusEnum orderStatusEnum;
+
 }

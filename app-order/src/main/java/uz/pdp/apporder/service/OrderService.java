@@ -18,7 +18,10 @@ import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,9 +30,9 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    private final BranchRepository branchRepository;
-
     private final ProductRepository productRepository;
+
+    private final BranchRepository branchRepository;
 
     private final ClientRepository clientRepository;
 
@@ -46,16 +49,16 @@ public class OrderService {
 
 
         // TODO: 9/27/22 Filial Id ni aniqlash
-        Short filialId = 1;
+        Branch branch = findNearestBranch(orderDTO.getAddressDTO());
 
         // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
-        Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
-
+        Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
 
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
+
 
 
         List<Product> productList = productRepository.findAllById(
@@ -84,7 +87,7 @@ public class OrderService {
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
         // TODO: 9/29/22 branch qoshilishi kerak
-        order.setBranch(null);
+        order.setBranch(branch);
 
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientUUID);
@@ -99,82 +102,84 @@ public class OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
-
-    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
-
-        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-        UUID clientUUID = findClientUUID(orderDTO);
-
-
-        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-        UUID operatorUUID = UUID.randomUUID();
-
-
-        // TODO: 9/27/22 Filial Id ni aniqlash
-        Short filialId = 1;
-
-
-        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
-        Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
-
-
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
-                orderDTO.getAddressDTO().getLng(),
-                orderDTO.getAddressDTO().getAddress(),
-                orderDTO.getAddressDTO().getExtraAddress());
-
-
-        List<Product> productList = productRepository.findAllById(
-                orderDTO
-                        .getOrderProductsDTOList()
-                        .stream()
-                        .map(OrderProductsDTO::getProductId)
-                        .collect(Collectors.toList())
-        );
-
-
-        Order order = new Order();
-
-        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
-        for (int i = 0; i < productList.size(); i++) {
-            orderProducts.add(new OrderProduct(order, productList.get(i),
-                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
-                    productList.get(i).getPrice()));
-        }
-
-
-        if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
-                || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
-            order.setStatusEnum(OrderStatusEnum.NEW);
-        else
-            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
-
-        // branch qoshilishi kerak
-        order.setBranch(null);
-
-        order.setPaymentType(orderDTO.getPaymentType());
-        order.setClientId(clientUUID);
-        order.setOperatorId(operatorUUID);
-        order.setOrderProducts(orderProducts);
-        order.setDeliverySum(shippingPrice);
-        order.setAddress(clientAddress);
-
-        orderRepository.save(order);
-
-        return ApiResult.successResponse("Order successfully saved!");
+    private Branch findNearestBranch(AddressDTO addressDTO) {
+        return branchRepository.findById(1).orElseThrow();
     }
 
-    // TODO: 9/29/22 Webdan buyurtma bolganda client malumotlarinio authga yuborish
-    private UUID findClientUUID(OrderWebDTO orderDTO) {
-        return UUID.randomUUID();
-    }
+
+//    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
+//
+//        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
+//        UUID clientUUID = findClientUUID(orderDTO);
+//
+//
+//        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
+//        UUID operatorUUID = UUID.randomUUID();
+//
+//
+//        // TODO: 9/27/22 Filial Id ni aniqlash
+//        Short filialId = 1;
+//
+//
+//        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
+//        Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
+//
+//
+//
+//        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
+//                orderDTO.getAddressDTO().getLng(),
+//                orderDTO.getAddressDTO().getAddress(),
+//                orderDTO.getAddressDTO().getExtraAddress());
+//
+//
+//
+//        List<Product> productList = productRepository.findAllById(
+//                orderDTO
+//                        .getOrderProductsDTOList()
+//                        .stream()
+//                        .map(OrderProductsDTO::getProductId)
+//                        .collect(Collectors.toList())
+//        );
+//
+//
+//        Order order = new Order();
+//
+//        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
+//        for (int i = 0; i < productList.size(); i++) {
+//            orderProducts.add(new OrderProduct(order, productList.get(i),
+//                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
+//                    productList.get(i).getPrice()));
+//        }
+//
+//
+//
+//        if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
+//                || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
+//            order.setStatusEnum(OrderStatusEnum.NEW);
+//        else
+//            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
+//
+//        // branch qoshilishi kerak
+//        order.setFilialId(filialId);
+//
+//        order.setPaymentType(orderDTO.getPaymentType());
+//        order.setClientId(clientUUID);
+//        order.setOperatorId(operatorUUID);
+//        order.setOrderProducts(orderProducts);
+//        order.setDeliverySum(shippingPrice);
+//        order.setAddress(clientAddress);
+//
+//        orderRepository.save(order);
+//
+//        return ApiResult.successResponse("Order successfully saved!");
+//    }
+
 
 
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
-    private Float findShippingPrice(Short filialId, AddressDTO addressDTO) {
+    private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
     }
-
 
     /**
      * <p>Show Statistics for admin with chart diagram</p>
@@ -183,6 +188,56 @@ public class OrderService {
      * @return
      */
     public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
+    /**
+     * Bu getStatisticsForChart method qismi
+     * @param orderChartDTO
+     * @param list
+     */
+    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
+                                               List<Integer> list) {
+
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
+
+        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
+        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
+
+        while (!fromDate.isAfter(tillDate)) {
+            int count = 0;
+            for (Order order : all) {
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)){
+                    if (Objects.isNull(orderChartDTO.getBranchId()))
+                        count++;
+                    else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
+                        count++;
+                }
+                else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                    count++;
+            }
+            list.add(count);
+            fromDate = fromDate.plusDays(1);
+        }
+    }
+
+    /**
+     * Bu getStatisticsForChart methodi qismi
+     * @param orderChartDTO
+     */
+    private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
+        if (!Objects.isNull(orderChartDTO.getBranchId())&& !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!",HttpStatus.NOT_FOUND);
+
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
 
@@ -193,20 +248,6 @@ public class OrderService {
                 && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
                     , HttpStatus.NOT_FOUND);
-
-        LocalDate fromDate = orderChartDTO.getFromDate();
-        LocalDate tillDate = orderChartDTO.getTillDate();
-
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
-
-        List<Integer> list = new LinkedList<>();
-
-        for (Order order : all) {
-
-        }
-
-        return ApiResult.successResponse();
-
     }
 
     /**
