@@ -1,12 +1,12 @@
 package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import uz.pdp.apporder.entity.ClientAddress;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.exceptions.RestException;
+import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
@@ -27,6 +27,9 @@ public class OrderService {
 
     public ApiResult<?> saveOrder(OrderUserDTO orderAddDTO) {
 
+        // TODO: 9/29/22 client address
+        ClientAddress clientAddress = new ClientAddress();
+
         // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
         ClientDTO clientDTO = new ClientDTO();
 
@@ -39,12 +42,13 @@ public class OrderService {
         Short filialId = 1;
 
 
-
         // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
-        Float shippingPrice = findShippingPrice(filialId,orderAddDTO.getLocation());
+        Float shippingPrice = findShippingPrice(filialId, orderAddDTO.getAddressDTO());
 
 
         Order order = new Order();
+
+
         List<Product> productList = productRepository.findAllById(
                 orderAddDTO
                         .getOrderProductsDTOList()
@@ -53,25 +57,29 @@ public class OrderService {
                         .collect(Collectors.toList())
         );
 
-        Float totalSum = totalSum(productList);
 
         ArrayList<OrderProduct> orderProducts = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
-            orderProducts.add(new OrderProduct(null,order,productList.get(i),
+            orderProducts.add(new OrderProduct(null, order, productList.get(i),
                     orderAddDTO.getOrderProductsDTOList().get(i).getQuantity(),
                     productList.get(i).getPrice()));
         }
 
+        if (orderAddDTO.getPaymentType().name().equals(PaymentType.CASH.name())
+                || orderAddDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name())) {
+            order.setStatusEnum(OrderStatusEnum.NEW);
+        } else {
+            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
+        }
+
+
         order.setFilialId(filialId);
-        order.setStatusEnum(OrderStatusEnum.NEW);
         order.setPaymentType(orderAddDTO.getPaymentType());
-        order.setUserID(clientDTO.getUserId());
+        order.setClientId(clientDTO.getUserId());
         order.setOperatorId(operatorDTO.getId());
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
-        order.setTotalProductsSum(totalSum);
-        order.setTotalSum(totalSum+shippingPrice);
-        order.setLocation(orderAddDTO.getLocation());
+        order.setAddress(clientAddress);
 
         orderRepository.save(order);
 
@@ -79,19 +87,10 @@ public class OrderService {
     }
 
 
-
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
-    private Float findShippingPrice(Short filialId, String location) {
+    private Float findShippingPrice(Short filialId, AddressDTO addressDTO) {
         return 500F;
     }
-
-
-    private Float totalSum(List<Product> products){
-        return products.stream().map(Product::getPrice).reduce(Float::sum).orElseThrow(() ->
-                RestException.restThrow("??", HttpStatus.BAD_REQUEST)
-        );
-    }
-
 
     public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
         orderChartDTO
