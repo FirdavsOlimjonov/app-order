@@ -1,33 +1,31 @@
-package uz.pdp.apporder.entity;
+package uz.pdp.telegrambot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import org.glassfish.jersey.internal.util.Producer;
 import uz.pdp.appproduct.entity.Product;
 
 import javax.persistence.*;
-import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProduct {
+@Entity
+public class BasketProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
-    private Order order;
+    private Basket basket;
 
     @ManyToOne(optional = false)
     private Product product;
 
-    private Short quantity;
-
-    private Float unitPrice;
+    @Column(nullable = false)
+    private Short quantity = 1;
 }
