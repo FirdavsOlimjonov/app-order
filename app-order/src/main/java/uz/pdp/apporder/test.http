@@ -1,0 +1,13 @@
+POST http://localhost:8081/api/order/save-app
+Content-Type: application/json
+
+{
+  "orderProductsDTOList": [
+    {
+      "productId": 1,
+      "quantity": 44.94
+    }
+  ],
+  "location": "test_336915ec3aa3",
+  "paymentType": "CASH"
+}

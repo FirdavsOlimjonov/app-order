@@ -5,18 +5,21 @@
     <packaging>jar</packaging>
     <parent>
         <groupId>uz.pdp</groupId>
-        <artifactId>app-order</artifactId>
+        <artifactId>app-order-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>app-telegram-bot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>app-telegram-bot</name>
     <description>app-telegram-bot</description>
+
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.telegram/telegrambots-spring-boot-starter -->
@@ -25,21 +28,8 @@
             <artifactId>telegrambots-spring-boot-starter</artifactId>
             <version>6.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.xabgesagtx</groupId>
-            <artifactId>telegram-spring-boot-starter</artifactId>
-            <version>0.26</version>
-        </dependency>
+
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

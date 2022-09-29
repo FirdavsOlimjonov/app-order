@@ -1,12 +1,7 @@
+server:
+    port: 8081
 spring:
-  application:
-    name: APP-ORDER
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8762/eureka
-  instance:
-    hostname: localhost
+    application:
+        name: ORDER-PARENT-SERVICE
+    profiles:
+        active: dev

@@ -1,7 +1,7 @@
-package com.example.telegrambot.bot;
+package uz.pdp.telegrambot.bot;
 
 
-import com.example.telegrambot.entity.User;
+import uz.pdp.telegrambot.entity.User;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,11 @@ public class Bot extends TelegramWebhookBot {
     @SneakyThrows
     public Bot(TelegramBotsApi telegramBotsApi, UserService userService) {
         this.userService = userService;
-        telegramBotsApi.registerBot(this, new SetWebhook());
+        try {
+            telegramBotsApi.registerBot(this, new SetWebhook());
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
         Location location;
     }
 
@@ -75,6 +79,7 @@ public class Bot extends TelegramWebhookBot {
 //            userService.insert(entity);
 //        }
 
+        return null;
     }
 
 //    private void onIdea(SendMessage response) throws TelegramApiException {

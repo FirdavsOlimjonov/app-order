@@ -1,4 +1,4 @@
-package com.example.telegrambot.bot.handler;//package com.example.telegrambot.bot.handler;
+package uz.pdp.telegrambot.bot.handler;//package com.example.telegrambot.bot.handler;
 //
 //import com.example.telegrambot.entity.User;
 //import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
