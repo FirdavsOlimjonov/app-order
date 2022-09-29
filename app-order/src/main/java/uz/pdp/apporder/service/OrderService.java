@@ -29,13 +29,11 @@ public class OrderService {
     private final ProductRepository productRepository;
 
 
-    public ApiResult<?> saveOrder(OrderUserDTO orderAddDTO) {
+    public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
-        // TODO: 9/29/22 client address
-        ClientAddress clientAddress = new ClientAddress();
 
         // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-        ClientDTO clientDTO = new ClientDTO();
+        UUID clientUUID = UUID.randomUUID();
 
 
         // TODO: 9/27/22 Operator Idsini  aniqlash
@@ -207,5 +205,6 @@ public class OrderService {
         return ApiResult.successResponse();
 
     }
+
 
 }
