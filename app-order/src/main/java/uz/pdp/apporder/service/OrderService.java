@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
-import uz.pdp.apporder.entity.enums.OrderEnum;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.OrderRepository;
@@ -63,7 +63,7 @@ public class OrderService {
         }
 
         order.setFilialId(filialId);
-        order.setStatusEnum(OrderEnum.NEW);
+        order.setStatusEnum(OrderStatusEnum.NEW);
         order.setPaymentType(orderAddDTO.getPaymentType());
         order.setUserID(clientDTO.getUserId());
         order.setOperatorId(operatorDTO.getId());
