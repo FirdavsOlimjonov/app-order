@@ -1,12 +1,11 @@
 package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.internals.AdminApiHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderUserDTO;
 import uz.pdp.apporder.service.OrderService;
 
 import javax.validation.Valid;
@@ -20,7 +19,7 @@ public class OrderController {
 
     @PostMapping("/save-app")
 //    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order){
+    public AdminApiHandler.ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUs order){
         return orderService.saveOrder(order);
     }
 
