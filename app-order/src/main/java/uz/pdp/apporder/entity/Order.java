@@ -25,14 +25,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private UUID userID;
 
+    @Column(nullable = false)
     private UUID operatorId;
 
+    @Column(nullable = false)
     private Short filialId;
 
-
+    @Column(nullable = false)
     private LocalDateTime startTime = LocalDateTime.now();
+
 
     @Enumerated(value = EnumType.STRING)
     private OrderEnum statusEnum;
@@ -45,10 +49,13 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderProduct> orderProducts;
 
+    @Column(nullable = false)
     private Float totalProductsSum;
 
+    @Column(nullable = false)
     private Float deliverySum;
 
+    @Column(nullable = false)
     private Float totalSum;
 
 }
