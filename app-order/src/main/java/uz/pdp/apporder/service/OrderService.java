@@ -35,14 +35,11 @@ public class OrderService {
 
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
-
         // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
         UUID clientUUID = UUID.randomUUID();
 
-
         // TODO: 9/27/22 Operator Idsini  aniqlash
         OperatorDTO operatorDTO = new OperatorDTO();
-
 
         // TODO: 9/27/22 Filial Id ni aniqlash
         Short filialId = 1;
@@ -50,14 +47,10 @@ public class OrderService {
         // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
         Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
 
-
-
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
-
 
         List<Product> productList = productRepository.findAllById(
                 orderDTO
@@ -67,7 +60,6 @@ public class OrderService {
                         .collect(Collectors.toList())
         );
 
-
         Order order = new Order();
 
         ArrayList<OrderProduct> orderProducts = new ArrayList<>();
@@ -76,8 +68,6 @@ public class OrderService {
                     orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
                     productList.get(i).getPrice()));
         }
-
-
 
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
@@ -187,6 +177,7 @@ public class OrderService {
      * @param orderChartDTO
      * @return
      */
+
     public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
