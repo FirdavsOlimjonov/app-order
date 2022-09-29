@@ -93,6 +93,7 @@ public class OrderService {
     }
 
 
-
-
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+        orderChartDTO
+    }
 }
