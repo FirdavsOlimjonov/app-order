@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderWebDTO;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
 import uz.pdp.apporder.service.OrderService;
@@ -21,15 +22,15 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/save-app")
+    @PostMapping("/save-mob-app")
 //    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
     public ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order){
         return orderService.saveOrder(order);
     }
 
-    @PostMapping("/save-phone")
+    @PostMapping("/save-web")
 //    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromPhone(@Valid @RequestBody OrderUserDTO order){
+    public ApiResult<?> saveOrderFromPhone(@Valid @RequestBody OrderWebDTO order){
         return orderService.saveOrder(order);
     }
 
