@@ -33,7 +33,6 @@ public class OrderService {
 
     private final ClientRepository clientRepository;
 
-
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
 
@@ -100,7 +99,6 @@ public class OrderService {
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
     }
-
 
 //    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 //
@@ -169,13 +167,10 @@ public class OrderService {
 //        return ApiResult.successResponse("Order successfully saved!");
 //    }
 
-
-
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
     }
-
     /**
      * <p>Show Statistics for admin with chart diagram</p>
      *
@@ -199,8 +194,7 @@ public class OrderService {
      * @param orderChartDTO
      * @param list
      */
-    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
-                                               List<Integer> list) {
+    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
@@ -244,6 +238,5 @@ public class OrderService {
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
                     , HttpStatus.NOT_FOUND);
     }
-
 
 }

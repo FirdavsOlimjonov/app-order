@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="app-order" target="11" />
+      <module name="app-order-parent" target="1.5" />
+      <module name="app-product" target="11" />
+      <module name="app-telegram-bot" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
