@@ -21,7 +21,6 @@ import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
 
-<<<<<<<< HEAD:app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -101,19 +100,6 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
         return ApiResult.successResponse("Order successfully saved!");
-    }
-
-    @Override
-    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
-
-        chechOrderChartDTO(orderChartDTO);
-
-        List<Integer> list = new LinkedList<>();
-
-        countingOrderByStatusAndDate(orderChartDTO, list);
-
-        return ApiResult.successResponse();
-
     }
 
 
@@ -212,6 +198,7 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+
     /**
      * Bu getStatisticsForChart method qismi
      *
@@ -262,6 +249,67 @@ public class OrderServiceImpl implements OrderService {
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
                     , HttpStatus.NOT_FOUND);
     }
+
+
+
+    /**
+     * @param orderStatus
+     * @return this method returns order list based on their status
+     */
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus) {
+
+        List<Order> orders = orderRepository.findByStatusEnum(OrderStatusEnum.valueOf(orderStatus));
+
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDTOList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDTOList);
+    }
+
+
+    private OrderDTO mapOrderToOrderDTO(Order order) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setNumber(order.getNumber());
+        orderDTO.setPaymentType(order.getPaymentType());
+        orderDTO.setDeliverySum(order.getDeliverySum());
+        orderDTO.setBranchName(order.getBranch().getName());
+
+        orderDTO.setOrderedAt(order.getOrderedAt());
+        setOrderTimeByStatus(order, orderDTO);
+
+        // TODO: 9/29/22  client malumomotlarini olib kelish kerak
+        orderDTO.setClientDTO(new ClientDTO("vali", "4463772"));
+
+        // TODO: 9/30/22 operator malumotlarini olib kelish kerak
+        orderDTO.setOperatorDTO(new OperatorDTO(UUID.randomUUID(), "Apacha", "zzz"));
+
+
+        return orderDTO;
+    }
+
+    private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {
+        if (order.getStatusEnum() == OrderStatusEnum.PAYMENT_WAITING
+                || order.getStatusEnum() == OrderStatusEnum.NEW) {
+            orderDTO.setOrderedAtByStatus(order.getOrderedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.ACCEPTED) {
+            orderDTO.setOrderedAtByStatus(order.getAcceptedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.COOKING) {
+            orderDTO.setOrderedAtByStatus(order.getCookingAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.READY) {
+            orderDTO.setOrderedAtByStatus(order.getReadyAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.SENT) {
+            orderDTO.setOrderedAtByStatus(order.getSentAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
+            orderDTO.setOrderedAtByStatus(order.getClosedAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
+            orderDTO.setOrderedAtByStatus(order.getCancelledAt());
+        }
+    }
+
+
 
     /**
      * <p>Show Statistics for admin with list</p>
