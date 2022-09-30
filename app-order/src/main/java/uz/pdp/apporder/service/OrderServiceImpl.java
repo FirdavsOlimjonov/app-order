@@ -17,11 +17,8 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
-
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -180,79 +177,11 @@ public class OrderServiceImpl implements OrderService {
         return 500F;
     }
 
+
+
+
     /**
-     * <p>Show Statistics for admin with chart diagram</p>
      *
-     * @param orderChartDTO
-     * @return
-     */
-    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
-
-        chechOrderChartDTO(orderChartDTO);
-
-        List<Integer> list = new LinkedList<>();
-
-        countingOrderByStatusAndDate(orderChartDTO, list);
-
-        return ApiResult.successResponse();
-
-    }
-
-
-    /**
-     * Bu getStatisticsForChart method qismi
-     *
-     * @param orderChartDTO
-     * @param list
-     */
-    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
-
-        LocalDate fromDate = orderChartDTO.getFromDate();
-        LocalDate tillDate = orderChartDTO.getTillDate();
-
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
-        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
-
-        while (!fromDate.isAfter(tillDate)) {
-            int count = 0;
-            for (Order order : all) {
-                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
-                    if (Objects.isNull(orderChartDTO.getBranchId()))
-                        count++;
-                    else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
-                        count++;
-                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
-                    count++;
-            }
-            list.add(count);
-            fromDate = fromDate.plusDays(1);
-        }
-    }
-
-    /**
-     * Bu getStatisticsForChart methodi qismi
-     *
-     * @param orderChartDTO
-     */
-    private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
-        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
-            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
-
-        if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
-            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
-
-        if (orderChartDTO.getTillDate().isAfter(LocalDate.now()))
-            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
-
-        if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
-                && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
-            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
-                    , HttpStatus.NOT_FOUND);
-    }
-
-
-
-    /**
      * @param orderStatus
      * @return this method returns order list based on their status
      */
@@ -268,7 +197,6 @@ public class OrderServiceImpl implements OrderService {
         }
         return ApiResult.successResponse(orderDTOList);
     }
-
 
     private OrderDTO mapOrderToOrderDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
@@ -302,13 +230,12 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setOrderedAtByStatus(order.getReadyAt());
         } else if (order.getStatusEnum() == OrderStatusEnum.SENT) {
             orderDTO.setOrderedAtByStatus(order.getSentAt());
-        }else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
+        } else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
             orderDTO.setOrderedAtByStatus(order.getClosedAt());
-        }else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
+        } else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
             orderDTO.setOrderedAtByStatus(order.getCancelledAt());
         }
     }
-
 
 
     /**

@@ -10,15 +10,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 @Getter
 @NoArgsConstructor
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderChartDTO {
-
-    private List<Integer> intervalData;
+public class OrderChartPaymentDTO {
 
     private Integer branchId;
 
@@ -27,8 +25,4 @@ public class OrderChartDTO {
 
     @NotNull
     private LocalDate tillDate;
-
-    @Enumerated(value = EnumType.STRING)
-    private OrderStatusEnum orderStatusEnum;
-
 }

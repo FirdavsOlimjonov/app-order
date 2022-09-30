@@ -1,0 +1,8 @@
+POST http://localhost:8081/api/v1/order/statistics-order
+Content-Type: application/json
+
+{
+  "tillDate": "2019-04-01",
+  "fromDate": "2019-01-05",
+  "orderStatusEnum": "REJECTED"
+}
