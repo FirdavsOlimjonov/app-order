@@ -1,7 +1,11 @@
 package uz.pdp.apporder.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uz.pdp.appproduct.entity.Product;
+
 import javax.persistence.*;
 
 @Entity
