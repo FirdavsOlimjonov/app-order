@@ -1,13 +1,13 @@
-package uz.pdp.apporder.controller.implementation;
+package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.apporder.controller.contract.OrderController;
+import uz.pdp.apporder.controller.OrderController;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
-import uz.pdp.apporder.service.contract.OrderService;
+import uz.pdp.apporder.service.OrderService;
 
 @RestController
 @RequiredArgsConstructor

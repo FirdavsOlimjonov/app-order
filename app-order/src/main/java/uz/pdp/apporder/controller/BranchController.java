@@ -1,4 +1,4 @@
-package uz.pdp.apporder.controller.contract;
+package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.entity.Branch;

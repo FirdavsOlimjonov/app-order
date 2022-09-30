@@ -1,4 +1,4 @@
-package uz.pdp.apporder.service.implementation;
+package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.BranchDTO;
 import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.service.contract.BranchService;
+import uz.pdp.apporder.service.BranchService;
 
 import java.util.List;
 import java.util.Optional;

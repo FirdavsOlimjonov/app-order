@@ -1,4 +1,4 @@
-package uz.pdp.apporder.controller.contract;
+package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -8,7 +8,7 @@ import uz.pdp.apporder.payload.ApiResult;
 @RequestMapping(OrderStatusController.BASE_PATH)
 public interface OrderStatusController {
 
-    String BASE_PATH = "/api/order-status/{id}";
+    String BASE_PATH = "/api/v1/order-status/{id}";
 
     String PAYMENT_WAITING_PATH = "/transfer-payment-waiting/{id}";
 
