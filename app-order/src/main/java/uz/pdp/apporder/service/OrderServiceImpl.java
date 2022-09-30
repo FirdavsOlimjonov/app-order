@@ -1,4 +1,4 @@
-package uz.pdp.apporder.service.implementation;
+package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
-import uz.pdp.apporder.service.contract.OrderService;
 import uz.pdp.appproduct.entity.Product;
 
 import java.time.LocalDate;

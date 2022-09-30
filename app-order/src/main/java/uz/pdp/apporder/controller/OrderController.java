@@ -1,4 +1,4 @@
-package uz.pdp.apporder.controller.contract;
+package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,10 +10,12 @@ import uz.pdp.apporder.payload.OrderUserDTO;
 import javax.validation.Valid;
 
 
-@RequestMapping("/api/v1/order")
+@RequestMapping(OrderController.PATH_BASE)
 public interface OrderController {
 
     String STATISTICS_CHART_PATH = "/statistics-chart";
+
+    String PATH_BASE = "/api/v1/order";
 
     String SAVE_MOB_APP = "/save-mob-app";
 

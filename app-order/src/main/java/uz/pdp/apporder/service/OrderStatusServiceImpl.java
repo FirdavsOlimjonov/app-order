@@ -1,4 +1,4 @@
-package uz.pdp.apporder.service.implementation;
+package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.service.contract.OrderStatusService;
+import uz.pdp.apporder.service.OrderStatusService;
 
 import javax.validation.Valid;
 
