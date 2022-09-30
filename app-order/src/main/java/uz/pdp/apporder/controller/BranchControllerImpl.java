@@ -2,6 +2,7 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.controller.BranchController;
 import uz.pdp.apporder.entity.Branch;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.BranchDTO;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class BranchControllerImpl implements BranchController{
+public class BranchControllerImpl implements BranchController {
 
     private final BranchService branchService;
 
