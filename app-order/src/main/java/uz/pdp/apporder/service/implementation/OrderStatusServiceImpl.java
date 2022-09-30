@@ -20,8 +20,6 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     @Override
     public ApiResult<?> transferPaymentWaitingStatus(@Valid Long id) {
-
-
         return null;
     }
 
