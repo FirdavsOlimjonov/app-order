@@ -99,6 +99,28 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
+    @Override
+    public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
+
+        if (!(orderStatusEnum == OrderStatusEnum.SENT || orderStatusEnum == OrderStatusEnum.READY))
+            RestException.restThrow("status must be sent or ready", HttpStatus.BAD_REQUEST);
+
+        return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
+    }
+
+    @Override
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
@@ -296,4 +318,8 @@ public class OrderServiceImpl implements OrderService {
         );
 
     }
+    private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
+        return orderRepository.getOrderByStatusEnum(statusEnum);
+    }
+
 }

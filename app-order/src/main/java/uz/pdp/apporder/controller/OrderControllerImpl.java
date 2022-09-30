@@ -3,6 +3,10 @@ package uz.pdp.apporder.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
+import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
+import uz.pdp.apporder.payload.OrderUserDTO;
 import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 
@@ -40,6 +44,15 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus) {
         return orderService.getOrdersByStatus(orderStatus);
+
+    @Override
+    public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
+        return orderService.getOrderForCourier(orderStatusEnum);
+    }
+
+    @PostMapping(STATISTICS_CHART_PATH)
+    public ApiResult<OrderChartDTO> showStatisticsForChart(OrderChartDTO orderChartDTO){
+        return orderService.getStatisticsForChart(orderChartDTO);
     }
 
 }

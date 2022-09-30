@@ -21,6 +21,12 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     Optional<Order> getByIdAndStatusEnum(Long id, OrderStatusEnum statusEnum);
 
+    Optional<Order> getByIdAndStatusEnumOrStatusEnum(Long id, OrderStatusEnum statusEnum, OrderStatusEnum statusEnum2);
+
+    List<Order> getOrderByStatusEnum(OrderStatusEnum statusEnum);
+
+
+
 
     List<Order> findByStatusEnum(OrderStatusEnum orderEnum);
 
