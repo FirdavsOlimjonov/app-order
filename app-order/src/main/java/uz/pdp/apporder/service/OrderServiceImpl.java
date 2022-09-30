@@ -17,13 +17,18 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
+import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
+import uz.pdp.apporder.payload.OrderUserDTO;
+
+<<<<<<<< HEAD:app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl {
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
@@ -33,7 +38,7 @@ public class OrderServiceImpl {
 
     private final ClientRepository clientRepository;
 
-
+    @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
 
@@ -55,7 +60,6 @@ public class OrderServiceImpl {
                 orderDTO.getAddressDTO().getLng(),
                 orderDTO.getAddressDTO().getAddress(),
                 orderDTO.getAddressDTO().getExtraAddress());
-
 
 
         List<Product> productList = productRepository.findAllById(
@@ -98,6 +102,20 @@ public class OrderServiceImpl {
 
         return ApiResult.successResponse("Order successfully saved!");
     }
+
+    @Override
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
@@ -171,8 +189,6 @@ public class OrderServiceImpl {
 //        return ApiResult.successResponse("Order successfully saved!");
 //    }
 
-
-
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
@@ -198,11 +214,11 @@ public class OrderServiceImpl {
 
     /**
      * Bu getStatisticsForChart method qismi
+     *
      * @param orderChartDTO
      * @param list
      */
-    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
-                                               List<Integer> list) {
+    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
@@ -213,13 +229,12 @@ public class OrderServiceImpl {
         while (!fromDate.isAfter(tillDate)) {
             int count = 0;
             for (Order order : all) {
-                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)){
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
                     if (Objects.isNull(orderChartDTO.getBranchId()))
                         count++;
                     else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
                         count++;
-                }
-                else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
                     count++;
             }
             list.add(count);
@@ -229,11 +244,12 @@ public class OrderServiceImpl {
 
     /**
      * Bu getStatisticsForChart methodi qismi
+     *
      * @param orderChartDTO
      */
     private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
-        if (!Objects.isNull(orderChartDTO.getBranchId())&& !branchRepository.existsById(orderChartDTO.getBranchId()))
-            throw RestException.restThrow("Bunday filial mavjud emas!",HttpStatus.NOT_FOUND);
+        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
 
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
@@ -257,18 +273,12 @@ public class OrderServiceImpl {
 
 //        if (Objects.isNull(orderListDTO)) {
 
-            List<Order> orders = orderRepository.getOrdersByOrderByOrderedAt();
+        List<Order> orders = orderRepository.getOrdersByOrderByOrderedAt();
 
-            List<OrderStatisticsDTO> orderStatisticsDTOS = mapOrdersToOrderStatisticsDTOs(orders);
+        List<OrderStatisticsDTO> orderStatisticsDTOS = mapOrdersToOrderStatisticsDTOs(orders);
 
-            return ApiResult.successResponse(orderStatisticsDTOS);
+        return ApiResult.successResponse(orderStatisticsDTOS);
 //        }
-
-
-
-
-
-
 
 
     }
@@ -311,6 +321,4 @@ public class OrderServiceImpl {
         );
 
     }
-
-
 }
