@@ -2,10 +2,9 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderDto;
+import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
 import uz.pdp.apporder.service.OrderService;
 
@@ -41,9 +40,9 @@ public class OrderController {
     }
 
 
-    @GetMapping(ORDER_LIST_BY_STATUS_PATH+"{orderStatus}")
+    @GetMapping(ORDER_LIST_BY_STATUS_PATH+"/{orderStatus}")
 //    @CheckAuth(permissions = {PermissionEnum.GET_ORDER})
-    public ApiResult<List<OrderDto>> getOrdersByStatus(@PathVariable String orderStatus){
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus){
         return orderService.getOrdersByStatus(orderStatus);
     }
 

@@ -172,7 +172,6 @@ public class OrderService {
 //    }
 
 
-
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
@@ -198,11 +197,12 @@ public class OrderService {
 
     /**
      * Buu getStatisticsForChart method qismi
+     *
      * @param orderChartDTO
      * @param list
      */
-    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
-                                               List<Integer> list) {
+    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO,
+                                              List<Integer> list) {
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
@@ -213,13 +213,12 @@ public class OrderService {
         while (!fromDate.isAfter(tillDate)) {
             int count = 0;
             for (Order order : all) {
-                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)){
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
                     if (Objects.isNull(orderChartDTO.getBranchId()))
                         count++;
                     else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
                         count++;
-                }
-                else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
                     count++;
             }
             list.add(count);
@@ -229,11 +228,12 @@ public class OrderService {
 
     /**
      * Buu getStatisticsForChart methodi qismi
+     *
      * @param orderChartDTO
      */
     private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
-        if (!Objects.isNull(orderChartDTO.getBranchId())&& !branchRepository.existsById(orderChartDTO.getBranchId()))
-            throw RestException.restThrow("Bunday filial mavjud emas!",HttpStatus.NOT_FOUND);
+        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
 
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
@@ -247,43 +247,62 @@ public class OrderService {
                     , HttpStatus.NOT_FOUND);
     }
 
+
     /**
      * @param orderStatus
      * @return this method returns order list based on their status
      */
-    public ApiResult<List<OrderDto>> getOrdersByStatus(String orderStatus) {
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus) {
 
         List<Order> orders = orderRepository.findByStatusEnum(OrderStatusEnum.valueOf(orderStatus));
 
-        List<OrderDto> orderDtoList = new ArrayList<>();
+        List<OrderDTO> orderDTOList = new ArrayList<>();
 
         for (Order order : orders) {
-            OrderDto orderDto = mapOrderToOrderDTO(order);
-            orderDtoList.add(orderDto);
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDTOList.add(orderDto);
         }
-        return ApiResult.successResponse(orderDtoList);
+        return ApiResult.successResponse(orderDTOList);
     }
 
 
+    private OrderDTO mapOrderToOrderDTO(Order order) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setNumber(order.getNumber());
+        orderDTO.setPaymentType(order.getPaymentType());
+        orderDTO.setDeliverySum(order.getDeliverySum());
+        orderDTO.setBranchName(order.getBranch().getName());
 
-    private OrderDto mapOrderToOrderDTO(Order order) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(order.getId());
-        orderDto.setBranch(order.getBranch());
-        orderDto.setAddress(order.getAddress());
-        orderDto.setComment(order.getComment());
-        orderDto.setNumber(order.getNumber());
-        orderDto.setServiceRate(order.getServiceRate());
-        orderDto.setClientId(order.getClientId());
-        orderDto.setCurrierId(order.getCurrierId());
-        orderDto.setTasteRate(order.getTasteRate());
-        orderDto.setOrderProducts(order.getOrderProducts());
-        orderDto.setStatusEnum(order.getStatusEnum());
-        orderDto.setPaymentType(order.getPaymentType());
-        orderDto.setDeliverySum(order.getDeliverySum());
+        orderDTO.setOrderedAt(order.getOrderedAt());
+        setOrderTimeByStatus(order, orderDTO);
+
+        // TODO: 9/29/22  client malumomotlarini olib kelish kerak
+        orderDTO.setClientDTO(new ClientDTO("vali", "4463772"));
+
+        // TODO: 9/30/22 operator malumotlarini olib kelish kerak
+        orderDTO.setOperatorDTO(new OperatorDTO(UUID.randomUUID(), "Apacha", "zzz"));
 
 
-        return orderDto;
+        return orderDTO;
+    }
+
+    private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {
+        if (order.getStatusEnum() == OrderStatusEnum.PAYMENT_WAITING
+                || order.getStatusEnum() == OrderStatusEnum.NEW) {
+            orderDTO.setOrderedAtByStatus(order.getOrderedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.ACCEPTED) {
+            orderDTO.setOrderedAtByStatus(order.getAcceptedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.COOKING) {
+            orderDTO.setOrderedAtByStatus(order.getCookingAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.READY) {
+            orderDTO.setOrderedAtByStatus(order.getReadyAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.SENT) {
+            orderDTO.setOrderedAtByStatus(order.getSentAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
+            orderDTO.setOrderedAtByStatus(order.getClosedAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
+            orderDTO.setOrderedAtByStatus(order.getCancelledAt());
+        }
     }
 
 }
