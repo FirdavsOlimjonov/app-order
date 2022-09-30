@@ -8,7 +8,6 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.service.OrderStatusService;
 
 import javax.validation.Valid;
 
@@ -30,7 +29,17 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     @Override
     public ApiResult<?> transferAcceptedStatus(Long id) {
-        return null;
+        Order order = orderRepository.getByIdAndStatusEnumOrStatusEnum(
+                id,
+                OrderStatusEnum.NEW,
+                OrderStatusEnum.PAYMENT_WAITING
+        ).orElseThrow(() ->
+                RestException.restThrow("order not found", HttpStatus.NOT_FOUND)
+        );
+
+        order.setStatusEnum(OrderStatusEnum.ACCEPTED);
+
+        return ApiResult.successResponse(orderRepository.save(order));
     }
 
     @Override

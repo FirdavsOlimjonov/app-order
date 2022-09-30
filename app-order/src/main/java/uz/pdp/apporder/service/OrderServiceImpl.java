@@ -98,6 +98,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
+
+        if (!(orderStatusEnum == OrderStatusEnum.SENT || orderStatusEnum == OrderStatusEnum.READY))
+            RestException.restThrow("status must be sent or ready", HttpStatus.BAD_REQUEST);
+
+        return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
+    }
+
+    @Override
     public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
 
         chechOrderChartDTO(orderChartDTO);
@@ -241,6 +250,10 @@ public class OrderServiceImpl implements OrderService {
                 && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
             throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
                     , HttpStatus.NOT_FOUND);
+    }
+
+    private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
+        return orderRepository.getOrderByStatusEnum(statusEnum);
     }
 
 }

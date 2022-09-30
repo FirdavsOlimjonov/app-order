@@ -3,6 +3,7 @@ package uz.pdp.apporder.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
@@ -21,6 +22,8 @@ public interface OrderController {
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
+
+    ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
     @PostMapping(STATISTICS_CHART_PATH)
     ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO);
