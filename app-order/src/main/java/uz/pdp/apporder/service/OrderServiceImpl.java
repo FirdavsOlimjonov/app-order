@@ -17,6 +17,10 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
+import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
+import uz.pdp.apporder.payload.OrderUserDTO;
+
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
                         .map(OrderProductsDTO::getProductId)
                         .collect(Collectors.toList())
         );
+
 
         Order order = new Order();
 
@@ -123,6 +128,7 @@ public class OrderServiceImpl implements OrderService {
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
     }
+
 
 //    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 //
@@ -195,19 +201,33 @@ public class OrderServiceImpl implements OrderService {
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
     }
+
     /**
      * <p>Show Statistics for admin with chart diagram</p>
      *
      * @param orderChartDTO
      * @return
      */
+    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
+
+        chechOrderChartDTO(orderChartDTO);
+
+        List<Integer> list = new LinkedList<>();
+
+        countingOrderByStatusAndDate(orderChartDTO, list);
+
+        return ApiResult.successResponse();
+
+    }
+
 
     /**
      * Bu getStatisticsForChart method qismi
+     *
      * @param orderChartDTO
      * @param list
      */
-    private  void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
+    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
 
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
@@ -218,13 +238,12 @@ public class OrderServiceImpl implements OrderService {
         while (!fromDate.isAfter(tillDate)) {
             int count = 0;
             for (Order order : all) {
-                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)){
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
                     if (Objects.isNull(orderChartDTO.getBranchId()))
                         count++;
                     else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
                         count++;
-                }
-                else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
                     count++;
             }
             list.add(count);
@@ -234,11 +253,12 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * Bu getStatisticsForChart methodi qismi
+     *
      * @param orderChartDTO
      */
     private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
-        if (!Objects.isNull(orderChartDTO.getBranchId())&& !branchRepository.existsById(orderChartDTO.getBranchId()))
-            throw RestException.restThrow("Bunday filial mavjud emas!",HttpStatus.NOT_FOUND);
+        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
 
         if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
             throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
@@ -256,4 +276,123 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.getOrderByStatusEnum(statusEnum);
     }
 
+
+
+    /**
+     * @param orderStatus
+     * @return this method returns order list based on their status
+     */
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus) {
+
+        List<Order> orders = orderRepository.findByStatusEnum(OrderStatusEnum.valueOf(orderStatus));
+
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDTOList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDTOList);
+    }
+
+
+    private OrderDTO mapOrderToOrderDTO(Order order) {
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setNumber(order.getNumber());
+        orderDTO.setPaymentType(order.getPaymentType());
+        orderDTO.setDeliverySum(order.getDeliverySum());
+        orderDTO.setBranchName(order.getBranch().getName());
+
+        orderDTO.setOrderedAt(order.getOrderedAt());
+        setOrderTimeByStatus(order, orderDTO);
+
+        // TODO: 9/29/22  client malumomotlarini olib kelish kerak
+        orderDTO.setClientDTO(new ClientDTO("vali", "4463772"));
+
+        // TODO: 9/30/22 operator malumotlarini olib kelish kerak
+        orderDTO.setOperatorDTO(new OperatorDTO(UUID.randomUUID(), "Apacha", "zzz"));
+
+
+        return orderDTO;
+    }
+
+    private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {
+        if (order.getStatusEnum() == OrderStatusEnum.PAYMENT_WAITING
+                || order.getStatusEnum() == OrderStatusEnum.NEW) {
+            orderDTO.setOrderedAtByStatus(order.getOrderedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.ACCEPTED) {
+            orderDTO.setOrderedAtByStatus(order.getAcceptedAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.COOKING) {
+            orderDTO.setOrderedAtByStatus(order.getCookingAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.READY) {
+            orderDTO.setOrderedAtByStatus(order.getReadyAt());
+        } else if (order.getStatusEnum() == OrderStatusEnum.SENT) {
+            orderDTO.setOrderedAtByStatus(order.getSentAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
+            orderDTO.setOrderedAtByStatus(order.getClosedAt());
+        }else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
+            orderDTO.setOrderedAtByStatus(order.getCancelledAt());
+        }
+    }
+
+
+
+    /**
+     * <p>Show Statistics for admin with list</p>
+     *
+     * @param orderListDTO
+     * @return
+     */
+    public ApiResult<List<OrderStatisticsDTO>> getOrdersForList(OrderListDTO orderListDTO) {
+
+//        if (Objects.isNull(orderListDTO)) {
+
+        List<Order> orders = orderRepository.getOrdersByOrderByOrderedAt();
+
+        List<OrderStatisticsDTO> orderStatisticsDTOS = mapOrdersToOrderStatisticsDTOs(orders);
+
+        return ApiResult.successResponse(orderStatisticsDTOS);
+//        }
+
+
+    }
+
+    private List<OrderStatisticsDTO> mapOrdersToOrderStatisticsDTOs(List<Order> orders) {
+        List<OrderStatisticsDTO> orderStatisticsDTOS = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderStatisticsDTO orderStatisticsDTO = mapOrderToOrderStatisticsDTO(order);
+            orderStatisticsDTOS.add(orderStatisticsDTO);
+        }
+        return orderStatisticsDTOS;
+    }
+
+    private OrderStatisticsDTO mapOrderToOrderStatisticsDTO(Order order) {
+
+        Branch branch = branchRepository.findById(order.getBranch().getId()).orElseThrow(
+                () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
+        );
+
+        BranchDTO branchDTO = BranchDTO.mapBranchToBranchDTO(branch);
+
+//        todo client malumotlarini authdan olib kelish
+
+        ClientDTO yusufbek = new ClientDTO("Yusufbek", "+998 90 380 63 35");
+
+
+        Double sum = 0D;
+        for (OrderProduct orderProduct : order.getOrderProducts())
+            sum += orderProduct.getQuantity() * orderProduct.getUnitPrice();
+
+
+        return new OrderStatisticsDTO(
+                branchDTO,
+                yusufbek,
+                order.getStatusEnum(),
+                order.getPaymentType(),
+                sum,
+                order.getOrderedAt()
+        );
+
+    }
 }
