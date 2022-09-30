@@ -1,9 +1,5 @@
 package uz.pdp.apporder.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
@@ -18,13 +14,10 @@ import java.util.List;
 public interface OrderController {
 
     public static final String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
-    private final String STATISTICS_CHART_PATH = "/statistics-chart";
-    private final String SAVE_MOB_APP = "/save-mob-app";
     String STATISTICS_CHART_PATH = "/statistics-chart";
+     String SAVE_MOB_APP = "/save-mob-app";
 
     String PATH_BASE = "/api/v1/order";
-
-    String SAVE_MOB_APP = "/save-mob-app";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -35,8 +28,6 @@ public interface OrderController {
 
     @GetMapping(ORDER_LIST_BY_STATUS_PATH+"/{orderStatus}")
 //    @CheckAuth(permissions = {PermissionEnum.GET_ORDER})
-    public ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus){
-        return orderService.getOrdersByStatus(orderStatus);
-    }
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus);
 
 }
