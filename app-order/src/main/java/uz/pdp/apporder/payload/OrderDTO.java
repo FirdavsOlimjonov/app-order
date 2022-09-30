@@ -7,7 +7,6 @@ import lombok.Setter;
 import uz.pdp.apporder.entity.enums.PaymentType;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
