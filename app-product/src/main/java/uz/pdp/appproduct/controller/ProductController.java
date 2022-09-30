@@ -3,6 +3,7 @@ package uz.pdp.appproduct.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.appproduct.dto.ProductDTO;
 import uz.pdp.appproduct.entity.Product;
+import uz.pdp.appproduct.payload.ApiResult;
 
 import java.util.List;
 
@@ -10,23 +11,27 @@ import java.util.List;
 @RestController
 public interface ProductController {
 
+    @PostMapping(path = "/add")
+    ApiResult<ProductDTO> addProduct(@RequestBody ProductDTO newProduct);
 
-    @GetMapping
-    public List<Product> getCustomers();
+    @PostMapping(path = "/list")
+    ApiResult<List<ProductDTO>> getProductsForAdmin();
 
-    @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Integer id);
+    @PostMapping(path = "/list")
+    ApiResult<List<ProductDTO>> getProductsForUser();
 
-    @PostMapping
-    public ApiResponse addProduct(@RequestBody ProductDTO customer);
+    @GetMapping(path = "/{id}")
+    ApiResult<ProductDTO> getProductForAdmin(@PathVariable Integer id);
+
+    @GetMapping(path = "/{id}")
+    ApiResult<ProductDTO> getProductForUser(@PathVariable Integer id);
+
+    @DeleteMapping(path = "/{id}")
+    ApiResult<?> deleteProduct(@PathVariable Integer id);
 
 
-    @DeleteMapping("/{id}")
-    public ApiResponse deleteProduct(@PathVariable Integer id);
-
-
-    @PutMapping("/{id}")
-    public ApiResponse editProduct(@PathVariable Integer id, @RequestBody ProductDTO customerDTO);
+    @PutMapping(path = "/{id}")
+    ApiResult<ProductDTO> editProduct(@PathVariable Integer id, @RequestBody ProductDTO customerDTO);
 
 
 }

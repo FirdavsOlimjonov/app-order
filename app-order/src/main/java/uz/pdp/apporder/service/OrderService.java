@@ -45,7 +45,7 @@ public class OrderService {
 
 
         Order order = new Order();
-        List<Product> productList = productRepository.findAllById(
+        List<Product<P>> productList = productRepository.findAllById(
                 orderAddDTO
                         .getOrderProductsDTOList()
                         .stream()
@@ -86,7 +86,7 @@ public class OrderService {
     }
 
 
-    private Float totalSum(List<Product> products){
+    private Float totalSum(List<Product<P>> products){
         return products.stream().map(Product::getPrice).reduce(Float::sum).orElseThrow(() ->
                 RestException.restThrow("??", HttpStatus.BAD_REQUEST)
         );

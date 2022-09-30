@@ -10,12 +10,13 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Product {
+
+public class Product<P> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private boolean stop;
+    private boolean active;
 
     private Float price;
 
@@ -23,4 +24,11 @@ public class Product {
 
     @ManyToOne(optional = false)
     private Category category;
+
+    /**
+     * Bu field mahsulotni qanday ulchanishini kursatadi
+     * 200 gr Free bunda "200 gr" shu fieldga biriktiriladi
+     **/
+
+    private String measurement;
 }

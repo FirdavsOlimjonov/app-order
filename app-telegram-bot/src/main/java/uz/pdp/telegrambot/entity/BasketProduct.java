@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.glassfish.jersey.internal.util.Producer;
 import uz.pdp.appproduct.entity.Product;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class BasketProduct {
     private Basket basket;
 
     @ManyToOne(optional = false)
-    private Product product;
+    private Product<P> product;
 
     @Column(nullable = false)
     private Short quantity = 1;
