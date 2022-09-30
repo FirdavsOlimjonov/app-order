@@ -1,33 +1,28 @@
 package uz.pdp.apporder.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
-import uz.pdp.apporder.service.OrderService;
 
 import javax.validation.Valid;
 
-@RestController
-@RequestMapping("/api/order")
-@RequiredArgsConstructor
-public class OrderController {
 
-    private final OrderService orderService;
+@RequestMapping(OrderController.PATH_BASE)
+public interface OrderController {
 
-    @PostMapping("/save-app")
-//    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order){
-        return orderService.saveOrder(order);
-    }
+    String STATISTICS_CHART_PATH = "/statistics-chart";
 
-    @PostMapping("/save-phone")
-//    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromPhone(@Valid @RequestBody OrderUserDTO order){
-        return orderService.saveOrder(order);
-    }
+    String PATH_BASE = "/api/v1/order";
+
+    String SAVE_MOB_APP = "/save-mob-app";
+
+    @PostMapping(SAVE_MOB_APP)
+    ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
+
+    @PostMapping(STATISTICS_CHART_PATH)
+    ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
 }

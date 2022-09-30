@@ -1,5 +1,6 @@
 package uz.pdp.apporder.payload;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,11 +11,12 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderUserDTO {
 
     private List<OrderProductsDTO> orderProductsDTOList;
 
-    private String location;
+    private AddressDTO addressDTO;
 
     private PaymentType paymentType;
 

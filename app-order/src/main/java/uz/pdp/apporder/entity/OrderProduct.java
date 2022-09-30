@@ -25,7 +25,16 @@ public class OrderProduct {
     @ManyToOne(optional = false)
     private Product<P> product;
 
+    @Column(nullable = false)
     private Short quantity;
 
+    @Column(nullable = false)
     private Float unitPrice;
+
+    public OrderProduct(Order order, Product product, Short quantity, Float unitPrice) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 }

@@ -1,10 +1,11 @@
 package uz.pdp.apporder.payload;
 
 
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 
 @Getter
@@ -16,6 +17,6 @@ public class OrderProductsDTO {
     private Integer productId;
 
     @NotNull
-    private Float quantity;
+    private Short quantity;
 
 }
