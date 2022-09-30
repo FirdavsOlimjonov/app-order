@@ -13,7 +13,7 @@ public class Category {
     * this is primary key for category table
     * */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /*this is category's name in uzbek language*/

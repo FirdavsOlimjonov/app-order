@@ -1,6 +1,5 @@
 package uz.pdp.appproduct.dto;
 
-
 import lombok.Getter;
 
 @Getter

@@ -1,25 +1,20 @@
 package uz.pdp.appproduct.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import uz.pdp.appproduct.dto.ApiResult;
-import uz.pdp.appproduct.dto.CategoryDTO;
-import uz.pdp.appproduct.dto.SortingDTO;
-import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.*;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.repository.CategoryRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @DynamicUpdate
+@DynamicInsert
 public class CategoryServiceImpl implements CategoryService{
 
     private final CategoryRepository categoryRepository;

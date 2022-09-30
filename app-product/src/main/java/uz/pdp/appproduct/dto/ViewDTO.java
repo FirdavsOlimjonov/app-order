@@ -11,5 +11,4 @@ public class ViewDTO {
     private SearchingDTO searching = new SearchingDTO();
 
     private List<SortingDTO> sorting = new ArrayList<>();
-
 }

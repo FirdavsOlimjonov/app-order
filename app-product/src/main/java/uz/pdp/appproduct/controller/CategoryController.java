@@ -6,11 +6,11 @@ import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
 import java.util.List;
 
-@RequestMapping("api/category")
+@RequestMapping("/api/category")
 @RestController
 public interface CategoryController {
 
-    @PostMapping(path = "/add")
+    @PostMapping( "/add")
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 
     @GetMapping(path = "/list")

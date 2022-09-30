@@ -1,16 +1,17 @@
-POST localhost/api/categeory/add
+POST http://localhost:8081/api/category/add
 Content-Type: application/json
 
 {
   "nameUz": "ichimliklar",
-  "nameRu": "drinks"
+  "nameRu": "drinks",
+  "parentCategory": null
 }
 
 ###
-GET http://localhost/api/categeory/1
+GET http://localhost:8081/api/category/1
 
 ###
-PUT http://localhost/api/categeory/1
+PUT http://localhost:8081/api/categeory/1
 Content-Type: application/json
 Accept-Language: uz
 
@@ -20,23 +21,8 @@ Accept-Language: uz
   "nameRu": "drinks"
 }
 ###
-DELETE http://localhost/api/categeory/1
+DELETE http://localhost:8081/api/categeory/1
 
 ###
-POST http://localhost/api/categeory/list
-Content-Type: application/json
+POST http://localhost:8081/api/categeory/list
 
-{
-  "searching": {
-    "columns": [
-      "nameUz"
-    ],
-    "value": "ichim"
-  },
-  "sorting": [
-    {
-      "name": "nameRu",
-      "type": "DESC"
-    }
-  ]
-}

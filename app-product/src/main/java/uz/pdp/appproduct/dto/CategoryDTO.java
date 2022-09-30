@@ -9,9 +9,6 @@ import uz.pdp.appproduct.entity.Category;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
 public class CategoryDTO {
 
     private String nameUz;

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ErrorData;
-
 import java.util.ArrayList;
 import java.util.List;
 

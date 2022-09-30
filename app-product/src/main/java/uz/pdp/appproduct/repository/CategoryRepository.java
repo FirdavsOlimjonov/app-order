@@ -20,5 +20,4 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
     List<Category> findAllByIdInAndNameUzOrderByNameUzAsc(Collection<Integer> id, String nameUz);
     List<Category>  findAllByIdInAndNameRuOrderByNameRuDesc(Collection<Integer> id, String nameRu);
     List<Category> findAllByIdInAndNameUzOrderByNameUzDesc(Collection<Integer> id, String nameUz);
-
 }

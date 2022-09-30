@@ -67,6 +67,4 @@ public class ApiResult<E> {
 
         return failResponse(errorDataList);
     }
-
-
 }
