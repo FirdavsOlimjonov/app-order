@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.glassfish.jersey.internal.util.Producer;
 import uz.pdp.appproduct.entity.Product;
 
 import javax.persistence.*;

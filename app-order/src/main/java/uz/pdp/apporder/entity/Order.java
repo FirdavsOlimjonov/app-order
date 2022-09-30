@@ -28,7 +28,8 @@ public class Order {
 
     private UUID operatorId;
 
-    private Short filialId;
+    @ManyToOne
+    private Branch branch;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
