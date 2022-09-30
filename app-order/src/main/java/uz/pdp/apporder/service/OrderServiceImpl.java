@@ -124,6 +124,58 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /**
+     * Bu getStatisticsForChart method qismi
+     *
+     * @param orderChartDTO
+     * @param list
+     */
+    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
+
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
+
+        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
+        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
+
+        while (!fromDate.isAfter(tillDate)) {
+            int count = 0;
+            for (Order order : all) {
+                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
+                    if (Objects.isNull(orderChartDTO.getBranchId()))
+                        count++;
+                    else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
+                        count++;
+                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+                    count++;
+            }
+            list.add(count);
+            fromDate = fromDate.plusDays(1);
+        }
+    }
+
+    /**
+     * Bu getStatisticsForChart methodi qismi
+     *
+     * @param orderChartDTO
+     */
+    private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
+        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
+            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
+
+        if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
+            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
+
+        if (orderChartDTO.getTillDate().isAfter(LocalDate.now()))
+            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
+
+        if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
+                && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
+            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
+                    , HttpStatus.NOT_FOUND);
+    }
+
+
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
@@ -200,76 +252,6 @@ public class OrderServiceImpl implements OrderService {
     // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
-    }
-
-    /**
-     * <p>Show Statistics for admin with chart diagram</p>
-     *
-     * @param orderChartDTO
-     * @return
-     */
-    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
-
-        chechOrderChartDTO(orderChartDTO);
-
-        List<Integer> list = new LinkedList<>();
-
-        countingOrderByStatusAndDate(orderChartDTO, list);
-
-        return ApiResult.successResponse();
-
-    }
-
-
-    /**
-     * Bu getStatisticsForChart method qismi
-     *
-     * @param orderChartDTO
-     * @param list
-     */
-    private void countingOrderByStatusAndDate(OrderChartDTO orderChartDTO, List<Integer> list) {
-
-        LocalDate fromDate = orderChartDTO.getFromDate();
-        LocalDate tillDate = orderChartDTO.getTillDate();
-
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
-        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
-
-        while (!fromDate.isAfter(tillDate)) {
-            int count = 0;
-            for (Order order : all) {
-                if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
-                    if (Objects.isNull(orderChartDTO.getBranchId()))
-                        count++;
-                    else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
-                        count++;
-                } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
-                    count++;
-            }
-            list.add(count);
-            fromDate = fromDate.plusDays(1);
-        }
-    }
-
-    /**
-     * Bu getStatisticsForChart methodi qismi
-     *
-     * @param orderChartDTO
-     */
-    private void chechOrderChartDTO(OrderChartDTO orderChartDTO) {
-        if (!Objects.isNull(orderChartDTO.getBranchId()) && !branchRepository.existsById(orderChartDTO.getBranchId()))
-            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
-
-        if (orderChartDTO.getTillDate().isAfter(orderChartDTO.getFromDate()))
-            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
-
-        if (orderChartDTO.getTillDate().isAfter(LocalDate.now()))
-            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
-
-        if (!orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.FINISHED)
-                && !orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED))
-            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
-                    , HttpStatus.NOT_FOUND);
     }
 
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
