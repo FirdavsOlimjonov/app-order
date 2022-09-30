@@ -16,6 +16,6 @@ public class OrderProductsDTO {
     private Integer productId;
 
     @NotNull
-    private Float quantity;
+    private Short quantity;
 
 }

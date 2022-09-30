@@ -33,12 +33,12 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>uz.pdp</groupId>
-            <artifactId>app-telegram-bot</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>uz.pdp</groupId>-->
+<!--            <artifactId>app-telegram-bot</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 <!--    <dependencyManagement>-->
