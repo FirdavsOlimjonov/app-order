@@ -6,22 +6,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderWebDTO;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
-import uz.pdp.apporder.service.OrderService;
+import uz.pdp.apporder.service.OrderServiceImpl;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/order")
 @RequiredArgsConstructor
-public class OrderController {
+public class OrderControllerImpl {
 
     private final String STATISTICS_CHART_PATH = "/statistics-chart";
     private final String SAVE_MOB_APP = "/save-mob-app";
 
-    private final OrderService orderService;
+    private final OrderServiceImpl orderService;
 
     @PostMapping(SAVE_MOB_APP)
 //    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
