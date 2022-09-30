@@ -10,13 +10,12 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Map;
 
 @Getter
 @NoArgsConstructor
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderChartOrderDTO {
+public class OrderChartDTO {
 
     private Integer branchId;
 

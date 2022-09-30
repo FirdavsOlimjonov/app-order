@@ -29,11 +29,8 @@ public interface OrderController {
 
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
-    @PostMapping(STATISTICS_CHART_PATH)
-    ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO);
-
     @PostMapping(STATISTICS_ORDER_PATH)
-    ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartOrderDTO orderChartOrderDTO);
+    ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);

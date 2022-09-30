@@ -8,7 +8,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartOrderDTO;
+import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderChartPaymentDTO;
 import uz.pdp.apporder.payload.OrderStatisticsChartDTO;
 import uz.pdp.apporder.repository.BranchRepository;
@@ -35,20 +35,20 @@ public class OrderServiceChartImpl implements OrderServiceChart {
      * <p>Show Statistics for admin with chart diagram</p>
      *
      */
-    public ApiResult<OrderStatisticsChartDTO> getStatisticsOrder(OrderChartOrderDTO orderChartOrderDTO) {
+    public ApiResult<OrderStatisticsChartDTO> getStatisticsOrder(OrderChartDTO orderChartDTO) {
 
-        checkOrderChartDTO(orderChartOrderDTO.getBranchId(),
-                orderChartOrderDTO.getTillDate(),
-                orderChartOrderDTO.getFromDate(),
-                orderChartOrderDTO.getOrderStatusEnum());
+        checkOrderChartDTO(orderChartDTO.getBranchId(),
+                orderChartDTO.getTillDate(),
+                orderChartDTO.getFromDate(),
+                orderChartDTO.getOrderStatusEnum());
 
-        Map<?, Integer> map = countingOrderByStatusAndDate(orderChartOrderDTO);
+        Map<?, Integer> map = countingOrderByStatusAndDate(orderChartDTO);
 
         OrderStatisticsChartDTO orderStatisticsDTO = new OrderStatisticsChartDTO(
-                map, orderChartOrderDTO.getBranchId(),
-                orderChartOrderDTO.getFromDate(),
-                orderChartOrderDTO.getTillDate(),
-                orderChartOrderDTO.getOrderStatusEnum()
+                map, orderChartDTO.getBranchId(),
+                orderChartDTO.getFromDate(),
+                orderChartDTO.getTillDate(),
+                orderChartDTO.getOrderStatusEnum()
         );
 
         return ApiResult.successResponse(orderStatisticsDTO);
@@ -60,22 +60,22 @@ public class OrderServiceChartImpl implements OrderServiceChart {
      * Bu getStatisticsForChart method qismi
      *
      */
-    private Map<?,Integer> countingOrderByStatusAndDate(OrderChartOrderDTO orderChartOrderDTO) {
+    private Map<?,Integer> countingOrderByStatusAndDate(OrderChartDTO orderChartDTO) {
 
-        LocalDate fromDate = orderChartOrderDTO.getFromDate();
-        LocalDate tillDate = orderChartOrderDTO.getTillDate();
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
 
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartOrderDTO.getOrderStatusEnum());
+        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
 
         if (fromDate.plusDays(30).isBefore(tillDate)) {
             Map<Month,Integer> monthMap = new TreeMap<>();
-            countingByMonth(orderChartOrderDTO,fromDate,tillDate, monthMap,all);
+            countingByMonth(orderChartDTO,fromDate,tillDate, monthMap,all);
             return monthMap;
         }
         else {
             Map<LocalDate,Integer> dayMap = new TreeMap<>();
             while (!fromDate.isAfter(tillDate)) {
-                dayMap.put(fromDate,getCountByDay(orderChartOrderDTO, fromDate, all));
+                dayMap.put(fromDate,getCountByDay(orderChartDTO, fromDate, all));
                 fromDate = fromDate.plusDays(1);
             }
             return dayMap;
@@ -85,16 +85,16 @@ public class OrderServiceChartImpl implements OrderServiceChart {
     /**
      * count order by day
      */
-    private int getCountByDay(OrderChartOrderDTO orderChartOrderDTO,
+    private int getCountByDay(OrderChartDTO orderChartDTO,
                               LocalDate fromDate, List<Order> all) {
         int count = 0;
-        boolean rejected = orderChartOrderDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
+        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
         for (Order order : all)
         {
             if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
-                if (Objects.isNull(orderChartOrderDTO.getBranchId()))
+                if (Objects.isNull(orderChartDTO.getBranchId()))
                     count++;
-                else if (Objects.equals(order.getBranch().getId(), orderChartOrderDTO.getBranchId()))
+                else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
                     count++;
             } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
                 count++;
@@ -105,7 +105,7 @@ public class OrderServiceChartImpl implements OrderServiceChart {
     /**
      * depend on counting
      */
-    private void countingByMonth(OrderChartOrderDTO orderChartOrderDTO,
+    private void countingByMonth(OrderChartDTO orderChartDTO,
                                  LocalDate fromDate,
                                  LocalDate tillDate,
                                  Map<Month, Integer> monthMap,
@@ -121,7 +121,7 @@ public class OrderServiceChartImpl implements OrderServiceChart {
                 count = 0;
             }
 
-            count += getCountByDay(orderChartOrderDTO, fromDate, all);
+            count += getCountByDay(orderChartDTO, fromDate, all);
             fromDate = fromDate.plusDays(1);
 
         }

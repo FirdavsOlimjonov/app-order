@@ -17,9 +17,9 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.appproduct.entity.Product;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,20 +107,6 @@ public class OrderServiceImpl implements OrderService {
 
         return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
     }
-
-    @Override
-    public ApiResult<OrderChartDTO> getStatisticsForChart(OrderChartDTO orderChartDTO) {
-
-        chechOrderChartDTO(orderChartDTO);
-
-        List<Integer> list = new LinkedList<>();
-
-        countingOrderByStatusAndDate(orderChartDTO, list);
-
-        return ApiResult.successResponse();
-
-    }
-
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();

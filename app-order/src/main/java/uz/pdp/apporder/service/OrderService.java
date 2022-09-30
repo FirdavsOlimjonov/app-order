@@ -1,12 +1,11 @@
 package uz.pdp.apporder.service;
 
-import uz.pdp.apporder.payload.*;
-
-import java.util.List;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
+import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
+
+import java.util.List;
 
 public interface OrderService {
 
@@ -16,4 +15,4 @@ public interface OrderService {
 
     ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum);
 }
-    }
+
