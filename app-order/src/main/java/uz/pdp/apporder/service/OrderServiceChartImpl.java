@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uz.pdp.apporder.entity.Order;
+import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
@@ -65,17 +66,15 @@ public class OrderServiceChartImpl implements OrderServiceChart {
         LocalDate fromDate = orderChartDTO.getFromDate();
         LocalDate tillDate = orderChartDTO.getTillDate();
 
-        List<Order> all = orderRepository.findAllByStatusEnumEquals(orderChartDTO.getOrderStatusEnum());
-
-        if (fromDate.plusDays(30).isBefore(tillDate)) {
+        if (fromDate.plusDays(30).atStartOfDay().isBefore(tillDate.atStartOfDay())) {
             Map<Month,Integer> monthMap = new TreeMap<>();
-            countingByMonth(orderChartDTO,fromDate,tillDate, monthMap,all);
+            countingByMonth(orderChartDTO,fromDate,tillDate, monthMap);
             return monthMap;
         }
         else {
             Map<LocalDate,Integer> dayMap = new TreeMap<>();
-            while (!fromDate.isAfter(tillDate)) {
-                dayMap.put(fromDate,getCountByDay(orderChartDTO, fromDate, all));
+            while (tillDate.atStartOfDay().isAfter(fromDate.atStartOfDay())) {
+                dayMap.put(fromDate,getCountByDay(orderChartDTO, fromDate));
                 fromDate = fromDate.plusDays(1);
             }
             return dayMap;
@@ -86,17 +85,26 @@ public class OrderServiceChartImpl implements OrderServiceChart {
      * count order by day
      */
     private int getCountByDay(OrderChartDTO orderChartDTO,
-                              LocalDate fromDate, List<Order> all) {
+                              LocalDate fromDate) {
         int count = 0;
+
+        List<Order> all = orderRepository.findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(
+                LocalDateTime.from(fromDate.atStartOfDay()),
+                LocalDateTime.from(fromDate.plusDays(1).atStartOfDay())
+        );
+
+
+
         boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
-        for (Order order : all)
-        {
-            if (rejected && Objects.equals(order.getCancelledAt().toLocalDate(), fromDate)) {
-                if (Objects.isNull(orderChartDTO.getBranchId()))
+        boolean aNull = Objects.isNull(orderChartDTO.getBranchId());
+
+        for (Order order : all) {
+            if (rejected) {
+                if (aNull)
                     count++;
                 else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
                     count++;
-            } else if (Objects.equals(order.getCancelledAt().toLocalDate(), fromDate))
+            } else
                 count++;
         }
         return count;
@@ -108,8 +116,7 @@ public class OrderServiceChartImpl implements OrderServiceChart {
     private void countingByMonth(OrderChartDTO orderChartDTO,
                                  LocalDate fromDate,
                                  LocalDate tillDate,
-                                 Map<Month, Integer> monthMap,
-                                 List<Order> all){
+                                 Map<Month, Integer> monthMap){
 
         Set<Month> set = new HashSet<>();
         int count = 0;
@@ -121,7 +128,7 @@ public class OrderServiceChartImpl implements OrderServiceChart {
                 count = 0;
             }
 
-            count += getCountByDay(orderChartDTO, fromDate, all);
+            count += getCountByDay(orderChartDTO, fromDate);
             fromDate = fromDate.plusDays(1);
 
         }
@@ -178,25 +185,57 @@ public class OrderServiceChartImpl implements OrderServiceChart {
         LocalDate fromDate = orderChartPaymentDTO.getFromDate();
         LocalDate tillDate = orderChartPaymentDTO.getTillDate();
 
-        Double paymentPayme = 0D;
-        Double paymentClick= 0D;
-        Double paymentChash = 0D;
-        Double paymentTerminal = 0D;
-        Double totalPayment = 0D;
+        double paymentPayme = 0D;
+        double paymentClick= 0D;
+        double paymentChash = 0D;
+        double paymentTerminal = 0D;
 
-        while (fromDate.isBefore(tillDate)){
+        while (fromDate.atStartOfDay().isBefore(tillDate.atStartOfDay())){
 
-            List<Order> allByClosedAt = orderRepository.findAllByClosedAt(
-                    LocalDateTime.from(fromDate));
+            PaymentType[] values = PaymentType.values();
 
-            for (Order order : allByClosedAt) {
-                if (Objects.equals(order.getPaymentType(), PaymentType.CASH)){
-                    paymentChash+=1;
-                }
+            for (PaymentType value : values) {
+                double sumByPaymentType = getSumByPaymentType(value, fromDate);
+
+                if (value.equals(PaymentType.CASH))
+                    paymentChash += sumByPaymentType;
+                else if (value.equals(PaymentType.PAYME))
+                    paymentPayme += sumByPaymentType;
+                else if (value.equals(PaymentType.CLICK))
+                    paymentClick += sumByPaymentType;
+                else
+                    paymentTerminal += sumByPaymentType;
+
             }
-
             fromDate = fromDate.plusDays(1);
 
         }
+
+        double totalPayment= paymentChash+paymentPayme+paymentClick+paymentTerminal;
+
+        statisticsChartDTO.setPaymentChash(paymentChash);
+        statisticsChartDTO.setPaymentPayme(paymentPayme);
+        statisticsChartDTO.setPaymentClick(paymentClick);
+        statisticsChartDTO.setPaymentTerminal(paymentTerminal);
+        statisticsChartDTO.setTotalPayment(totalPayment);
+    }
+
+    private double getSumByPaymentType(PaymentType paymentType, LocalDate fromDate){
+        double payment = 0;
+
+        List<Order> orderByDate = orderRepository.findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(
+                LocalDateTime.from(fromDate.atStartOfDay()),
+                LocalDateTime.from(fromDate.plusDays(1).atStartOfDay())
+        );
+
+        for (Order order : orderByDate) {
+            if (Objects.equals(order.getPaymentType(), paymentType)){
+                OrderProduct orderProduct = orderProductRepository.findByOrderId(order.getId());
+                payment+=orderProduct.getQuantity()*orderProduct.getUnitPrice();
+            }
+        }
+
+        return payment;
+
     }
 }
