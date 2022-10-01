@@ -8,7 +8,7 @@ import uz.pdp.apporder.payload.ApiResult;
 @RequestMapping(OrderStatusController.BASE_PATH)
 public interface OrderStatusController {
 
-    String BASE_PATH = "/api/v1/order-status/{id}";
+    String BASE_PATH = "/api/v1/order-status";
 
     String PAYMENT_WAITING_PATH = "/transfer-payment-waiting/{id}";
 

@@ -11,15 +11,9 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Product;
-
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -30,6 +24,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderProductRepository orderProductRepository;
 
     private final ProductRepository productRepository;
 
@@ -251,7 +246,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
     /**
      * @param orderStatus
      * @return this method returns order list based on their status
@@ -302,33 +296,106 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setOrderedAtByStatus(order.getReadyAt());
         } else if (order.getStatusEnum() == OrderStatusEnum.SENT) {
             orderDTO.setOrderedAtByStatus(order.getSentAt());
-        }else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
+        } else if (order.getStatusEnum() == OrderStatusEnum.FINISHED) {
             orderDTO.setOrderedAtByStatus(order.getClosedAt());
-        }else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
+        } else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
             orderDTO.setOrderedAtByStatus(order.getCancelledAt());
         }
     }
 
 
-
+    @Override
     /**
      * <p>Show Statistics for admin with list</p>
      *
      * @param orderListDTO
      * @return
      */
-    public ApiResult<List<OrderStatisticsDTO>> getOrdersForList(OrderListDTO orderListDTO) {
+    public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(OrderListDTO orderListDTO, int page, int size) {
 
-//        if (Objects.isNull(orderListDTO)) {
+        StringBuilder query = new StringBuilder("SELECT b.id, o.id,  Cast(o.client_id as varchar), Cast(o.operator_id as varchar), o.payment_type,  o.status_enum, o.ordered_at\n" +
+                "FROM orders o\n" +
+                "         JOIN branch b on b.id = o.branch_id\n"
+        );
 
-        List<Order> orders = orderRepository.getOrdersByOrderByOrderedAt();
+        if (!Objects.isNull(orderListDTO)) {
 
-        List<OrderStatisticsDTO> orderStatisticsDTOS = mapOrdersToOrderStatisticsDTOs(orders);
+            String branchName = orderListDTO.getBranchName();
+            PaymentType paymentType = orderListDTO.getPaymentType();
+            OrderStatusEnum orderStatusEnum = orderListDTO.getOrderStatusEnum();
 
-        return ApiResult.successResponse(orderStatisticsDTOS);
-//        }
+            if (!Objects.isNull(branchName) || !Objects.isNull(paymentType) || !Objects.isNull(orderStatusEnum))
+                query.append(" WHERE ");
 
 
+            boolean hasBranchName = false;
+            boolean hasPaymentType = false;
+            if (!Objects.isNull(branchName)) {
+                query.append(" b.name = ")
+                        .append(" ' ")
+                        .append(branchName)
+                        .append(" ' ");
+                hasBranchName = true;
+            }
+
+            if (hasBranchName)
+                query.append(" AND ");
+
+            if (!Objects.isNull(paymentType)) {
+                query.append(" o.payment_type = ")
+                        .append(" ' ")
+                        .append(paymentType)
+                        .append( " ' ");
+                hasPaymentType = true;
+            }
+
+            if (hasPaymentType)
+                query.append(" AND ");
+
+            if (!Objects.isNull(orderStatusEnum)) {
+                query.append(" o.status_enum = ")
+                        .append(" ' ")
+                        .append(orderStatusEnum)
+                        .append(" ' ");
+            }
+
+        }
+
+        query.append(" LIMIT ").append(size).append(" OFFSET ").append((page-1)*size);
+
+        List<StatisticsOrderDTOProjection> ordersByStringQuery = orderRepository.getOrdersByStringQuery(query.toString());
+
+        List<OrderStatisticsDTO> orderStatisticsDTOList = new ArrayList<>();
+
+        for (StatisticsOrderDTOProjection projection : ordersByStringQuery) {
+            OrderStatisticsDTO orderStatisticsDTO = mapProjectionToOrderStatisticsDTO(projection);
+            orderStatisticsDTOList.add(orderStatisticsDTO);
+        }
+
+        return ApiResult.successResponse(orderStatisticsDTOList);
+    }
+
+    private OrderStatisticsDTO mapProjectionToOrderStatisticsDTO(StatisticsOrderDTOProjection projection) {
+
+        OrderStatisticsDTO orderStatisticsDTO = new OrderStatisticsDTO();
+        Branch branch = branchRepository.findById(projection.getBranchId()).orElseThrow(
+                () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
+        );
+
+        BranchDTO branchDTO = BranchDTO.mapBranchToBranchDTO(branch);
+
+        Double totalSumOfOrder = orderProductRepository.countSumOfOrder(projection.getOrderId());
+
+        orderStatisticsDTO.setBranchDTO(branchDTO);
+
+//        todo clientId orqali clientni olib kelish va DTOga otkazish
+        orderStatisticsDTO.setClientDTO(null);
+        orderStatisticsDTO.setSum(totalSumOfOrder);
+        orderStatisticsDTO.setOrderedAt(projection.getOrderedAt());
+        orderStatisticsDTO.setStatusEnum(projection.getStatusEnum());
+        orderStatisticsDTO.setPaymentType(projection.getPaymentType());
+
+        return orderStatisticsDTO;
     }
 
     private List<OrderStatisticsDTO> mapOrdersToOrderStatisticsDTOs(List<Order> orders) {
