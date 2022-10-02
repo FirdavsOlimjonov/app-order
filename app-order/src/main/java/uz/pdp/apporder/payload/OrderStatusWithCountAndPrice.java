@@ -16,6 +16,6 @@ public class OrderStatusWithCountAndPrice {
 
     private Integer count;
 
-    private Float price;
+    private Double price;
 
 }

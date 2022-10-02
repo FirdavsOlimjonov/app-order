@@ -11,10 +11,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Product;
 
 import java.util.ArrayList;
@@ -25,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+
+    private final OrderProductRepository orderProductRepository;
 
     private final OrderRepository orderRepository;
 
@@ -137,8 +136,15 @@ public class OrderServiceImpl implements OrderService {
         Double price = 0d;
         for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
             count++;
-            price += order.
+            Double aDouble = orderProductRepository.countSumOfOrder(order.getId());
+            price += aDouble;
         }
+        OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
+
+        orderStatusWithCountAndPrice.setCount(count);
+        orderStatusWithCountAndPrice.setPrice(price);
+        orderStatusWithCountAndPrice.setStatusEnum(orderStatus);
+        return ApiResult.successResponse(orderStatusWithCountAndPrice);
     }
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
