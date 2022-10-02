@@ -185,16 +185,6 @@ public class OrderServiceImpl implements OrderService {
         return 500F;
     }
 
-    private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
-        return orderRepository.getOrderByStatusEnum(statusEnum);
-    }
-
-
-
-    /**
-
-
-
     /**
      *
      * @param orderStatus
