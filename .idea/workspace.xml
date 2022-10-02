@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="courier api created">
+    <list default="true" id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="Azamat">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/OrderStatusWithCountAndPrice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/OrderDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/OrderStatusCountPriceDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +116,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="" />
+      <changelist id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="Azamat" />
       <created>1664450477592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -123,6 +130,7 @@
       <workItem from="1664473513003" duration="4238000" />
       <workItem from="1664520529369" duration="6109000" />
       <workItem from="1664599469493" duration="2196000" />
+      <workItem from="1664729458391" duration="1647000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>

@@ -108,6 +108,39 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
     }
 
+    @Override
+    public ApiResult<OrderDTO> getOneOrder(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> RestException.restThrow("order not found", HttpStatus.NOT_FOUND));
+        OrderDTO orderDto = mapOrderToOrderDTO(order);
+        return ApiResult.successResponse(orderDto);
+
+    }
+
+    @Override
+    public ApiResult<List<OrderDTO>> getOrders() {
+        List<Order> orders = orderRepository.findAll();
+
+        List<OrderDTO> orderDtoList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDtoList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDtoList);
+
+    }
+
+    @Override
+    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
+        int count = 0;
+        Double price = 0d;
+        for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
+            count++;
+            price += order.
+        }
+    }
+
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
     }

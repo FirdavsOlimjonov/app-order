@@ -47,6 +47,22 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
+    public ApiResult<OrderDTO> getOneOrder(Long id) {
+        return orderService.getOneOrder(id);
+    }
+
+    @Override
+    public ApiResult<List<OrderDTO>> getOrderList() {
+        return orderService.getOrders();
+    }
+
+    @Override
+    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
+        return orderService.getOrderStatusCountPrice(orderStatus);
+    }
+
+
+    @Override
     public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
         return orderService.getOrderForCourier(orderStatusEnum);
     }
