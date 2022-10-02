@@ -7,7 +7,9 @@ import uz.pdp.apporder.entity.OrderProduct;
 @Repository
 public interface OrderProductRepository extends JpaRepository<OrderProduct, Long> {
 
-    
+
     OrderProduct findByOrderId(Long id);
+
+
 
 }
