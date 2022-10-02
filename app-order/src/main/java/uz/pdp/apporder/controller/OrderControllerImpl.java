@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.service.OrderService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,8 +33,8 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
-    public ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(OrderListDTO orderListDTO, int page, int size) {
-        return orderService.getStatisticsForList(orderListDTO, page, size);
+    public ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid ViewDTO viewDTO, int page, int size) {
+        return orderService.getStatisticsForList(viewDTO, page, size);
     }
 
     @Override

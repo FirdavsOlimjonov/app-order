@@ -4,24 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="order status edit">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/projection/StatisticsOrderDTOProjection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/utils/RestConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="order statistics for list is done">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/SearchingDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/SortingDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/ViewDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/enums/OperatorTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/enums/SortingTypeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order-parent.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/OrderListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/OrderListDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +33,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -75,28 +73,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Documents/java/git-projects/fast-food/app-order-parent/app-order/src/main/java/uz/pdp/apporder&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.ignored.files&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;5efd154ae6215146a66d458f7caeb051&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Documents/java/git-projects/fast-food/app-order-parent/app-order/src/main/java/uz/pdp/apporder/payload/enums",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.ignored.files",
+    "spring.configuration.checksum": "5efd154ae6215146a66d458f7caeb051"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -107,6 +105,8 @@
       <recent name="uz.pdp.apporder.service" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\payload\enums" />
+      <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\payload" />
       <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -165,6 +165,8 @@
       <workItem from="1664471547212" duration="102000" />
       <workItem from="1664473513003" duration="4238000" />
       <workItem from="1664531821928" duration="21274000" />
+      <workItem from="1664639457888" duration="90000" />
+      <workItem from="1664690571895" duration="4835000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -173,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664477203724</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="order statistics for list is done">
+      <created>1664639493460</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664639493460</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,15 +208,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order status edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="order status edit" />
+    <MESSAGE value="order statistics for list is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="order statistics for list is done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java</url>
+          <line>320</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java</url>
+          <line>371</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

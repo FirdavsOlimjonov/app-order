@@ -13,5 +13,5 @@ public interface OrderService {
 
     ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus);
 
-    ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(OrderListDTO orderListDTO, int page, int size);
+    ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(ViewDTO viewDTO, int page, int size);
 }

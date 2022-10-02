@@ -311,57 +311,108 @@ public class OrderServiceImpl implements OrderService {
      * @param orderListDTO
      * @return
      */
-    public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(OrderListDTO orderListDTO, int page, int size) {
+    public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(ViewDTO viewDTO, int page, int size) {
 
         StringBuilder query = new StringBuilder("SELECT b.id, o.id,  Cast(o.client_id as varchar), Cast(o.operator_id as varchar), o.payment_type,  o.status_enum, o.ordered_at\n" +
                 "FROM orders o\n" +
                 "         JOIN branch b on b.id = o.branch_id\n"
         );
 
-        if (!Objects.isNull(orderListDTO)) {
+        if (Objects.nonNull(viewDTO)) {
 
-            String branchName = orderListDTO.getBranchName();
-            PaymentType paymentType = orderListDTO.getPaymentType();
-            OrderStatusEnum orderStatusEnum = orderListDTO.getOrderStatusEnum();
+            OrderListDTO orderListDTO = viewDTO.getOrderListDTO();
+            SearchingDTO searchingDTO = viewDTO.getSearching();
+            List<SortingDTO> sortingDTOS = viewDTO.getSorting();
 
-            if (!Objects.isNull(branchName) || !Objects.isNull(paymentType) || !Objects.isNull(orderStatusEnum))
-                query.append(" WHERE ");
+            boolean hasFilterWorked = false;
+            if (Objects.nonNull(orderListDTO)) {
+                String branchName = orderListDTO.getBranchName();
+                PaymentType paymentType = orderListDTO.getPaymentType();
+                OrderStatusEnum orderStatusEnum = orderListDTO.getOrderStatusEnum();
+
+                if (!Objects.isNull(branchName) || !Objects.isNull(paymentType) || !Objects.isNull(orderStatusEnum))
+                    query.append(" WHERE ");
 
 
-            boolean hasBranchName = false;
-            boolean hasPaymentType = false;
-            if (!Objects.isNull(branchName)) {
-                query.append(" b.name = ")
-                        .append(" ' ")
-                        .append(branchName)
-                        .append(" ' ");
-                hasBranchName = true;
+                boolean hasBranchName = false;
+                boolean hasPaymentType = false;
+                if (!Objects.isNull(branchName)) {
+                    query.append(" b.name = ")
+                            .append(" ' ")
+                            .append(branchName)
+                            .append(" ' ");
+                    hasBranchName = true;
+                    hasFilterWorked = true;
+                }
+
+                if (hasBranchName)
+                    query.append(" AND ");
+
+                if (!Objects.isNull(paymentType)) {
+                    query.append(" o.payment_type = ")
+                            .append(" ' ")
+                            .append(paymentType)
+                            .append(" ' ");
+                    hasPaymentType = true;
+                    hasFilterWorked = true;
+                }
+
+                if (hasPaymentType)
+                    query.append(" AND ");
+
+                if (!Objects.isNull(orderStatusEnum)) {
+                    query.append(" o.status_enum = ")
+                            .append(" ' ")
+                            .append(orderStatusEnum)
+                            .append(" ' ");
+                    hasFilterWorked = true;
+                }
             }
 
-            if (hasBranchName)
-                query.append(" AND ");
+            if (searchingDTO.getColumns().size() > 0) {
+                if (!hasFilterWorked)
+                    query.append(" WHERE ");
+                else
+                    query.append("  AND ( ");
 
-            if (!Objects.isNull(paymentType)) {
-                query.append(" o.payment_type = ")
-                        .append(" ' ")
-                        .append(paymentType)
-                        .append( " ' ");
-                hasPaymentType = true;
+                int columnSize = 1;
+                for (String column : searchingDTO.getColumns()) {
+                    query
+                            .append(column)
+                            .append(" ilike '%")
+                            .append(searchingDTO.getValue())
+                            .append("%' ");
+                    if (columnSize < searchingDTO.getColumns().size())
+                        query.append(" OR");
+                }
+                if (hasFilterWorked)
+                    query.append(" ) ");
             }
 
-            if (hasPaymentType)
-                query.append(" AND ");
+            if (sortingDTOS.size() > 0) {
+                query
+                        .append("\n")
+                        .append("ORDER BY ");
 
-            if (!Objects.isNull(orderStatusEnum)) {
-                query.append(" o.status_enum = ")
-                        .append(" ' ")
-                        .append(orderStatusEnum)
-                        .append(" ' ");
+                for (SortingDTO sortingDTO : sortingDTOS) {
+                    query
+                            .append(sortingDTO.getName())
+                            .append(" ")
+                            .append(sortingDTO.getType());
+                }
             }
 
         }
 
-        query.append(" LIMIT ").append(size).append(" OFFSET ").append((page-1)*size);
+        if (viewDTO.getSorting().size() == 0) {
+            query
+                    .append("\n")
+                    .append("ORDER BY ")
+                    .append(" ordered_at ")
+                    .append(" DESC ");
+        }
+
+        query.append("\n LIMIT ").append(size).append(" OFFSET ").append((page - 1) * size);
 
         List<StatisticsOrderDTOProjection> ordersByStringQuery = orderRepository.getOrdersByStringQuery(query.toString());
 

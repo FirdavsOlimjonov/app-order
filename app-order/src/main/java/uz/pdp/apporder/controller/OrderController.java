@@ -25,7 +25,7 @@ public interface OrderController {
     ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_LIST_PATH)
-    ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid @RequestBody OrderListDTO orderListDTO,
+    ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid @RequestBody ViewDTO viewDTO,
                                                               @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
                                                               @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
 
