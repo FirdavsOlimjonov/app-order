@@ -13,7 +13,6 @@ import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
 import uz.pdp.apporder.utils.CommonUtils;
 import uz.pdp.apporder.utils.OpenFeign;
@@ -380,45 +379,6 @@ public class OrderServiceImpl implements OrderService {
         orderStatisticsDTO.setPaymentType(projection.getPaymentType());
 
         return orderStatisticsDTO;
-    }
-
-    private List<OrderStatisticsDTO> mapOrdersToOrderStatisticsDTOs(List<Order> orders) {
-        List<OrderStatisticsDTO> orderStatisticsDTOS = new ArrayList<>();
-
-        for (Order order : orders) {
-            OrderStatisticsDTO orderStatisticsDTO = mapOrderToOrderStatisticsDTO(order);
-            orderStatisticsDTOS.add(orderStatisticsDTO);
-        }
-        return orderStatisticsDTOS;
-    }
-
-    private OrderStatisticsDTO mapOrderToOrderStatisticsDTO(Order order) {
-
-        Branch branch = branchRepository.findById(order.getBranch().getId()).orElseThrow(
-                () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
-        );
-
-        BranchDTO branchDTO = BranchDTO.mapBranchToBranchDTO(branch);
-
-//        todo client malumotlarini authdan olib kelish
-
-        ClientDTO yusufbek = new ClientDTO(UUID.randomUUID(), "Yusufbek", "+998 90 380 63 35");
-
-
-        Double sum = 0D;
-        for (OrderProduct orderProduct : order.getOrderProducts())
-            sum += orderProduct.getQuantity() * orderProduct.getUnitPrice();
-
-
-        return new OrderStatisticsDTO(
-                branchDTO,
-                yusufbek,
-                order.getStatusEnum(),
-                order.getPaymentType(),
-                sum,
-                order.getOrderedAt()
-        );
-
     }
 
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
