@@ -1,9 +1,12 @@
 package uz.pdp.apporder.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
+import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,4 +30,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     List<Order> findByStatusEnum(OrderStatusEnum orderEnum);
 
     Integer countAllByStatusEnum(OrderStatusEnum orderEnum);
+
+    @Query(value = "SELECT * FROM get_result_of_query(:query)", nativeQuery = true)
+    List<StatisticsOrderDTOProjection> getOrdersByStringQuery(@Param("query") String query);
 }
