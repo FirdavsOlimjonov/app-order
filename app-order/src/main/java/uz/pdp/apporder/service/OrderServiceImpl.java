@@ -347,4 +347,12 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.getOrderByStatusEnum(statusEnum);
     }
 
+    /**
+     * test uchun
+     * @return
+     */
+    private String test(){
+        return "hello world";
+    }
+
 }
