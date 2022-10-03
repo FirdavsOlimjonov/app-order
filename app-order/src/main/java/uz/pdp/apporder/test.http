@@ -22,3 +22,13 @@ Content-Type: application/json
 GET http://localhost:8081/api/v1/order/list-by-status/PAYMENT_WAITING
 Content-Type: application/json
 
+
+###
+
+POST http://54.209.172.146:8090/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "admin@codingbat.com",
+  "password": "root123"
+}
