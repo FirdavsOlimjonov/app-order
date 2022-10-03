@@ -3,6 +3,14 @@ package uz.pdp.apporder.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.utils.RestConstants;
+import uz.pdp.apporder.payload.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
+import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
+import uz.pdp.apporder.payload.OrderUserDTO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -11,8 +19,9 @@ import java.util.List;
 @RequestMapping(OrderController.PATH_BASE)
 public interface OrderController {
 
-    public static final String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
-    String STATISTICS_CHART_PATH = "/statistics-chart";
+    String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
+    String STATISTICS_ORDER_PATH = "/statistics-order";
+    String STATISTICS_PAYMENT_PATH = "/statistics-payment";
     String STATISTICS_LIST_PATH = "/statistics-list";
     String SAVE_MOB_APP = "/save-mob-app";
 
@@ -21,8 +30,13 @@ public interface OrderController {
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
 
-    @PostMapping(STATISTICS_CHART_PATH)
-    ApiResult<OrderChartDTO> showStatisticsForChart(@Valid @RequestBody OrderChartDTO orderChartDTO);
+    ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
+
+    @PostMapping(STATISTICS_ORDER_PATH)
+    ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
+
+    @PostMapping(STATISTICS_PAYMENT_PATH)
+    ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
 
     @PostMapping(STATISTICS_LIST_PATH)
     ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid @RequestBody ViewDTO viewDTO,

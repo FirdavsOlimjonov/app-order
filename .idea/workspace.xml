@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="order statistics for list is done">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/SearchingDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/SortingDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/ViewDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/enums/OperatorTypeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/enums/SortingTypeEnum.java" afterDir="false" />
+    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="courier api created">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,11 +26,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -82,7 +70,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Documents/java/git-projects/fast-food/app-order-parent/app-order/src/main/java/uz/pdp/apporder/payload/enums&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hp/Desktop/Back-end/Pdp-java/module_7/fast-food/app-order-parent&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -95,46 +83,21 @@
     &quot;spring.configuration.checksum&quot;: &quot;5efd154ae6215146a66d458f7caeb051&quot;
   }
 }</component>
-  <component name="ReactorSettings">
-    <option name="notificationShown" value="true" />
-  </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.apporder." />
       <recent name="uz.pdp.apporder.service" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\payload\enums" />
-      <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\payload" />
-      <recent name="D:\Documents\java\git-projects\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="uz.pdp.apporder.utils" />
       <recent name="uz.pdp.apporder.order" />
       <recent name="uz.pdp.apporder.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.AppOrderApplication">
-    <configuration name="OrderServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="uz.pdp.apporder.service.OrderServiceImpl" />
-      <module name="app-order" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="uz.pdp.apporder.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="app-order" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="uz.pdp.apporder.AppOrderApplication" />
@@ -142,12 +105,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="HTTP Request.generated-requests | #5" />
-        <item itemvalue="Application.OrderServiceImpl" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -164,9 +121,8 @@
       <workItem from="1664471471585" duration="64000" />
       <workItem from="1664471547212" duration="102000" />
       <workItem from="1664473513003" duration="4238000" />
-      <workItem from="1664531821928" duration="21274000" />
-      <workItem from="1664639457888" duration="90000" />
-      <workItem from="1664690571895" duration="4929000" />
+      <workItem from="1664520529369" duration="6109000" />
+      <workItem from="1664599469493" duration="2196000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -175,21 +131,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664477203724</updated>
     </task>
-    <task id="LOCAL-00002" summary="order statistics for list is done">
-      <created>1664639493460</created>
+    <task id="LOCAL-00002" summary="order test class created">
+      <created>1664520619132</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1664639493460</updated>
+      <updated>1664520619132</updated>
     </task>
-    <task id="LOCAL-00003" summary="order statistics for list is done with filtering and searching">
-      <created>1664700322861</created>
+    <task id="LOCAL-00003" summary="courier api created">
+      <created>1664533571582</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1664700322861</updated>
+      <updated>1664533571582</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="courier api created">
+      <created>1664548249584</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664548249584</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,24 +178,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order status edit" />
-    <MESSAGE value="order statistics for list is done" />
-    <MESSAGE value="order statistics for list is done with filtering and searching" />
-    <option name="LAST_COMMIT_MESSAGE" value="order statistics for list is done with filtering and searching" />
+    <MESSAGE value="order test class created" />
+    <MESSAGE value="courier api created" />
+    <option name="LAST_COMMIT_MESSAGE" value="courier api created" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java</url>
-          <line>320</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java</url>
-          <line>371</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
