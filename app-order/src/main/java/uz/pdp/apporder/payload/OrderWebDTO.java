@@ -14,6 +14,8 @@ import java.util.List;
 @Setter
 public class OrderWebDTO {
 
+    private ClientFromWebDTO clientFromWebDTO;
+
     private List<OrderProductsDTO> orderProductsDTOList;
 
     private AddressDTO addressDTO;

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.controller.OrderStatusController;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.service.OrderStatusService;
 
 @RestController
@@ -13,13 +14,13 @@ public class OrderStatusControllerImpl implements OrderStatusController {
     private final OrderStatusService orderStatusService;
 
     @Override
-    public ApiResult<?> transferPaymentWaiting(Long id) {
-        return orderStatusService.transferPaymentWaitingStatus(id);
+    public ApiResult<?> transferPaymentWaiting(OrderDTO orderDTO) {
+        return orderStatusService.transferPaymentWaitingStatus(orderDTO);
     }
 
     @Override
-    public ApiResult<?> transferNew(Long id) {
-        return orderStatusService.transferNewStatus(id);
+    public ApiResult<?> transferNew(OrderDTO orderDTO) {
+        return orderStatusService.transferNewStatus(orderDTO);
     }
 
     @Override

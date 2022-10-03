@@ -33,6 +33,26 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.11.Final</version>
+        </dependency>
+
+
+        <!--        <dependency>-->
+<!--            <groupId>uz.pdp</groupId>-->
+<!--            <artifactId>app-telegram-bot</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>
