@@ -227,9 +227,7 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse(orderStatusWithCountAndPrice);
     }
 
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
-    }
+
 
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
         return 500F;
@@ -272,7 +270,9 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setOrderedAtByStatus(order.getCancelledAt());
         }
     }
-
+   private Branch findNearestBranch(AddressDTO addressDTO) {
+        return branchRepository.findById(1).orElseThrow();
+    }
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
         return orderRepository.getOrderByStatusEnum(statusEnum);
     }
