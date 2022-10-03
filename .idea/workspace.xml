@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="order status edit">
-      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderServiceTest.java" afterDir="false" />
+    <list default="true" id="90bd8264-95d1-4fce-9125-2e99204f9cab" name="Changes" comment="product and category">
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/CategoryControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/CategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/CategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/CategoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/implementation/OrderStatusServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/implementation/OrderStatusServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Category.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,12 +25,25 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/Ulugbek" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -62,38 +79,47 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/hp/Desktop/Back-end/Pdp-java/module_7/fast-food/app-order-parent",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.ignored.files",
-    "spring.configuration.checksum": "9d3e4c06d2fcb965d139543009b8e140"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/Desktop/salom/new/app-order-parent/app-product/src/main/java/uz/pdp/appproduct&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.ignored.files&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;5efd154ae6215146a66d458f7caeb051&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.apporder." />
       <recent name="uz.pdp.apporder.service" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\HP\Desktop\salom\new\app-order-parent\app-product\src\main\java\uz\pdp\appproduct" />
+      <recent name="C:\Users\HP\Desktop\salom\new\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\Kerak" />
+      <recent name="C:\Users\HP\Desktop\salom\new\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\dto" />
+      <recent name="C:\Users\HP\Desktop\salom\new\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\sevice" />
+      <recent name="C:\Users\HP\Desktop\salom\new\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\controller" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="uz.pdp.appproduct.payload" />
       <recent name="uz.pdp.apporder.order" />
       <recent name="uz.pdp.apporder.service" />
     </key>
@@ -110,7 +136,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="" />
+      <changelist id="90bd8264-95d1-4fce-9125-2e99204f9cab" name="Changes" comment="product" />
       <created>1664450477592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -122,6 +148,10 @@
       <workItem from="1664471471585" duration="64000" />
       <workItem from="1664471547212" duration="102000" />
       <workItem from="1664473513003" duration="4238000" />
+      <workItem from="1664541023941" duration="977000" />
+      <workItem from="1664704004598" duration="1705000" />
+      <workItem from="1664715238953" duration="7034000" />
+      <workItem from="1664780333799" duration="791000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -130,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664477203724</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="product and category">
+      <created>1664780571800</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664780571800</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +193,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order status edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="order status edit" />
+    <MESSAGE value="product and category" />
+    <option name="LAST_COMMIT_MESSAGE" value="product and category" />
   </component>
 </project>
