@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="order status price and count">
-      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderServiceGetMethodsTest.java" afterDir="false" />
+    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="courier api created">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +55,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2FRMVz1WnGOMr3gcZyCUiad4xwC" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -71,7 +70,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/azamatjon/Fastfood/api-gateway&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hp/Desktop/Back-end/Pdp-java/module_7/fast-food/app-order-parent&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -98,16 +97,7 @@
       <recent name="uz.pdp.apporder.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.AppOrderApplication">
-    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="generated-requests | #7" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="7" requestIdentifier="#7" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="generated-requests | #8" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="8" requestIdentifier="#8" runType="Run single request">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="app-order" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="uz.pdp.apporder.AppOrderApplication" />
@@ -115,18 +105,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="HTTP Request.generated-requests | #8" />
-        <item itemvalue="HTTP Request.generated-requests | #7" />
-        <item itemvalue="HTTP Request.generated-requests | #6" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="Azamat" />
+      <changelist id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="" />
       <created>1664450477592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -140,11 +123,6 @@
       <workItem from="1664473513003" duration="4238000" />
       <workItem from="1664520529369" duration="6109000" />
       <workItem from="1664599469493" duration="2196000" />
-      <workItem from="1664729458391" duration="2881000" />
-      <workItem from="1664735370907" duration="1722000" />
-      <workItem from="1664737889470" duration="25000" />
-      <workItem from="1664748980689" duration="2370000" />
-      <workItem from="1664758577882" duration="47000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -174,21 +152,7 @@
       <option name="project" value="LOCAL" />
       <updated>1664548249584</updated>
     </task>
-    <task id="LOCAL-00005" summary="we">
-      <created>1664731251078</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1664731251078</updated>
-    </task>
-    <task id="LOCAL-00006" summary="order status price and count">
-      <created>1664735603693</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1664735603693</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,9 +180,7 @@
     <MESSAGE value="order status edit" />
     <MESSAGE value="order test class created" />
     <MESSAGE value="courier api created" />
-    <MESSAGE value="we" />
-    <MESSAGE value="order status price and count" />
-    <option name="LAST_COMMIT_MESSAGE" value="order status price and count" />
+    <option name="LAST_COMMIT_MESSAGE" value="courier api created" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
