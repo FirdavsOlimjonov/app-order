@@ -21,8 +21,6 @@ public interface OrderController {
 
     String SAVE_WEB = "/save-mob-app";
     String STATISTICS_LIST_PATH = "/statistics-list";
-    String SAVE_MOB_APP = "/save-mob-app";
-
     String PATH_BASE = "/api/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
