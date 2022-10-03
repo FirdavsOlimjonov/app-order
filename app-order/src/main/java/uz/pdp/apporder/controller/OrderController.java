@@ -20,7 +20,7 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
     String GET_ORDER_FOR_COURIER = "/get-orders/{orderStatusEnum}";
 
-    String SAVE_WEB = "/save-mob-app";
+    String SAVE_WEB = "/save-web-app";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
