@@ -27,7 +27,7 @@ public interface OrderController {
 
     @GetMapping(GET_ORDER_FOR_COURIER)
     ApiResult<?> getOrderForCourier(@NotNull @PathVariable OrderStatusEnum orderStatusEnum);
-    @PostMapping(SAVE_MOB_APP)
+    @PostMapping(SAVE_WEB)
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
     @PostMapping(STATISTICS_ORDER_PATH)
