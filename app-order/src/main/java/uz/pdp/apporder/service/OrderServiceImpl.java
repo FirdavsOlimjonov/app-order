@@ -11,19 +11,14 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.apporder.utils.CommonUtils;
 import uz.pdp.apporder.utils.OpenFeign;
-import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
-import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,7 +45,6 @@ public class OrderServiceImpl implements OrderService {
 
         // TODO: 9/30/22  Shipping narxini aniqlash method parametrlar ozgarishi mumkin
         Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
-
 
 
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
@@ -232,153 +226,6 @@ public class OrderServiceImpl implements OrderService {
         } else if (order.getStatusEnum() == OrderStatusEnum.REJECTED) {
             orderDTO.setOrderedAtByStatus(order.getCancelledAt());
         }
-    }
-
-
-    @Override
-    /**
-     * <p>Show Statistics for admin with list</p>
-     *
-     * @param orderListDTO
-     * @return
-     */
-    public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(ViewDTO viewDTO, int page, int size) {
-
-        StringBuilder query = new StringBuilder("SELECT b.id as branchId, o.id as orderId,  Cast(o.client_id as varchar) as clientId, Cast(o.operator_id as varchar) as operatorId, o.payment_type as paymentType,  o.status_enum as statusEnum , o.ordered_at as orderedAt \n" +
-                "FROM orders o\n" +
-                "         JOIN branch b on b.id = o.branch_id\n"
-        );
-
-        if (Objects.nonNull(viewDTO)) {
-
-            OrderListDTO orderListDTO = viewDTO.getOrderListDTO();
-            SearchingDTO searchingDTO = viewDTO.getSearching();
-            List<SortingDTO> sortingDTOS = viewDTO.getSorting();
-
-            boolean hasFilterWorked = false;
-            if (Objects.nonNull(orderListDTO)) {
-                String branchName = orderListDTO.getBranchName();
-                PaymentType paymentType = orderListDTO.getPaymentType();
-                OrderStatusEnum orderStatusEnum = orderListDTO.getOrderStatusEnum();
-
-                if (!Objects.isNull(branchName) || !Objects.isNull(paymentType) || !Objects.isNull(orderStatusEnum))
-                    query.append(" WHERE ");
-
-
-                boolean hasBranchName = false;
-                boolean hasPaymentType = false;
-                if (!Objects.isNull(branchName)) {
-                    query.append(" b.name = ")
-                            .append(" ' ")
-                            .append(branchName)
-                            .append(" ' ");
-                    hasBranchName = true;
-                    hasFilterWorked = true;
-                }
-
-                if (hasBranchName)
-                    query.append(" AND ");
-
-                if (!Objects.isNull(paymentType)) {
-                    query.append(" o.payment_type = ")
-                            .append(" ' ")
-                            .append(paymentType)
-                            .append(" ' ");
-                    hasPaymentType = true;
-                    hasFilterWorked = true;
-                }
-
-                if (hasPaymentType)
-                    query.append(" AND ");
-
-                if (!Objects.isNull(orderStatusEnum)) {
-                    query.append(" o.status_enum = ")
-                            .append(" ' ")
-                            .append(orderStatusEnum)
-                            .append(" ' ");
-                    hasFilterWorked = true;
-                }
-            }
-
-            if (searchingDTO.getColumns().size() > 0) {
-                if (!hasFilterWorked)
-                    query.append(" WHERE ");
-                else
-                    query.append("  AND ( ");
-
-                int columnSize = 1;
-                for (String column : searchingDTO.getColumns()) {
-                    query
-                            .append(column)
-                            .append(" ilike '%")
-                            .append(searchingDTO.getValue())
-                            .append("%' ");
-                    if (columnSize < searchingDTO.getColumns().size())
-                        query.append(" OR");
-                }
-                if (hasFilterWorked)
-                    query.append(" ) ");
-            }
-
-            if (sortingDTOS.size() > 0) {
-                query
-                        .append("\n")
-                        .append("ORDER BY ");
-
-                for (SortingDTO sortingDTO : sortingDTOS) {
-                    query
-                            .append(sortingDTO.getName())
-                            .append(" ")
-                            .append(sortingDTO.getType());
-                }
-            }
-
-        }
-
-        if (viewDTO.getSorting().size() == 0) {
-            query
-                    .append("\n")
-                    .append("ORDER BY ")
-                    .append(" ordered_at ")
-                    .append(" DESC ");
-        }
-
-        query.append("\n LIMIT ").append(size).append(" OFFSET ").append((page - 1) * size);
-
-        List<StatisticsOrderDTOProjection> ordersByStringQuery = orderRepository.getOrdersByStringQuery(query.toString());
-
-        List<OrderStatisticsDTO> orderStatisticsDTOList = new ArrayList<>();
-
-        for (StatisticsOrderDTOProjection projection : ordersByStringQuery) {
-            OrderStatisticsDTO orderStatisticsDTO = mapProjectionToOrderStatisticsDTO(projection);
-            orderStatisticsDTOList.add(orderStatisticsDTO);
-        }
-
-        return ApiResult.successResponse(orderStatisticsDTOList);
-    }
-
-    private OrderStatisticsDTO mapProjectionToOrderStatisticsDTO(StatisticsOrderDTOProjection projection) {
-
-        OrderStatisticsDTO orderStatisticsDTO = new OrderStatisticsDTO();
-        Integer branchId = projection.getBranchId();
-        Branch branch = branchRepository.findById(branchId).orElseThrow(
-                () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
-        );
-
-        BranchDTO branchDTO = BranchDTO.mapBranchToBranchDTO(branch);
-
-        Double totalSumOfOrder = orderProductRepository.countSumOfOrder(projection.getOrderId());
-
-        orderStatisticsDTO.setBranchDTO(branchDTO);
-
-//        todo clientId orqali clientni olib kelish va DTOga otkazish
-        orderStatisticsDTO.setClientDTO(null);
-        orderStatisticsDTO.setSum(totalSumOfOrder);
-        orderStatisticsDTO.setOrderedAt(projection.getOrderedAt());
-        orderStatisticsDTO.setStatusEnum(projection.getStatusEnum());
-        orderStatisticsDTO.setPaymentType(projection.getPaymentType());
-
-        return orderStatisticsDTO;
     }
 
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
