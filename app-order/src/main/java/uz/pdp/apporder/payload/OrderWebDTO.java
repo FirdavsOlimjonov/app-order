@@ -12,13 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderPhoneDTO {
+public class OrderWebDTO {
 
     private List<OrderProductsDTO> orderProductsDTOList;
 
-
-
-    private String location;
+    private AddressDTO addressDTO;
 
     private PaymentType paymentType;
 

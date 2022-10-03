@@ -1,33 +1,43 @@
 package uz.pdp.apporder.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import uz.pdp.apporder.payload.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderUserDTO;
-import uz.pdp.apporder.service.OrderService;
 
 import javax.validation.Valid;
+import java.util.List;
 
-@RestController
-@RequestMapping("/api/order")
-@RequiredArgsConstructor
-public class OrderController {
 
-    private final OrderService orderService;
+@RequestMapping(OrderController.PATH_BASE)
+public interface OrderController {
 
-    @PostMapping("/save-app")
-//    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order){
-        return orderService.saveOrder(order);
-    }
+    String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
+    String STATISTICS_ORDER_PATH = "/statistics-order";
+    String STATISTICS_PAYMENT_PATH = "/statistics-payment";
+     String SAVE_MOB_APP = "/save-mob-app";
 
-    @PostMapping("/save-phone")
-//    @CheckAuth(permissions = {PermissionEnum.ADD_ORDER})
-    public ApiResult<?> saveOrderFromPhone(@Valid @RequestBody OrderUserDTO order){
-        return orderService.saveOrder(order);
-    }
+    String PATH_BASE = "/api/v1/order";
+
+    @PostMapping(SAVE_MOB_APP)
+    ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
+
+    ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
+
+    @PostMapping(STATISTICS_ORDER_PATH)
+    ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
+
+    @PostMapping(STATISTICS_PAYMENT_PATH)
+    ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
+
+
+    @GetMapping(ORDER_LIST_BY_STATUS_PATH+"/{orderStatus}")
+//    @CheckAuth(permissions = {PermissionEnum.GET_ORDER})
+    public ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus);
 
 }
