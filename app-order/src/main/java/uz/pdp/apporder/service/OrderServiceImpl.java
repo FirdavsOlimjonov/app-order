@@ -15,10 +15,9 @@ import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Product;
 
-import java.time.LocalDate;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
