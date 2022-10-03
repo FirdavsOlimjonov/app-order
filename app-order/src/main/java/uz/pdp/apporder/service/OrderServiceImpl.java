@@ -15,10 +15,13 @@ import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.apporder.utils.OpenFeign;
 import uz.pdp.appproduct.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,30 +30,86 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-
     private final ProductRepository productRepository;
-
     private final BranchRepository branchRepository;
-
     private final ClientRepository clientRepository;
+    private final OpenFeign openFeign;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
 
-        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-        UUID clientUUID = UUID.randomUUID();
-
-
-        // TODO: 9/27/22 Operator Idsini  aniqlash
-        OperatorDTO operatorDTO = new OperatorDTO();
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
 
 
         // TODO: 9/27/22 Filial Id ni aniqlash
         Branch branch = findNearestBranch(orderDTO.getAddressDTO());
 
-        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
+        // TODO: 9/30/22  Shipping narxini aniqlash method parametrlar ozgarishi mumkin
         Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
+
+
+
+        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
+                orderDTO.getAddressDTO().getLng(),
+                orderDTO.getAddressDTO().getAddress(),
+                orderDTO.getAddressDTO().getExtraAddress());
+
+
+        List<Product> productList = productRepository.findAllById(
+                orderDTO
+                        .getOrderProductsDTOList()
+                        .stream()
+                        .map(OrderProductsDTO::getProductId)
+                        .collect(Collectors.toList())
+        );
+
+        Order order = new Order();
+
+        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
+        for (int i = 0; i < productList.size(); i++) {
+            orderProducts.add(new OrderProduct(order, productList.get(i),
+                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
+                    productList.get(i).getPrice()));
+        }
+
+        if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
+                || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
+            order.setStatusEnum(OrderStatusEnum.NEW);
+        else
+            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
+
+        order.setBranch(branch);
+        order.setPaymentType(orderDTO.getPaymentType());
+        order.setClientId(currentUser.getUserId());
+        order.setOrderProducts(orderProducts);
+        order.setDeliverySum(shippingPrice);
+        order.setAddress(clientAddress);
+
+        clientRepository.save(clientAddress);
+        orderRepository.save(order);
+
+        return ApiResult.successResponse("Order successfully saved!");
+    }
+
+    @Override
+    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
+
+        OperatorDTO operatorDTO = (OperatorDTO) CommonUtils
+                .getCurrentRequest().getAttribute("currentUser");
+
+        ClientDTO clientDTO = Objects.requireNonNull(
+                openFeign.getClientDTOAndSet(orderDTO.getClientFromWebDTO()).getData()
+        );
+
+
+        // TODO: 9/27/22 Filial Id ni aniqlash
+        Branch branch = findNearestBranch(orderDTO.getAddressDTO());
+
+
+        // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
+        Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
+
 
         ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
                 orderDTO.getAddressDTO().getLng(),
@@ -83,11 +142,9 @@ public class OrderServiceImpl implements OrderService {
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
-        // TODO: 9/29/22 branch qoshilishi kerak
         order.setBranch(branch);
-
         order.setPaymentType(orderDTO.getPaymentType());
-        order.setClientId(clientUUID);
+        order.setClientId(clientDTO.getUserId());
         order.setOperatorId(operatorDTO.getId());
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
@@ -99,93 +156,8 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
-    @Override
-    public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
-
-        if (!(orderStatusEnum == OrderStatusEnum.SENT || orderStatusEnum == OrderStatusEnum.READY))
-            RestException.restThrow("status must be sent or ready", HttpStatus.BAD_REQUEST);
-
-        return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
-    }
-
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
-    }
-
-
-//    public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
-//
-//        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-//        UUID clientUUID = findClientUUID(orderDTO);
-//
-//
-//        // TODO: 9/27/22 Userni verificatsiya qilib authdan olib kelish
-//        UUID operatorUUID = UUID.randomUUID();
-//
-//
-//        // TODO: 9/27/22 Filial Id ni aniqlash
-//        Short filialId = 1;
-//
-//
-//        // Shipping narxini aniqlash method parametrlar ozgarishi mumkin
-//        Float shippingPrice = findShippingPrice(filialId, orderDTO.getAddressDTO());
-//
-//
-//
-//        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
-//                orderDTO.getAddressDTO().getLng(),
-//                orderDTO.getAddressDTO().getAddress(),
-//                orderDTO.getAddressDTO().getExtraAddress());
-//
-//
-//
-//        List<Product> productList = productRepository.findAllById(
-//                orderDTO
-//                        .getOrderProductsDTOList()
-//                        .stream()
-//                        .map(OrderProductsDTO::getProductId)
-//                        .collect(Collectors.toList())
-//        );
-//
-//
-//        Order order = new Order();
-//
-//        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
-//        for (int i = 0; i < productList.size(); i++) {
-//            orderProducts.add(new OrderProduct(order, productList.get(i),
-//                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
-//                    productList.get(i).getPrice()));
-//        }
-//
-//
-//
-//        if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
-//                || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
-//            order.setStatusEnum(OrderStatusEnum.NEW);
-//        else
-//            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
-//
-//        // branch qoshilishi kerak
-//        order.setFilialId(filialId);
-//
-//        order.setPaymentType(orderDTO.getPaymentType());
-//        order.setClientId(clientUUID);
-//        order.setOperatorId(operatorUUID);
-//        order.setOrderProducts(orderProducts);
-//        order.setDeliverySum(shippingPrice);
-//        order.setAddress(clientAddress);
-//
-//        orderRepository.save(order);
-//
-//        return ApiResult.successResponse("Order successfully saved!");
-//    }
-
-    // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
-    private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
-        return 500F;
-    }
-
     /**
+     * method by      OTABEK
      *
      * @param orderStatus
      * @return this method returns order list based on their status
@@ -203,6 +175,24 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse(orderDTOList);
     }
 
+
+    @Override
+    public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
+
+        if (!(orderStatusEnum == OrderStatusEnum.SENT || orderStatusEnum == OrderStatusEnum.READY))
+            RestException.restThrow("status must be sent or ready", HttpStatus.BAD_REQUEST);
+
+        return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
+    }
+
+    private Branch findNearestBranch(AddressDTO addressDTO) {
+        return branchRepository.findById(1).orElseThrow();
+    }
+
+    private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
+        return 500F;
+    }
+
     private OrderDTO mapOrderToOrderDTO(Order order) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setNumber(order.getNumber());
@@ -213,13 +203,12 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderedAt(order.getOrderedAt());
         setOrderTimeByStatus(order, orderDTO);
 
-        // TODO: 9/29/22  client malumomotlarini olib kelish kerak
-        orderDTO.setClientDTO(new ClientDTO("vali", "4463772"));
+        orderDTO.setClientDTO(Objects.requireNonNull(openFeign.getClientDTO(order.getClientId()).getData()));
+        orderDTO.setOperatorDTO(Objects.requireNonNull(openFeign.getOperatorDTO(order.getOperatorId()).getData()));
 
-        // TODO: 9/30/22 operator malumotlarini olib kelish kerak
-        orderDTO.setOperatorDTO(new OperatorDTO(UUID.randomUUID(), "Apacha", "zzz"));
-
-
+        if (Objects.nonNull(order.getCurrierId())) {
+            orderDTO.setCurrierDTO(Objects.requireNonNull(openFeign.getCurrierDTO(order.getCurrierId()).getData()));
+        }
         return orderDTO;
     }
 
@@ -283,7 +272,7 @@ public class OrderServiceImpl implements OrderService {
 
 //        todo client malumotlarini authdan olib kelish
 
-        ClientDTO yusufbek = new ClientDTO("Yusufbek", "+998 90 380 63 35");
+        ClientDTO yusufbek = new ClientDTO(UUID.randomUUID(), "Yusufbek", "+998 90 380 63 35");
 
 
         Double sum = 0D;
@@ -301,6 +290,7 @@ public class OrderServiceImpl implements OrderService {
         );
 
     }
+
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
         return orderRepository.getOrderByStatusEnum(statusEnum);
     }

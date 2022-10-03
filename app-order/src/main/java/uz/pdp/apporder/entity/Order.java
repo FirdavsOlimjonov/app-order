@@ -29,6 +29,8 @@ public class Order {
 
     private UUID operatorId;
 
+    private UUID currierId;
+
     @ManyToOne
     private Branch branch;
 
@@ -44,8 +46,6 @@ public class Order {
     private List<OrderProduct> orderProducts;
 
     private Float deliverySum;
-
-    private UUID currierId;
 
     private Integer number;
 

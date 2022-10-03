@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.apporder.entity.enums.PermissionEnum;
 
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -19,5 +21,7 @@ public class OperatorDTO {
     private String firstName;
 
     private String lastName;
+
+    private Set<PermissionEnum> permissions;
 
 }
