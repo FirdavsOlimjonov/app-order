@@ -1,14 +1,9 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.payload.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
+import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.utils.RestConstants;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -25,6 +20,8 @@ public interface OrderController {
     String GET_ORDER_FOR_COURIER = "/get-orders/{orderStatusEnum}";
 
     String SAVE_WEB = "/save-mob-app";
+    String STATISTICS_LIST_PATH = "/statistics-list";
+    String SAVE_MOB_APP = "/save-mob-app";
 
     String PATH_BASE = "/api/v1/order";
 
@@ -41,6 +38,11 @@ public interface OrderController {
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
+
+    @PostMapping(STATISTICS_LIST_PATH)
+    ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid @RequestBody ViewDTO viewDTO,
+                                                              @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                              @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
 
 
     @GetMapping(ORDER_LIST_BY_STATUS_PATH + "/{orderStatus}")
