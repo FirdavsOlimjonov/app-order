@@ -3,6 +3,7 @@ package uz.pdp.appproduct.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,17 +11,21 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private boolean stop;
+    private boolean active;
 
     private Float price;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToOne(optional = false)
     private Category category;
+
+    private String description;
 }

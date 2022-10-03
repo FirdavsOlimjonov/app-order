@@ -7,9 +7,13 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.ClientDTO;
+import uz.pdp.apporder.payload.OperatorDTO;
+import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.utils.CommonUtils;
 
-import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -18,17 +22,21 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     private final OrderRepository orderRepository;
 
     @Override
-    public ApiResult<?> transferPaymentWaitingStatus(@Valid Long id) {
+    public ApiResult<?> transferPaymentWaitingStatus(OrderDTO orderDTO) {
+
         return null;
     }
 
     @Override
-    public ApiResult<?> transferNewStatus(Long id) {
+    public ApiResult<?> transferNewStatus(OrderDTO orderDTO) {
         return null;
     }
 
     @Override
     public ApiResult<?> transferAcceptedStatus(Long id) {
+
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = orderRepository.getByIdAndStatusEnumOrStatusEnum(
                 id,
                 OrderStatusEnum.NEW,
@@ -38,53 +46,76 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         );
 
         order.setStatusEnum(OrderStatusEnum.ACCEPTED);
+        order.setAcceptedAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        orderRepository.save(order);
+
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     @Override
     public ApiResult<?> transferCookingStatus(Long id) {
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = getOrder(id, OrderStatusEnum.ACCEPTED);
 
         order.setStatusEnum(OrderStatusEnum.COOKING);
+        order.setCookingAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        orderRepository.save(order);
+
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     @Override
     public ApiResult<?> transferReadyStatus(Long id) {
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = getOrder(id, OrderStatusEnum.COOKING);
 
         order.setStatusEnum(OrderStatusEnum.READY);
+        order.setReadyAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     @Override
     public ApiResult<?> transferSentStatus(Long id) {
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = getOrder(id, OrderStatusEnum.READY);
 
         order.setStatusEnum(OrderStatusEnum.SENT);
+        order.setSentAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        orderRepository.save(order);
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     @Override
     public ApiResult<?> transferFinishedStatus(Long id) {
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.FINISHED);
+        order.setClosedAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        orderRepository.save(order);
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     @Override
     public ApiResult<?> transferRejectedStatus(Long id) {
+        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.REJECTED);
+        order.setCancelledAt(LocalDateTime.now());
 
-        return ApiResult.successResponse(orderRepository.save(order));
+        orderRepository.save(order);
+        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
     }
 
     private Order getOrder(Long id, OrderStatusEnum statusEnum) {
@@ -93,5 +124,15 @@ public class OrderStatusServiceImpl implements OrderStatusService {
                 statusEnum).orElseThrow(() ->
                 RestException.restThrow("order not found", HttpStatus.NOT_FOUND)
         );
+    }
+
+    private OrderDTO toOrderDTO(Order order, ClientDTO clientDTO) {
+        return OrderDTO.builder()
+                .branchName(order.getBranch().getName())
+                .clientDTO(clientDTO)
+                .operatorDTO(new OperatorDTO())
+                .number(order.getNumber())
+                .paymentType(order.getPaymentType())
+                .build();
     }
 }
