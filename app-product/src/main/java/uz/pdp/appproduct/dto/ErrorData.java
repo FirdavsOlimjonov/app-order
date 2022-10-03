@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ErrorData {
 
+
     private String msg;
 
     private Integer code;

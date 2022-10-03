@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @DynamicUpdate
 @DynamicInsert
 public class CategoryServiceImpl implements CategoryService{
-
     private final CategoryRepository categoryRepository;
 
 

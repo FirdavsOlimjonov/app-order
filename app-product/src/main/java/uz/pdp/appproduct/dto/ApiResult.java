@@ -14,6 +14,7 @@ public class ApiResult<E> {
 
     private boolean success;
 
+
     private String message;
 
     private E data;

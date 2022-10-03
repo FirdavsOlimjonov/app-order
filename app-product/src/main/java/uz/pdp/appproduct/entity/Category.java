@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Getter
 public class Category {
 
+
     /*
     * this is primary key for category table
     * */

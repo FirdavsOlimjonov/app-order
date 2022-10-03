@@ -13,6 +13,7 @@ import java.util.*;
 @Slf4j
 public class RestExceptionHandler {
 
+
     @ExceptionHandler(value = RestException.class)
     public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(RestException ex) {
         log.error("Exception: ",ex);

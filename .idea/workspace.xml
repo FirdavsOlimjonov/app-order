@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="order status edit">
-      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderServiceTest.java" afterDir="false" />
+    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="category second full versionzsz">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/implementation/OrderStatusServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/implementation/OrderStatusServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +26,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="Zuhra" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -81,7 +93,12 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.settings.project.maven.ignored.files",
-    "spring.configuration.checksum": "9d3e4c06d2fcb965d139543009b8e140"
+    "spring.configuration.checksum": "5efd154ae6215146a66d458f7caeb051"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -98,7 +115,13 @@
       <recent name="uz.pdp.apporder.service" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.AppOrderApplication">
+    <configuration name="category | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="app-order" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="uz.pdp.apporder.AppOrderApplication" />
@@ -106,6 +129,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.category | #1" />
+        <item itemvalue="HTTP Request.category | #2" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -122,6 +151,7 @@
       <workItem from="1664471471585" duration="64000" />
       <workItem from="1664471547212" duration="102000" />
       <workItem from="1664473513003" duration="4238000" />
+      <workItem from="1664705070097" duration="675000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -130,7 +160,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664477203724</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="category second full version">
+      <created>1664521535395</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664521535396</updated>
+    </task>
+    <task id="LOCAL-00003" summary="category second full version">
+      <created>1664704233285</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1664704233285</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +200,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order status edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="order status edit" />
+    <MESSAGE value="category second full version" />
+    <option name="LAST_COMMIT_MESSAGE" value="category second full version" />
   </component>
 </project>

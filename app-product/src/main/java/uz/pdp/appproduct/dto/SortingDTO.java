@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public class SortingDTO {
 
+
     private String name;
 
     private SortingTypeEnum type;
