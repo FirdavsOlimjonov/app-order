@@ -1,6 +1,7 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,9 +31,11 @@ public interface OrderController {
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
     @PostMapping(STATISTICS_ORDER_PATH)
+//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
+//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
 
 
