@@ -12,9 +12,7 @@ import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderChartPaymentDTO;
 import uz.pdp.apporder.payload.OrderStatisticsChartDTO;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

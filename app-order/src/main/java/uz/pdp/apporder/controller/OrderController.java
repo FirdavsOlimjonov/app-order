@@ -1,7 +1,10 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.apporder.aop.CheckAuth;
+import uz.pdp.apporder.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
+import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.utils.RestConstants;
 
@@ -20,7 +23,7 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
     String GET_ORDER_FOR_COURIER = "/get-orders/{orderStatusEnum}";
 
-    String SAVE_WEB = "/save-mob-app";
+    String SAVE_WEB = "/save-web-app";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -31,11 +34,11 @@ public interface OrderController {
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
     @PostMapping(STATISTICS_ORDER_PATH)
-//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
-//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
 
     @PostMapping(STATISTICS_LIST_PATH)

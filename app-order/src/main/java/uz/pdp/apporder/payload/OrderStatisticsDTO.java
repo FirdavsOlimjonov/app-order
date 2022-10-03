@@ -15,9 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderStatisticsDTO {
 
-    public BranchDTO branchDTO;
+    private BranchDTO branchDTO;
 
-    public ClientDTO clientDTO;
+    private ClientDTO clientDTO;
+
+    private OperatorDTOForList operatorDTOForList;
 
     private OrderStatusEnum statusEnum;
 
