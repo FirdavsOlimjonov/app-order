@@ -12,7 +12,6 @@ import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.*;
-import uz.pdp.apporder.repository.*;
 import uz.pdp.apporder.utils.CommonUtils;
 import uz.pdp.apporder.utils.OpenFeign;
 import uz.pdp.appproduct.entity.Product;
@@ -91,6 +90,8 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
+
+
     @Override
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 
@@ -101,49 +102,9 @@ public class OrderServiceImpl implements OrderService {
                 openFeign.getClientDTOAndSet(orderDTO.getClientFromWebDTO()).getData()
         );
 
-    @Override
-    public ApiResult<OrderDTO> getOneOrder(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(
-                () -> RestException.restThrow("order not found", HttpStatus.NOT_FOUND));
-        OrderDTO orderDto = mapOrderToOrderDTO(order);
-        return ApiResult.successResponse(orderDto);
 
-    }
 
-    @Override
-    public ApiResult<List<OrderDTO>> getOrders() {
-        List<Order> orders = orderRepository.findAll();
 
-        List<OrderDTO> orderDtoList = new ArrayList<>();
-
-        for (Order order : orders) {
-            OrderDTO orderDto = mapOrderToOrderDTO(order);
-            orderDtoList.add(orderDto);
-        }
-        return ApiResult.successResponse(orderDtoList);
-
-    }
-
-    @Override
-    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
-        int count = 0;
-        Double price = 0d;
-        for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
-            count++;
-            Double aDouble = orderProductRepository.countSumOfOrder(order.getId());
-            price += aDouble;
-        }
-        OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
-
-        orderStatusWithCountAndPrice.setCount(count);
-        orderStatusWithCountAndPrice.setPrice(price);
-        orderStatusWithCountAndPrice.setStatusEnum(orderStatus);
-        return ApiResult.successResponse(orderStatusWithCountAndPrice);
-    }
-
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
-    }
 
         // TODO: 9/27/22 Filial Id ni aniqlash
         Branch branch = findNearestBranch(orderDTO.getAddressDTO());
@@ -225,6 +186,45 @@ public class OrderServiceImpl implements OrderService {
             throw RestException.restThrow("status must be sent or ready", HttpStatus.BAD_REQUEST);
 
         return ApiResult.successResponse(getOrdersByStatus(orderStatusEnum));
+    }
+
+    @Override
+    public ApiResult<OrderDTO> getOneOrder(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> RestException.restThrow("order not found", HttpStatus.NOT_FOUND));
+        OrderDTO orderDto = mapOrderToOrderDTO(order);
+        return ApiResult.successResponse(orderDto);
+    }
+
+    @Override
+    public ApiResult<List<OrderDTO>> getOrders() {
+        List<Order> orders = orderRepository.findAll();
+
+        List<OrderDTO> orderDtoList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDtoList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDtoList);
+
+    }
+
+    @Override
+    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
+        int count = 0;
+        Double price = 0d;
+        for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
+            count++;
+            Double aDouble = orderProductRepository.countSumOfOrder(order.getId());
+            price += aDouble;
+        }
+        OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
+
+        orderStatusWithCountAndPrice.setCount(count);
+        orderStatusWithCountAndPrice.setPrice(price);
+        orderStatusWithCountAndPrice.setStatusEnum(orderStatus);
+        return ApiResult.successResponse(orderStatusWithCountAndPrice);
     }
 
     private Branch findNearestBranch(AddressDTO addressDTO) {
