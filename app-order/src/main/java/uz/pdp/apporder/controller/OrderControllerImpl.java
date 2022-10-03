@@ -2,6 +2,7 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.payload.ApiResult;
@@ -10,6 +11,7 @@ import uz.pdp.apporder.payload.OrderUserDTO;
 import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,6 +41,11 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
+    }
+
+    @Override
+    public ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid ViewDTO viewDTO, int page, int size) {
+        return orderService.getStatisticsForList(viewDTO, page, size);
     }
 
     @Override
