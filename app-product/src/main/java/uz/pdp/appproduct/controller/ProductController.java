@@ -1,9 +1,10 @@
 package uz.pdp.appproduct.controller;
 
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
-import uz.pdp.appproduct.entity.Product;
-import uz.pdp.appproduct.payload.ApiResult;
+import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.util.RestConstants;
 
 import java.util.List;
 
@@ -11,27 +12,46 @@ import java.util.List;
 @RestController
 public interface ProductController {
 
+    /**
+     * bu yol faqat super admin uchun
+     */
     @PostMapping(path = "/add")
-    ApiResult<ProductDTO> addProduct(@RequestBody ProductDTO newProduct);
+    ApiResult<ProductDTO> addProduct(@RequestBody ProductDTO productDTO);
 
-    @PostMapping(path = "/list")
-    ApiResult<List<ProductDTO>> getProductsForAdmin();
 
-    @PostMapping(path = "/list")
-    ApiResult<List<ProductDTO>> getProductsForUser();
+    /**
+     * bu yol faqat super admin uchun
+     */
+    @GetMapping(path = "/list")
+    ApiResult<List<ProductDTO>> getProductsForAdmin(@RequestBody(required = false) ViewDTO viewDTO,
+                                                    @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                    @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
 
-    @GetMapping(path = "/{id}")
+
+    /**
+     * Bu yul super admin uchun active bo'lmagan product larni ham qaytaradi
+     */
+    @GetMapping("/admin/{id}")
     ApiResult<ProductDTO> getProductForAdmin(@PathVariable Integer id);
 
-    @GetMapping(path = "/{id}")
-    ApiResult<ProductDTO> getProductForUser(@PathVariable Integer id);
 
-    @DeleteMapping(path = "/{id}")
+    /**
+     * Bu yul super admin uchun active bo'lmagan product larni ham qaytaradi
+     */
+    @DeleteMapping("/{id}")
     ApiResult<?> deleteProduct(@PathVariable Integer id);
 
+    @PutMapping("/{id}")
+    ApiResult editProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO);
 
-    @PutMapping(path = "/{id}")
-    ApiResult<ProductDTO> editProduct(@PathVariable Integer id, @RequestBody ProductDTO customerDTO);
 
+    /**
+     * faqat active bo'lgan productni qaytaraadi
+     */
+    @GetMapping("/{id}")
+    ApiResult<ProductDTO> getProduct(@PathVariable Integer id);
+
+    @GetMapping(path = "/list-for-users")
+    ApiResult<List<ProductDTO>> getProducts();
 
 }

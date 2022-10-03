@@ -2,9 +2,10 @@ package uz.pdp.appproduct.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
-import uz.pdp.appproduct.payload.ApiResult;
-import uz.pdp.appproduct.sevice.ProductService;
+import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.service.ProductService;
 
 import java.util.List;
 
@@ -13,19 +14,15 @@ import java.util.List;
 public class ProductControllerImpl implements ProductController {
     private final ProductService productService;
 
+
     @Override
-    public ApiResult<ProductDTO> addProduct(ProductDTO newProduct) {
-        return productService.addProduct(newProduct);
+    public ApiResult<ProductDTO> addProduct(ProductDTO productDTO) {
+        return productService.addProduct(productDTO);
     }
 
     @Override
-    public ApiResult<List<ProductDTO>> getProductsForAdmin() {
-        return productService.getProductsForAdmin();
-    }
-
-    @Override
-    public ApiResult<List<ProductDTO>> getProductsForUser() {
-        return productService.getProductsForUser();
+    public ApiResult<List<ProductDTO>> getProductsForAdmin(ViewDTO viewDTO, int page, int size) {
+        return getProductsForAdmin(viewDTO, page, size);
     }
 
     @Override
@@ -34,17 +31,22 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
-    public ApiResult<ProductDTO> getProductForUser(Integer id) {
-        return productService.getProductForUser(id);
-    }
-
-    @Override
     public ApiResult<?> deleteProduct(Integer id) {
         return productService.deleteProduct(id);
     }
 
     @Override
-    public ApiResult<ProductDTO> editProduct(Integer id, ProductDTO customerDTO) {
-        return productService.editProduct(id, customerDTO);
+    public ApiResult<ProductDTO> editProduct(Integer id, ProductDTO productDTO) {
+        return productService.editProduct(id, productDTO);
+    }
+
+    @Override
+    public ApiResult<ProductDTO> getProduct(Integer id) {
+        return productService.getProductForUser(id);
+    }
+
+    @Override
+    public ApiResult<List<ProductDTO>> getProducts() {
+        return productService.getProductsForUser();
     }
 }

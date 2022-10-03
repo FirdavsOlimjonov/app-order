@@ -1,10 +1,14 @@
 package uz.pdp.appproduct.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProductDTO {
     private Float price;
 
@@ -14,6 +18,6 @@ public class ProductDTO {
 
     private boolean active;
 
-    private String measurement;
+    private String description;
 
 }

@@ -23,7 +23,7 @@ public class OrderProduct {
     private Order order;
 
     @ManyToOne(optional = false)
-    private Product<P> product;
+    private Product<> product;
 
     @Column(nullable = false)
     private Short quantity;

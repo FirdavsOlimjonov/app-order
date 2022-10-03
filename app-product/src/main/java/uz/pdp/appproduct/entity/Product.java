@@ -3,6 +3,7 @@ package uz.pdp.appproduct.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,8 +11,8 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
-
-public class Product<P> {
+@Setter
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,15 +21,11 @@ public class Product<P> {
 
     private Float price;
 
+    @Column(unique = true)
     private String name;
 
     @ManyToOne(optional = false)
     private Category category;
 
-    /**
-     * Bu field mahsulotni qanday ulchanishini kursatadi
-     * 200 gr Free bunda "200 gr" shu fieldga biriktiriladi
-     **/
-
-    private String measurement;
+    private String description;
 }
