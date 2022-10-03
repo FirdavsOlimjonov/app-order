@@ -3,6 +3,7 @@ package uz.pdp.apporder.projection;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public interface StatisticsOrderDTOProjection {
