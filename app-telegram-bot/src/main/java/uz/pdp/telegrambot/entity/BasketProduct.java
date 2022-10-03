@@ -23,7 +23,7 @@ public class BasketProduct {
     private Basket basket;
 
     @ManyToOne(optional = false)
-    private Product product;
+    private Product<P> product;
 
     @Column(nullable = false)
     private Short quantity = 1;
