@@ -42,11 +42,11 @@ public class ProductControllerImpl implements ProductController {
 
     @Override
     public ApiResult<ProductDTO> getProduct(Integer id) {
-        return productService.getProductForUser(id);
+        return productService.getProduct(id);
     }
 
     @Override
     public ApiResult<List<ProductDTO>> getProducts() {
-        return productService.getProductsForUser();
+        return productService.getProducts();
     }
 }
