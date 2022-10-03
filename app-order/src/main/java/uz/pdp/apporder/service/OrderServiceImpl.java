@@ -11,10 +11,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.repository.ProductRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.apporder.utils.CommonUtils;
 import uz.pdp.apporder.utils.OpenFeign;
 import uz.pdp.appproduct.entity.Product;
@@ -29,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
+    private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final BranchRepository branchRepository;
@@ -41,53 +39,12 @@ public class OrderServiceImpl implements OrderService {
 
         ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
 
-
-        // TODO: 9/27/22 Filial Id ni aniqlash
-        Branch branch = findNearestBranch(orderDTO.getAddressDTO());
-
-        // TODO: 9/30/22  Shipping narxini aniqlash method parametrlar ozgarishi mumkin
-        Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
-
-
-
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
-                orderDTO.getAddressDTO().getLng(),
-                orderDTO.getAddressDTO().getAddress(),
-                orderDTO.getAddressDTO().getExtraAddress());
-
-
-        List<Product> productList = productRepository.findAllById(
-                orderDTO
-                        .getOrderProductsDTOList()
-                        .stream()
-                        .map(OrderProductsDTO::getProductId)
-                        .collect(Collectors.toList())
-        );
-
-        Order order = new Order();
-
-        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
-        for (int i = 0; i < productList.size(); i++) {
-            orderProducts.add(new OrderProduct(order, productList.get(i),
-                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
-                    productList.get(i).getPrice()));
-        }
-
-        if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
-                || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
-            order.setStatusEnum(OrderStatusEnum.NEW);
-        else
-            order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
-
-        order.setBranch(branch);
-        order.setPaymentType(orderDTO.getPaymentType());
-        order.setClientId(currentUser.getUserId());
-        order.setOrderProducts(orderProducts);
-        order.setDeliverySum(shippingPrice);
-        order.setAddress(clientAddress);
-
-        clientRepository.save(clientAddress);
-        orderRepository.save(order);
+        saveOrder(new OrderWebDTO(null,
+                        orderDTO.getOrderProductsDTOList(),
+                        orderDTO.getAddressDTO(),
+                        orderDTO.getPaymentType()),
+                currentUser.getUserId(),
+                null);
 
         return ApiResult.successResponse("Order successfully saved!");
     }
@@ -95,13 +52,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 
-        OperatorDTO operatorDTO = (OperatorDTO) CommonUtils
+        OperatorDTO currentEmployee = (OperatorDTO) CommonUtils
                 .getCurrentRequest().getAttribute("currentUser");
 
         ClientDTO clientDTO = Objects.requireNonNull(
                 openFeign.getClientDTOAndSet(orderDTO.getClientFromWebDTO()).getData()
         );
 
+        saveOrder(orderDTO,
+                clientDTO.getUserId(),
+                currentEmployee.getId());
+
+        return ApiResult.successResponse("Order successfully saved!");
+    }
+
+    private void saveOrder(OrderWebDTO orderDTO, UUID clientId, UUID operatorId) {
 
         // TODO: 9/27/22 Filial Id ni aniqlash
         Branch branch = findNearestBranch(orderDTO.getAddressDTO());
@@ -127,7 +92,6 @@ public class OrderServiceImpl implements OrderService {
 
 
         Order order = new Order();
-
         ArrayList<OrderProduct> orderProducts = new ArrayList<>();
         for (int i = 0; i < productList.size(); i++) {
             orderProducts.add(new OrderProduct(order, productList.get(i),
@@ -144,8 +108,8 @@ public class OrderServiceImpl implements OrderService {
 
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
-        order.setClientId(clientDTO.getUserId());
-        order.setOperatorId(operatorDTO.getId());
+        order.setClientId(clientId);
+        order.setOperatorId(operatorId);
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
         order.setAddress(clientAddress);
@@ -153,7 +117,6 @@ public class OrderServiceImpl implements OrderService {
         clientRepository.save(clientAddress);
         orderRepository.save(order);
 
-        return ApiResult.successResponse("Order successfully saved!");
     }
 
 
@@ -296,6 +259,46 @@ public class OrderServiceImpl implements OrderService {
 
     private List<Order> getOrdersByStatus(OrderStatusEnum statusEnum) {
         return orderRepository.getOrderByStatusEnum(statusEnum);
+    }
+
+    @Override
+    public ApiResult<OrderDTO> getOneOrder(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> RestException.restThrow("order not found", HttpStatus.NOT_FOUND));
+        OrderDTO orderDto = mapOrderToOrderDTO(order);
+        return ApiResult.successResponse(orderDto);
+
+    }
+
+    @Override
+    public ApiResult<List<OrderDTO>> getOrders() {
+        List<Order> orders = orderRepository.findAll();
+
+        List<OrderDTO> orderDtoList = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDto = mapOrderToOrderDTO(order);
+            orderDtoList.add(orderDto);
+        }
+        return ApiResult.successResponse(orderDtoList);
+
+    }
+
+    @Override
+    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
+        int count = 0;
+        Double price = 0d;
+        for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
+            count++;
+            Double aDouble = orderProductRepository.countSumOfOrder(order.getId());
+            price += aDouble;
+        }
+        OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
+
+        orderStatusWithCountAndPrice.setCount(count);
+        orderStatusWithCountAndPrice.setPrice(price);
+        orderStatusWithCountAndPrice.setStatusEnum(orderStatus);
+        return ApiResult.successResponse(orderStatusWithCountAndPrice);
     }
 
 }
