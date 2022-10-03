@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b80e4c24-403a-4c22-8a95-3a29445a1dd1" name="Changes" comment="courier api created">
+    <list default="true" id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="order status price and count">
+      <change afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderServiceGetMethodsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceChartImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/test/java/uz/pdp/apporder/order/OrderAPITest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +56,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2FRMVz1WnGOMr3gcZyCUiad4xwC" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -123,6 +124,12 @@
       <workItem from="1664473513003" duration="4238000" />
       <workItem from="1664520529369" duration="6109000" />
       <workItem from="1664599469493" duration="2196000" />
+      <workItem from="1664729458391" duration="2881000" />
+      <workItem from="1664735370907" duration="1722000" />
+      <workItem from="1664737889470" duration="25000" />
+      <workItem from="1664748980689" duration="2370000" />
+      <workItem from="1664758577882" duration="47000" />
+      <workItem from="1664806507726" duration="353000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -152,7 +159,21 @@
       <option name="project" value="LOCAL" />
       <updated>1664548249584</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="we">
+      <created>1664731251078</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664731251078</updated>
+    </task>
+    <task id="LOCAL-00006" summary="order status price and count">
+      <created>1664735603693</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664735603693</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
