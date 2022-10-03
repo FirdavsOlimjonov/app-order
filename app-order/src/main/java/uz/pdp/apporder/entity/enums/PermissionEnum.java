@@ -8,5 +8,7 @@ public enum PermissionEnum  {
     EDIT_ORDER,
     ADD_ORDER,
     EDIT_STATUS;
+    SHOW_STATISTICS,
+    ADD_ORDER;
 
 }

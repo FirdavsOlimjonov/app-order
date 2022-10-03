@@ -32,9 +32,11 @@ public interface OrderController {
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
     @PostMapping(STATISTICS_ORDER_PATH)
+//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
+//    @CheckAuth(permissions = {PermissionEnum.SHOW_STATISTICS})
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
 
     @PostMapping(STATISTICS_LIST_PATH)
