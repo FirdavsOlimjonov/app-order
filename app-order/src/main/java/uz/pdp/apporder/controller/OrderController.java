@@ -12,16 +12,15 @@ import java.util.List;
 
 @RequestMapping(OrderController.PATH_BASE)
 public interface OrderController {
-
+    String PATH_BASE = "/api/v1/order";
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
     String STATISTICS_ORDER_PATH = "/statistics-order";
     String STATISTICS_PAYMENT_PATH = "/statistics-payment";
+    String STATISTICS_LIST_PATH = "/statistics-list";
     String SAVE_MOB_APP = "/save-mob-app";
     String GET_ORDER_FOR_COURIER = "/get-orders/{orderStatusEnum}";
 
-    String SAVE_WEB = "/save-web-app";
-    String STATISTICS_LIST_PATH = "/statistics-list";
-    String PATH_BASE = "/api/v1/order";
+    String SAVE_WEB = "/save-mob-app";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -43,7 +42,6 @@ public interface OrderController {
     ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid @RequestBody ViewDTO viewDTO,
                                                               @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
                                                               @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
-
 
     @GetMapping(ORDER_LIST_BY_STATUS_PATH + "/{orderStatus}")
 //    @CheckAuth(permissions = {PermissionEnum.GET_ORDER})
