@@ -7,9 +7,10 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
 
-import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +19,13 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     private final OrderRepository orderRepository;
 
     @Override
-    public ApiResult<?> transferPaymentWaitingStatus(@Valid Long id) {
+    public ApiResult<?> transferPaymentWaitingStatus(OrderDTO orderDTO) {
+
         return null;
     }
 
     @Override
-    public ApiResult<?> transferNewStatus(Long id) {
+    public ApiResult<?> transferNewStatus(OrderDTO orderDTO) {
         return null;
     }
 
@@ -38,6 +40,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         );
 
         order.setStatusEnum(OrderStatusEnum.ACCEPTED);
+        order.setAcceptedAt(LocalDateTime.now());
+
+        orderRepository.save(order);
 
         return ApiResult.successResponse(orderRepository.save(order));
     }
@@ -47,7 +52,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         Order order = getOrder(id, OrderStatusEnum.ACCEPTED);
 
         order.setStatusEnum(OrderStatusEnum.COOKING);
+        order.setCookingAt(LocalDateTime.now());
 
+        orderRepository.save(order);
         return ApiResult.successResponse(orderRepository.save(order));
     }
 
@@ -56,7 +63,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         Order order = getOrder(id, OrderStatusEnum.COOKING);
 
         order.setStatusEnum(OrderStatusEnum.READY);
+        order.setReadyAt(LocalDateTime.now());
 
+        orderRepository.save(order);
         return ApiResult.successResponse(orderRepository.save(order));
     }
 
@@ -65,7 +74,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         Order order = getOrder(id, OrderStatusEnum.READY);
 
         order.setStatusEnum(OrderStatusEnum.SENT);
+        order.setSentAt(LocalDateTime.now());
 
+        orderRepository.save(order);
         return ApiResult.successResponse(orderRepository.save(order));
     }
 
@@ -74,7 +85,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.FINISHED);
+        order.setClosedAt(LocalDateTime.now());
 
+        orderRepository.save(order);
         return ApiResult.successResponse(orderRepository.save(order));
     }
 
@@ -83,7 +96,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.REJECTED);
+        order.setCancelledAt(LocalDateTime.now());
 
+        orderRepository.save(order);
         return ApiResult.successResponse(orderRepository.save(order));
     }
 
@@ -94,4 +109,16 @@ public class OrderStatusServiceImpl implements OrderStatusService {
                 RestException.restThrow("order not found", HttpStatus.NOT_FOUND)
         );
     }
+
+    /*
+    private OrderDTO toOrderDTO(Order order) {
+        return OrderDTO.builder()
+                .branchName(order.getBranch().getName())
+                .clientDTO(order.getClientId())
+                .operatorDTO()
+                .number()
+                .paymentType()
+                .build();
+    }
+    */
 }

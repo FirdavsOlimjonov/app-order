@@ -2,17 +2,22 @@ package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderDTO;
+
+import javax.validation.Valid;
 
 @RequestMapping(OrderStatusController.BASE_PATH)
 public interface OrderStatusController {
 
     String BASE_PATH = "/api/v1/order-status";
 
-    String PAYMENT_WAITING_PATH = "/transfer-payment-waiting/{id}";
+    String PAYMENT_WAITING_PATH = "/transfer-payment-waiting";
 
-    String NEW_PATH = "/transfer-new/{id}";
+    String NEW_PATH = "/transfer-new";
+
     String ACCEPTED_PATH = "/transfer-accepted/{id}";
 
     String COOKING_PATH = "/transfer-cooking/{id}";
@@ -26,11 +31,10 @@ public interface OrderStatusController {
     String REJECTED_PATH = "/transfer-rejected/{id}";
 
     @PutMapping(PAYMENT_WAITING_PATH)
-    ApiResult<?> transferPaymentWaiting(@PathVariable Long id);
-
+    ApiResult<?> transferPaymentWaiting(@Valid @RequestBody OrderDTO orderDTO);
 
     @PutMapping(NEW_PATH)
-    ApiResult<?> transferNew(@PathVariable Long id);
+    ApiResult<?> transferNew(@Valid @RequestBody OrderDTO orderDTO);
 
     @PutMapping(ACCEPTED_PATH)
     ApiResult<?> transferAccepted(@PathVariable Long id);
