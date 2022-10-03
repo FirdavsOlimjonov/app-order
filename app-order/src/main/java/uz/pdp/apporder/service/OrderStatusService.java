@@ -1,12 +1,13 @@
 package uz.pdp.apporder.service;
 
 import uz.pdp.apporder.payload.ApiResult;
+import uz.pdp.apporder.payload.OrderDTO;
 
 public interface OrderStatusService {
 
-    ApiResult<?> transferPaymentWaitingStatus(Long id);
+    ApiResult<?> transferPaymentWaitingStatus(OrderDTO orderDTO);
 
-    ApiResult<?> transferNewStatus(Long id);
+    ApiResult<?> transferNewStatus(OrderDTO orderDTO);
 
     ApiResult<?> transferAcceptedStatus(Long id);
 

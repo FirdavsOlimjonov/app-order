@@ -1,17 +1,19 @@
 package uz.pdp.apporder.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 import uz.pdp.apporder.entity.enums.PaymentType;
 
 import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
+
     private Long id;
 
     private ClientDTO clientDTO;
@@ -29,7 +31,6 @@ public class OrderDTO {
     private LocalDateTime orderedAt;
 
     private LocalDateTime orderedAtByStatus;
-
 
     private CurrierDTO currierDTO;
 }
