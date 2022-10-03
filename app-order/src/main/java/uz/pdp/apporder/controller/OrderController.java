@@ -20,12 +20,16 @@ public interface OrderController {
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
     String STATISTICS_ORDER_PATH = "/statistics-order";
     String STATISTICS_PAYMENT_PATH = "/statistics-payment";
-     String SAVE_MOB_APP = "/save-mob-app";
+    String SAVE_MOB_APP = "/save-mob-app";
+    String SAVE_WEB = "/save-mob-app";
 
     String PATH_BASE = "/api/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
+
+    @PostMapping(SAVE_MOB_APP)
+    ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
