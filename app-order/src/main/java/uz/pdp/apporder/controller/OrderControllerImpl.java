@@ -58,6 +58,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
+    @CheckAuth(permissions = {PermissionEnum.GET_ORDER_FOR_COURIER})
     public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
         return orderService.getOrderForCourier(orderStatusEnum);
     }

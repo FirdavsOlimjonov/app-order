@@ -7,8 +7,7 @@ public enum PermissionEnum  {
     EDIT_PRODUCT,
     EDIT_ORDER,
     ADD_ORDER,
-    EDIT_STATUS;
-    SHOW_STATISTICS,
-    ADD_ORDER;
-
+    GET_ORDER_FOR_COURIER,
+    EDIT_STATUS,
+    SHOW_STATISTICS
 }
