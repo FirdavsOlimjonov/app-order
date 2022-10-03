@@ -29,7 +29,7 @@ public class DataLoader implements CommandLineRunner {
 //            b.id, o.id, o.client_id, o.operator_id, o.payment_type,  o.status_enum, o.ordered_at
             try {
                 Statement statement = connection.createStatement();
-                statement.execute("CREATE OR REPLACE FUNCTION  get_result_of_query(sql_query character varying)\n" +
+                statement.execute("DROP FUNCTION IF EXISTS get_result_of_query; CREATE OR REPLACE FUNCTION  get_result_of_query(sql_query character varying)\n" +
                         "    returns TABLE(branch_id int, " +
                         "orderId bigint, " +
                         "clientId varchar, " +

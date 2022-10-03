@@ -19,7 +19,7 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
     String GET_ORDER_FOR_COURIER = "/get-orders/{orderStatusEnum}";
 
-    String SAVE_WEB = "/save-mob-app";
+    String SAVE_WEB = "/save-web-app";
     String STATISTICS_LIST_PATH = "/statistics-list";
     String PATH_BASE = "/api/v1/order";
 
@@ -28,7 +28,7 @@ public interface OrderController {
 
     @GetMapping(GET_ORDER_FOR_COURIER)
     ApiResult<?> getOrderForCourier(@NotNull @PathVariable OrderStatusEnum orderStatusEnum);
-    @PostMapping(SAVE_MOB_APP)
+    @PostMapping(SAVE_WEB)
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
     @PostMapping(STATISTICS_ORDER_PATH)
