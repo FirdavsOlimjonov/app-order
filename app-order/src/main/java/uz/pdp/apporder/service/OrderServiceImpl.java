@@ -255,7 +255,7 @@ public class OrderServiceImpl implements OrderService {
      */
     public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(ViewDTO viewDTO, int page, int size) {
 
-        StringBuilder query = new StringBuilder("SELECT b.id, o.id,  Cast(o.client_id as varchar), Cast(o.operator_id as varchar), o.payment_type,  o.status_enum, o.ordered_at\n" +
+        StringBuilder query = new StringBuilder("SELECT b.id as branchId, o.id as orderId,  Cast(o.client_id as varchar) as clientId, Cast(o.operator_id as varchar) as operatorId, o.payment_type as paymentType,  o.status_enum as statusEnum , o.ordered_at as orderedAt \n" +
                 "FROM orders o\n" +
                 "         JOIN branch b on b.id = o.branch_id\n"
         );
@@ -371,7 +371,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderStatisticsDTO mapProjectionToOrderStatisticsDTO(StatisticsOrderDTOProjection projection) {
 
         OrderStatisticsDTO orderStatisticsDTO = new OrderStatisticsDTO();
-        Branch branch = branchRepository.findById(projection.getBranchId()).orElseThrow(
+        Integer branchId = projection.getBranchId();
+        Branch branch = branchRepository.findById(branchId).orElseThrow(
                 () -> RestException.restThrow("branch not found", HttpStatus.NOT_FOUND)
         );
 

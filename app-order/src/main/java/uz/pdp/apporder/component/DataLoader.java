@@ -31,12 +31,12 @@ public class DataLoader implements CommandLineRunner {
                 Statement statement = connection.createStatement();
                 statement.execute("CREATE OR REPLACE FUNCTION  get_result_of_query(sql_query character varying)\n" +
                         "    returns TABLE(branch_id int, " +
-                        "order_id bigint, " +
-                        "client_id varchar, " +
-                        "operator_id varchar, " +
-                        "payment_type varchar, " +
-                        "status_enum varchar," +
-                        "  ordered_at timestamp without time zone)\n" +
+                        "orderId bigint, " +
+                        "clientId varchar, " +
+                        "operatorId varchar, " +
+                        "paymentType varchar, " +
+                        "statusEnum varchar," +
+                        "  orderedAt timestamp without time zone)\n" +
                         "    language plpgsql\n" +
                         "as\n" +
                         "$$\n" +
