@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="azamat" />
+    <list default="true" id="249bcd39-c25a-4fe1-866f-f60f01a66c82" name="Changes" comment="azamat">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,6 +141,8 @@
       <workItem from="1664806507726" duration="353000" />
       <workItem from="1664825876551" duration="17000" />
       <workItem from="1664836119303" duration="1184000" />
+      <workItem from="1664891163215" duration="393000" />
+      <workItem from="1664895656781" duration="178000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -238,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664837199978</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="azamat">
+      <created>1664891195068</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1664891195068</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
