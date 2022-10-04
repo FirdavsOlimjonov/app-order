@@ -14,6 +14,7 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.utils.CommonUtils;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,9 +34,6 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     @Override
     public ApiResult<OrderDTO> transferAcceptedStatus(Long id) {
-
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
         Order order = orderRepository.getByIdAndStatusEnumOrStatusEnum(
                 id,
                 OrderStatusEnum.NEW,
@@ -49,12 +47,11 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
         orderRepository.save(order);
 
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
     public ApiResult<OrderDTO> transferCookingStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
 
         Order order = getOrder(id, OrderStatusEnum.ACCEPTED);
 
@@ -63,12 +60,11 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
         orderRepository.save(order);
 
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
     public ApiResult<OrderDTO> transferReadyStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
 
         Order order = getOrder(id, OrderStatusEnum.COOKING);
 
@@ -76,12 +72,11 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         order.setReadyAt(LocalDateTime.now());
         orderRepository.save(order);
 
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
     public ApiResult<OrderDTO> transferSentStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
 
         Order order = getOrder(id, OrderStatusEnum.READY);
 
@@ -89,26 +84,22 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         order.setSentAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
     public ApiResult<OrderDTO> transferFinishedStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.FINISHED);
         order.setClosedAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
     public ApiResult<OrderDTO> transferRejectedStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
         Order order = orderRepository.getOrderIdAndStatus(
                 id,
                 OrderStatusEnum.PAYMENT_WAITING,
@@ -122,7 +113,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         order.setCancelledAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(toOrderDTO(order, currentUser));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     private Order getOrder(Long id, OrderStatusEnum statusEnum) {
@@ -133,13 +124,20 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         );
     }
 
-    private OrderDTO toOrderDTO(Order order, ClientDTO clientDTO) {
+    private OrderDTO toOrderDTO(Order order) {
         return OrderDTO.builder()
                 .branchName(order.getBranch().getName())
-                .clientDTO(clientDTO)
-                .operatorDTO(new OperatorDTO())
+                .clientDTO(getClientDTO(order.getClientId()))
                 .number(order.getNumber())
                 .paymentType(order.getPaymentType())
                 .build();
+    }
+
+    private ClientDTO getClientDTO(UUID uuid) {
+        return null;
+    }
+
+    private OperatorDTO getOperatorDTO(UUID uuid) {
+        return null;
     }
 }
