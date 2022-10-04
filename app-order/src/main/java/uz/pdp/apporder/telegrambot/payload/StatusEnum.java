@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.payload;
+package uz.pdp.apporder.telegrambot.payload;
 
 public enum StatusEnum {
     STATUS_START,

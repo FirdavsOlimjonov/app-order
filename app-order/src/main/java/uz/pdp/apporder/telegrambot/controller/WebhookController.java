@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.controller;
+package uz.pdp.apporder.telegrambot.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import uz.pdp.telegrambot.bot.CommandsBot;
+import uz.pdp.apporder.telegrambot.bot.CommandsBot;
 
 @RestController
 @AllArgsConstructor

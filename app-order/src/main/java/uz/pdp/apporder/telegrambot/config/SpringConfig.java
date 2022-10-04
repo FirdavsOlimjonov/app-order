@@ -1,10 +1,10 @@
-package uz.pdp.telegrambot.config;
+package uz.pdp.apporder.telegrambot.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
-import uz.pdp.telegrambot.bot.CommandsBot;
+import uz.pdp.apporder.telegrambot.bot.CommandsBot;
 
 @Configuration
 @AllArgsConstructor

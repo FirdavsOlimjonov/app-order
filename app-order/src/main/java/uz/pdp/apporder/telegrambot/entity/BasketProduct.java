@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.entity;
+package uz.pdp.apporder.telegrambot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class BasketProduct {
     private Basket basket;
 
     @ManyToOne(optional = false)
-    private Product<P> product;
+    private Product product;
 
     @Column(nullable = false)
     private Short quantity = 1;

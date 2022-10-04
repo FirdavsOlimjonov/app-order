@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.entity;
+package uz.pdp.apporder.telegrambot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
