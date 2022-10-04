@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @DynamicUpdate
 @DynamicInsert
 public class CategoryServiceImpl implements CategoryService{
-
     private final CategoryRepository categoryRepository;
 
 
@@ -34,6 +33,9 @@ public class CategoryServiceImpl implements CategoryService{
     public ApiResult<CategoryDTO> add(CategoryDTO categoryDTO) {
 
         if (categoryRepository.existsByNameUzIgnoreCase(categoryDTO.getNameUz()))
+            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
+
+        if (categoryRepository.existsByNameRuIgnoreCase(categoryDTO.getNameRu()))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
 
         Category category = getCategoryFromCategoryDTO(categoryDTO);
