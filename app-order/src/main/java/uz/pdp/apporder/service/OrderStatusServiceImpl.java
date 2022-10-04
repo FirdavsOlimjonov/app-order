@@ -12,6 +12,7 @@ import uz.pdp.apporder.payload.OperatorDTO;
 import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.apporder.utils.OpenFeign;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,6 +22,8 @@ import java.util.UUID;
 public class OrderStatusServiceImpl implements OrderStatusService {
 
     private final OrderRepository orderRepository;
+
+    private final OpenFeign openFeign;
 
     @Override
     public ApiResult<OrderDTO> transferPaymentWaitingStatus(OrderDTO orderDTO) {
@@ -134,10 +137,21 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     }
 
     private ClientDTO getClientDTO(UUID uuid) {
-        return null;
+
+        ClientDTO data = openFeign.getClientDTO(uuid).getData();
+        if (data == null)
+            throw RestException.restThrow("user not found", HttpStatus.NOT_FOUND);
+        return data;
     }
 
     private OperatorDTO getOperatorDTO(UUID uuid) {
         return null;
+    }
+
+    private String getToken() {
+        String authorization = CommonUtils.getCurrentRequest().getHeader("Authorization");
+        if (authorization == null)
+            throw RestException.restThrow("Not access", HttpStatus.UNAUTHORIZED);
+        return authorization;
     }
 }
