@@ -33,4 +33,12 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     @Query(value = "SELECT * FROM get_result_of_query(:query)", nativeQuery = true)
     List<StatisticsOrderDTOProjection> getOrdersByStringQuery(@Param("query") String query);
+
+    @Query("SELECT * FROM Order o WHERE o.id = :id and (" +
+            "o.statusEnum =:statusEnaum or o.statusEnum =:statusEnaum2 or o.statusEnum =:statusEnaum3)")
+    Optional<Order> getOrderIdAndStatus(
+            Long id,
+            OrderStatusEnum statusEnum,
+            OrderStatusEnum statusEnum2,
+            OrderStatusEnum statusEnum3);
 }

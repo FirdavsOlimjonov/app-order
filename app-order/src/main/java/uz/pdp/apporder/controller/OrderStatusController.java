@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.apporder.aop.CheckAuth;
+import uz.pdp.apporder.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderDTO;
@@ -33,35 +34,35 @@ public interface OrderStatusController {
     String REJECTED_PATH = "/transfer-rejected/{id}";
 
     @PutMapping(PAYMENT_WAITING_PATH)
-    ApiResult<?> transferPaymentWaiting(@Valid @RequestBody OrderDTO orderDTO);
+    ApiResult<OrderDTO> transferPaymentWaiting(@Valid @RequestBody OrderDTO orderDTO);
 
     @PutMapping(NEW_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferNew(@Valid @RequestBody OrderDTO orderDTO);
+    //@CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
+    ApiResult<OrderDTO> transferNew(@Valid @RequestBody OrderDTO orderDTO);
 
     @PutMapping(ACCEPTED_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferAccepted(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.ACCEPTED_STATUS})
+    ApiResult<OrderDTO> transferAccepted(@PathVariable Long id);
 
 
     @PutMapping(COOKING_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferCooking(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.COOKING_STATUS})
+    ApiResult<OrderDTO> transferCooking(@PathVariable Long id);
 
     @PutMapping(READY_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferReady(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.READY_STATUS})
+    ApiResult<OrderDTO> transferReady(@PathVariable Long id);
 
 
     @PutMapping(SENT_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferSent(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.SENT_STATUS})
+    ApiResult<OrderDTO> transferSent(@PathVariable Long id);
 
     @PutMapping(FINISHED_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferFinished(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.FINISHED_STATUS})
+    ApiResult<OrderDTO> transferFinished(@PathVariable Long id);
 
     @PutMapping(REJECTED_PATH)
-    @CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
-    ApiResult<?> transferRejected(@PathVariable Long id);
+    //@CheckAuthEmpl(permissions = {PermissionEnum.REJECTED_STATUS})
+    ApiResult<OrderDTO> transferRejected(@PathVariable Long id);
 }
