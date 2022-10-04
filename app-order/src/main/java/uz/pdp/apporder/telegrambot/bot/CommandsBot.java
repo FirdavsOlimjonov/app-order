@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.bot;
+package uz.pdp.apporder.telegrambot.bot;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,9 +17,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.starter.SpringWebhookBot;
-import uz.pdp.telegrambot.entity.ChatPageStatus;
-import uz.pdp.telegrambot.payload.StatusEnum;
-import uz.pdp.telegrambot.repository.ChatPageStatusRepository;
+import uz.pdp.apporder.telegrambot.entity.ChatPageStatus;
+import uz.pdp.apporder.telegrambot.payload.StatusEnum;
+import uz.pdp.apporder.telegrambot.repository.ChatPageStatusRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +60,7 @@ public class CommandsBot extends SpringWebhookBot {
         Long chatId = updateMessage.getChatId();
         if ( !repository.existsById(chatId)){
 
-            repository.save(new ChatPageStatus(chatId,StatusEnum.STATUS_START));
+            repository.save(new ChatPageStatus(chatId, StatusEnum.STATUS_START));
         }
 
 

@@ -1,10 +1,10 @@
-package uz.pdp.telegrambot.entity;
+package uz.pdp.apporder.telegrambot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.telegrambot.payload.StatusEnum;
+import uz.pdp.apporder.telegrambot.payload.StatusEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

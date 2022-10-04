@@ -1,9 +1,9 @@
-package uz.pdp.telegrambot.entity;
+package uz.pdp.apporder.telegrambot.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
