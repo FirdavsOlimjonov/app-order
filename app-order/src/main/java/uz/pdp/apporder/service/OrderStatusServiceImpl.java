@@ -74,6 +74,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
         order.setStatusEnum(OrderStatusEnum.READY);
         order.setReadyAt(LocalDateTime.now());
+        orderRepository.save(order);
 
         return ApiResult.successResponse(toOrderDTO(order, currentUser));
     }

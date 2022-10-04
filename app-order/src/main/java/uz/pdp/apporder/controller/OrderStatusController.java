@@ -1,9 +1,6 @@
 package uz.pdp.apporder.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.aop.CheckAuth;
 import uz.pdp.apporder.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.PermissionEnum;
@@ -33,36 +30,36 @@ public interface OrderStatusController {
 
     String REJECTED_PATH = "/transfer-rejected/{id}";
 
-    @PutMapping(PAYMENT_WAITING_PATH)
+    @GetMapping(PAYMENT_WAITING_PATH)
     ApiResult<OrderDTO> transferPaymentWaiting(@Valid @RequestBody OrderDTO orderDTO);
 
-    @PutMapping(NEW_PATH)
+    @GetMapping(NEW_PATH)
     //@CheckAuth(permissions = {PermissionEnum.EDIT_STATUS})
     ApiResult<OrderDTO> transferNew(@Valid @RequestBody OrderDTO orderDTO);
 
-    @PutMapping(ACCEPTED_PATH)
+    @GetMapping(ACCEPTED_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.ACCEPTED_STATUS})
     ApiResult<OrderDTO> transferAccepted(@PathVariable Long id);
 
 
-    @PutMapping(COOKING_PATH)
+    @GetMapping(COOKING_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.COOKING_STATUS})
     ApiResult<OrderDTO> transferCooking(@PathVariable Long id);
 
-    @PutMapping(READY_PATH)
+    @GetMapping(READY_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.READY_STATUS})
     ApiResult<OrderDTO> transferReady(@PathVariable Long id);
 
 
-    @PutMapping(SENT_PATH)
+    @GetMapping(SENT_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.SENT_STATUS})
     ApiResult<OrderDTO> transferSent(@PathVariable Long id);
 
-    @PutMapping(FINISHED_PATH)
+    @GetMapping(FINISHED_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.FINISHED_STATUS})
     ApiResult<OrderDTO> transferFinished(@PathVariable Long id);
 
-    @PutMapping(REJECTED_PATH)
+    @GetMapping(REJECTED_PATH)
     //@CheckAuthEmpl(permissions = {PermissionEnum.REJECTED_STATUS})
     ApiResult<OrderDTO> transferRejected(@PathVariable Long id);
 }
