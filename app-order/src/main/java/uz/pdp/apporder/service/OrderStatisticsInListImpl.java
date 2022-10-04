@@ -10,7 +10,8 @@ import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 import uz.pdp.apporder.repository.*;
-import uz.pdp.apporder.utils.OpenFeign;
+import uz.pdp.apporder.aop.OpenFeign;
+import uz.pdp.apporder.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,9 +179,11 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
 
         orderStatisticsDTO.setBranchDTO(branchDTO);
 
-        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId())).getData();
+        String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
 
-        OperatorDTO operatorDTO = openFeign.getOperatorDTO(UUID.fromString(projection.getOperatorId())).getData();
+        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId()),token).getData();
+
+        OperatorDTO operatorDTO = openFeign.getOperatorDTO(UUID.fromString(projection.getOperatorId()), token).getData();
 
         orderStatisticsDTO.setClientDTO(clientDTO);
         orderStatisticsDTO.setOperatorDTOForList(mapOperatorDTOToOperatorDTOForList(operatorDTO));
