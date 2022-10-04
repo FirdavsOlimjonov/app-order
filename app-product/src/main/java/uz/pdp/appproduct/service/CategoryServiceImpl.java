@@ -35,6 +35,9 @@ public class CategoryServiceImpl implements CategoryService{
         if (categoryRepository.existsByNameUzIgnoreCase(categoryDTO.getNameUz()))
             throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
 
+        if (categoryRepository.existsByNameRuIgnoreCase(categoryDTO.getNameRu()))
+            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
+
         Category category = getCategoryFromCategoryDTO(categoryDTO);
 
         categoryRepository.save(category);

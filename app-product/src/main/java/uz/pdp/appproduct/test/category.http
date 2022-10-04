@@ -2,8 +2,8 @@ POST https://localhost:8081/api/category/add
 Content-Type: application/json
 
 {
-  "nameUz": "ichimliklar",
-  "nameRu": "drinks",
+  "nameUz": "lavash",
+  "nameRu": "lavash",
   "parentCategory": null
 }
 
