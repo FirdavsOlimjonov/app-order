@@ -20,8 +20,4 @@ public class AppOrderApplication {
         SpringApplication.run(AppOrderApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate(){
-        return new RestTemplate();
-    }
 }

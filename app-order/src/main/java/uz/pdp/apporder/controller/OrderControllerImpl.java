@@ -1,6 +1,7 @@
 package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.aop.CheckAuth;
 import uz.pdp.apporder.aop.CheckAuthEmpl;
@@ -26,18 +27,17 @@ public class OrderControllerImpl implements OrderController {
     private final OrderStatisticsInList orderStatisticsInList;
 
     @Override
-    @CheckAuth()
     public ApiResult<?> saveOrderFromApp(OrderUserDTO order) {
         return orderService.saveOrder(order);
     }
 
     @Override
-    @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
     public ApiResult<?> saveOrderFromWeb(OrderWebDTO order) {
         return orderService.saveOrder(order);
     }
 
 
+    @Override
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
@@ -47,10 +47,7 @@ public class OrderControllerImpl implements OrderController {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
 
-    @Override
-    public ApiResult<List<OrderStatisticsDTO>> showStatisticsForList(@Valid ViewDTO viewDTO, int page, int size) {
-        return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
-    }
+
 
     @Override
     @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
@@ -62,6 +59,26 @@ public class OrderControllerImpl implements OrderController {
     @CheckAuth(permissions = {PermissionEnum.GET_ORDER_FOR_COURIER})
     public ApiResult<?> getOrderForCourier(OrderStatusEnum orderStatusEnum) {
         return orderService.getOrderForCourier(orderStatusEnum);
+    }
+
+    @Override
+    public ApiResult<OrderDTO> getOneOrder(Long id) {
+        return orderService.getOneOrder(id);
+    }
+
+    @Override
+    public ApiResult<List<OrderDTO>> getOrderList() {
+        return orderService.getOrders();
+    }
+
+    @Override
+    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
+        return orderService.getOrderStatusCountPrice(orderStatus);
+    }
+
+    @Override
+    public ApiResult<?> editOrder(OrderWebDTO order, Long id) {
+        return orderService.editOrder(order,id);
     }
 
 }
