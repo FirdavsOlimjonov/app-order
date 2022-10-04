@@ -21,8 +21,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class CheckAuthExecutor {
-
-    private final RestTemplate restTemplate;
+    private final OpenFeign openFeign;
 
     @Before(value = "@annotation(checkAuth)")
     public void checkAuth(CheckAuth checkAuth) {
@@ -36,32 +35,20 @@ public class CheckAuthExecutor {
 
     public void getUserDTOIfIdNullThrow(CheckAuth checkAuth){
 
-
         String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
 
         if (Objects.isNull(token))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", token);
+        ApiResult<ClientDTO> authorizedClientDTO = openFeign.getAuthorizedClientDTO(token);
 
-        HttpEntity<Object> httpEntity = new HttpEntity<>(null,httpHeaders);
-        ResponseEntity<ApiResult<ClientDTO>> exchange = restTemplate.exchange(
-                "lb://APP-AUTH/api/user/me",
-                HttpMethod.POST,
-                httpEntity,
-                new ParameterizedTypeReference<>() {
-                });
+        ClientDTO clientDTO = Objects.requireNonNull(authorizedClientDTO.getData());
 
-        ClientDTO userDTO = Objects.requireNonNull(exchange.getBody()).getData();
-
-        if (Objects.isNull(userDTO.getUserId()))
+        if (Objects.isNull(clientDTO.getUserId()))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
 
-        setRequestUserDTO(userDTO);
+        setRequestUserDTO(clientDTO);
     }
-
-
 
     public void getUserDTOIfIdNullThrow(CheckAuthEmpl checkAuthEmpl){
 
@@ -71,18 +58,9 @@ public class CheckAuthExecutor {
         if (Objects.isNull(token))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", token);
+        ApiResult<OperatorDTO> authorizedOperatorDTO = openFeign.getAuthorizedOperatorDTO(token);
 
-        HttpEntity<Object> httpEntity = new HttpEntity<>(null,httpHeaders);
-        ResponseEntity<ApiResult<OperatorDTO>> exchange = restTemplate.exchange(
-                "lb://APP-AUTH/api/employee/me",
-                HttpMethod.GET,
-                httpEntity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        OperatorDTO operatorDTO = Objects.requireNonNull(exchange.getBody()).getData();
+        OperatorDTO operatorDTO = Objects.requireNonNull(authorizedOperatorDTO.getData());
 
         if (Objects.isNull(operatorDTO.getId()))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
