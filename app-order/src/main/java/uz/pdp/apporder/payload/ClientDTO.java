@@ -14,6 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ClientDTO {
 
+    private UUID userId;
+
     private String name;
 
     private String phoneNumber;

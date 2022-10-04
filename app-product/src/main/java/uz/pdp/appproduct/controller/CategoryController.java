@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 public interface CategoryController {
 
-
     @PostMapping( "/add")
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 

@@ -13,18 +13,18 @@ public class Branch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToOne(optional = false)
     private Address address;
 
     @Column(nullable = false)
-    private Double standartDictance;
+    private Double standardDistance;
 
     @Column(nullable = false)
-    private Double standartDictancePrice;
+    private Double standardDistancePrice;
 
     @Column(nullable = false)
-    private Double standartDictanceMorePrice;
+    private Double standardDistanceMorePrice;
 }

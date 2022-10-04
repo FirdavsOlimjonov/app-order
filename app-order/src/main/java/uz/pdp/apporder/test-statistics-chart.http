@@ -1,0 +1,19 @@
+POST http://localhost/api/v1/order/statistics-order
+Content-Type: application/json
+
+{
+  "tillDate": "2019-04-01",
+  "fromDate": "2019-01-05",
+  "orderStatusEnum": "REJECTED"
+}
+
+###
+
+POST http://localhost/api/v1/order/statistics-order
+Content-Type: application/json
+
+{
+  "tillDate": "2019-04-01",
+  "fromDate": "2019-01-05",
+  "branchId": "1"
+}

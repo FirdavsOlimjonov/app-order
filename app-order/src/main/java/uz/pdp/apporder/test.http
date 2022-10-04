@@ -1,4 +1,4 @@
-POST http://localhost:8081/api/order/save-mob-app
+POST http://localhost:8081/api/v1/order/save-mob-app
 Content-Type: application/json
 
 {
@@ -18,24 +18,17 @@ Content-Type: application/json
 }
 
 
+###
+GET http://localhost:8081/api/v1/order/list-by-status/PAYMENT_WAITING
+Content-Type: application/json
 
 
 ###
-POST http://localhost:8081/api/order/save-web
+
+POST http://54.209.172.146:8090/api/auth/sign-in
 Content-Type: application/json
 
 {
-  "orderProductsDTOList": [
-    {
-      "productId": 1,
-      "quantity": 18
-    }
-  ],
-  "addressDTO": {
-    "lat": 2.91,
-    "lng": 4.92,
-    "address": "test_3aa01a8b746e",
-    "extraAddress": "test_df849d5293dd"
-  },
-  "paymentType": "PAYME"
+  "email": "admin@codingbat.com",
+  "password": "root123"
 }
