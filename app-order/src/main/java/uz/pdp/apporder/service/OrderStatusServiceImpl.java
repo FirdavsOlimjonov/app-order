@@ -3,6 +3,7 @@ package uz.pdp.apporder.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import uz.pdp.apporder.aop.OpenFeign;
 import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
@@ -12,7 +13,6 @@ import uz.pdp.apporder.payload.OperatorDTO;
 import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.utils.CommonUtils;
-import uz.pdp.apporder.utils.OpenFeign;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -138,7 +138,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     private ClientDTO getClientDTO(UUID uuid) {
 
-        ClientDTO data = openFeign.getClientDTO(uuid).getData();
+        ClientDTO data = openFeign.getClientDTO(uuid, getToken()).getData();
         if (data == null)
             throw RestException.restThrow("user not found", HttpStatus.NOT_FOUND);
         return data;
