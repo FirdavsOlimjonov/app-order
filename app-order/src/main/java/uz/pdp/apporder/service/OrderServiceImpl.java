@@ -202,9 +202,6 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-
-
-
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
     private Branch findNearestBranch(AddressDTO addressDTO) {
         return branchRepository.findById(1).orElseThrow();
