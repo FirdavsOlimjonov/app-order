@@ -9,5 +9,5 @@ public enum PermissionEnum  {
     ADD_ORDER,
     GET_ORDER_FOR_COURIER,
     EDIT_STATUS,
-    SHOW_STATISTICS
+    GET_ORDER, SHOW_STATISTICS
 }

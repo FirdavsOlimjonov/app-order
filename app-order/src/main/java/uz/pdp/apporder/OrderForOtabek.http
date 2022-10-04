@@ -1,0 +1,13 @@
+POST //localhost:8180/api/v1/order/save-mob-app
+Content-Type: application/json
+
+
+
+###
+POST http://localhost:8180/api/v1/order/save-web
+Content-Type: application/json
+
+
+###
+GET http://localhost:8180/api/v1/order/list-by-status/PAYMENT_WAITING
+Content-Type: application/json
