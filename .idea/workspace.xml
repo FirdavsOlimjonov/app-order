@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="263488fe-b4e7-4edf-8404-fe748eec59b0" name="Changes" comment="prices of delivering CRUD">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/utils/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="263488fe-b4e7-4edf-8404-fe748eec59b0" name="Changes" comment="prices of delivering CRUD" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,6 +192,7 @@
       <workItem from="1664962933574" duration="168000" />
       <workItem from="1664971966560" duration="36000" />
       <workItem from="1664972017918" duration="4386000" />
+      <workItem from="1664979902125" duration="298000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
