@@ -21,4 +21,16 @@ public interface RestConstants {
             "END\n" +
             "$$";
 
+
+    String INITIAL_PRODUCT_FUNCTION = "DROP FUNCTION IF EXISTS get_query_result;" +
+            " create function get_query_result(sql_query text) " +
+            "    returns TABLE(id integer, active boolean, description character varying, name character varying, price real, category_id integer, discount_id integer, promotion_id integer) " +
+            "    language plpgsql " +
+            "as " +
+            "$$ " +
+            "BEGIN " +
+            "    RETURN QUERY " +
+            "        EXECUTE sql_query; " +
+            "END " +
+            "$$;";
 }

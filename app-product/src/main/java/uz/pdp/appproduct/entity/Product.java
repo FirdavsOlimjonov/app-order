@@ -29,4 +29,10 @@ public class Product {
     private Category category;
 
     private String description;
+
+    @ManyToOne
+    private Discount discount;
+
+    @ManyToOne
+    private Promotion promotion;
 }

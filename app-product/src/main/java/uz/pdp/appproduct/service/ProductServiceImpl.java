@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
+import uz.pdp.appproduct.dto.ProductDTOCommon;
 import uz.pdp.appproduct.dto.ViewDTO;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.entity.Product;
@@ -12,7 +13,9 @@ import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.repository.CategoryRepository;
 import uz.pdp.appproduct.repository.ProductRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -143,6 +146,59 @@ public class ProductServiceImpl implements ProductService {
                 product.getCategory().getId(),
                 product.isActive(),
                 product.getDescription());
+    }
+
+    public ApiResult<Set<ProductDTOCommon>> getCommonProducts(){
+        String query1 =
+                "SELECT DISTINCT ON(p.id) p.* FROM product p WHERE discount_id IS NOT NULL " +
+                        " UNION " +
+                        " SELECT p.* FROM product p WHERE promotion_id IS NOT NULL " +
+                        " LIMIT 10";
+
+        String query2 =
+                " WITH temp AS (SELECT p.*, COUNT(op.product_id) count FROM product p " +
+                        " INNER JOIN order_product op ON op.product_id = p.id " +
+                        " GROUP BY p.id  ORDER BY count DESC" +
+                        " LIMIT 10) " +
+                        " SELECT t.id, t.active, t.description, t.name, t.price, t.category_id, t.discount_id, t.promotion_id" +
+                        " FROM temp t";
+
+        Set<Product> discountProducts = productRepository.getCommon(query1);
+
+        Set<Product> commonProducts = productRepository.getCommon(query2);
+
+        Set<ProductDTOCommon> commons =  sumCommons(discountProducts, commonProducts);
+
+        return ApiResult.successResponse(commons);
+    }
+
+    private Set<ProductDTOCommon> sumCommons(Set<Product> discountProducts, Set<Product> commonProducts) {
+
+        Set<ProductDTOCommon> result = new HashSet<>();
+
+        discountProducts
+                .forEach(p -> result.add(new ProductDTOCommon(
+                    p.getId(),
+                    p.isActive(),
+                    p.getDescription(),
+                    p.getPrice(),
+                    p.getName(),
+                    p.getCategory(),
+                    p.getDiscount(),
+                    p.getPromotion())));
+
+        commonProducts
+                .forEach(p -> result.add(new ProductDTOCommon(
+                    p.getId(),
+                    p.isActive(),
+                    p.getDescription(),
+                    p.getPrice(),
+                    p.getName(),
+                    p.getCategory(),
+                    p.getDiscount(),
+                    p.getPromotion())));
+
+        return result;
     }
 
 }

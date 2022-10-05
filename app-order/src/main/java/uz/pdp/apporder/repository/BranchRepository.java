@@ -15,4 +15,9 @@ public interface BranchRepository extends JpaRepository<Branch, Integer> {
     @Query(nativeQuery = true,value = RestConstants.INITIAL_SEARCHING_FUNCTION)
     void executeInitialFunction();
 
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value = RestConstants.INITIAL_PRODUCT_FUNCTION)
+    void executeProductFunction();
 }

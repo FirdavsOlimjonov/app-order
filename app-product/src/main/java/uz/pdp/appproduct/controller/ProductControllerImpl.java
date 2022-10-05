@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
+import uz.pdp.appproduct.dto.ProductDTOCommon;
 import uz.pdp.appproduct.dto.ViewDTO;
 import uz.pdp.appproduct.service.ProductService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,5 +50,10 @@ public class ProductControllerImpl implements ProductController {
     @Override
     public ApiResult<List<ProductDTO>> getProducts() {
         return productService.getProducts();
+    }
+
+    @Override
+    public ApiResult<Set<ProductDTOCommon>> getCommonProduct() {
+        return productService.getCommonProducts();
     }
 }

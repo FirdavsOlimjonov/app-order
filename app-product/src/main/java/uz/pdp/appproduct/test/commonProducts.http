@@ -1,0 +1,2 @@
+GET http://localhost:8182/api/order/v1/product/common-products
+Content-Type: application/json

@@ -3,15 +3,19 @@ package uz.pdp.appproduct.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
+import uz.pdp.appproduct.dto.ProductDTOCommon;
 import uz.pdp.appproduct.dto.ViewDTO;
 import uz.pdp.appproduct.util.RestConstants;
 
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping(ProductController.BASE_PATH)
 public interface ProductController {
 
     String BASE_PATH = RestConstants.SERVICE_BASE_PATH + "product";
+
+    String COMMON_PRODUCTS_LIST_PATH = "/common-products";
 
     /**
      * bu yol faqat super admin uchun
@@ -55,4 +59,6 @@ public interface ProductController {
     @GetMapping(path = "/list-for-users")
     ApiResult<List<ProductDTO>> getProducts();
 
+    @GetMapping(COMMON_PRODUCTS_LIST_PATH)
+    ApiResult<Set<ProductDTOCommon>> getCommonProduct();
 }

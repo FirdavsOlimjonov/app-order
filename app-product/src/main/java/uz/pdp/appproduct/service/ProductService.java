@@ -2,9 +2,11 @@ package uz.pdp.appproduct.service;
 
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
+import uz.pdp.appproduct.dto.ProductDTOCommon;
 import uz.pdp.appproduct.dto.ViewDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
     ApiResult<ProductDTO> addProduct(ProductDTO productDTO);
@@ -24,4 +26,6 @@ public interface ProductService {
     ApiResult<ProductDTO> getProduct(Integer id);
 
     ApiResult<List<ProductDTO>> getProducts();
+
+    ApiResult<Set<ProductDTOCommon>> getCommonProducts();
 }
