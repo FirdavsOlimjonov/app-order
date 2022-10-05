@@ -1,0 +1,30 @@
+POST http://localhost/api/order/v1/product/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
+
+{
+  "price": 89.18,
+  "name": "test_6560237d7b48",
+  "categoryId": 2,
+  "active": true,
+  "description": "test_44734fe2fd6d"
+}
+
+###
+GET https://localhost:8081/api/category/1
+###
+PUT http://localhost:8081/api/categeory/1
+Content-Type: application/json
+Accept-Language: uz
+
+{
+  "id": 1,
+  "nameUz": "ichimliklar",
+  "nameRu": "drinks"
+}
+###
+DELETE http://localhost:8081/api/categeory/1
+
+###
+POST http://localhost:8081/api/categeory/list
+

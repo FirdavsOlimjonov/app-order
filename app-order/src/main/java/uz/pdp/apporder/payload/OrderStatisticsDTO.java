@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.appproduct.dto.ClientDTO;
 
 import java.time.LocalDateTime;
 

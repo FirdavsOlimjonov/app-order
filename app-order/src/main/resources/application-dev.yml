@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/order_parent
     username: postgres
     password: root123
 
@@ -11,7 +11,6 @@ spring:
     properties:
       hibernate:
         enable_lazy_load_no_trans: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 eureka:
   client:
@@ -21,3 +20,8 @@ eureka:
       defaultZone: http://localhost:8762/eureka
   instance:
     hostname: localhost
+
+telegram:
+  webhook-path: "https://b084-188-113-204-30.in.ngrok.io"
+  bot-name: "@maxway_deliverybot"
+  bot-token: "5511026470:AAHT-D1EXn447o_DdGh5F0PfrAI-iV9DzSQ"

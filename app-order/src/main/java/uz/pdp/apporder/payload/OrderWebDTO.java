@@ -5,8 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.appproduct.dto.ClientDTO;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,12 +20,28 @@ import java.util.List;
 @Setter
 public class OrderWebDTO {
 
-    private ClientFromWebDTO clientFromWebDTO;
+    @NotNull
+    private ClientDTO client;
 
-    private List<OrderProductsDTO> orderProductsDTOList;
+    @NotNull
+    private Set<OrderProductDTO> products;
 
-    private AddressDTO addressDTO;
+    @NotNull
+    private AddressDTO address;
 
+    @NotNull
     private PaymentType paymentType;
+
+
+    public Map<Integer, OrderProductDTO> orderProductDTOMap() {
+        if (Objects.isNull(products))
+            return new HashMap<>();
+
+        return products
+                .stream()
+                .collect(Collectors.toMap(
+                        OrderProductDTO::getProductId,
+                        o -> o));
+    }
 
 }

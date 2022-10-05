@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.appproduct.service.CategoryService;
 
 import java.util.List;
@@ -15,12 +17,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CategoryControllerImpl implements CategoryController {
-
+    
     private final CategoryService categoryService;
 
+    @CheckAuthEmpl(permissions = {PermissionEnum.ADD_CATEGORY})
     @Override
     public ApiResult<CategoryDTO> add(CategoryDTO categoryDTO) {
-
         return categoryService.add(categoryDTO);
     }
 

@@ -9,8 +9,13 @@ import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
-import uz.pdp.apporder.repository.*;
-import uz.pdp.apporder.utils.OpenFeign;
+import uz.pdp.apporder.repository.BranchRepository;
+import uz.pdp.apporder.repository.OrderProductRepository;
+import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.appproduct.aop.AuthFeign;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +30,7 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
     private final BranchRepository branchRepository;
     private final OrderProductRepository orderProductRepository;
 
-    private final OpenFeign openFeign;
+    private final AuthFeign openFeign;
 
 
     /**
@@ -178,9 +183,11 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
 
         orderStatisticsDTO.setBranchDTO(branchDTO);
 
-        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId())).getData();
+        String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
 
-        OperatorDTO operatorDTO = openFeign.getOperatorDTO(UUID.fromString(projection.getOperatorId())).getData();
+        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId()),token).getData();
+
+        EmployeeDTO operatorDTO = openFeign.getEmployeeDTO(UUID.fromString(projection.getOperatorId()), token).getData();
 
         orderStatisticsDTO.setClientDTO(clientDTO);
         orderStatisticsDTO.setOperatorDTOForList(mapOperatorDTOToOperatorDTOForList(operatorDTO));
@@ -192,8 +199,7 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
         return orderStatisticsDTO;
     }
 
-
-    private OperatorDTOForList mapOperatorDTOToOperatorDTOForList(OperatorDTO operatorDTO){
+    private OperatorDTOForList mapOperatorDTOToOperatorDTOForList(EmployeeDTO operatorDTO){
         return new OperatorDTOForList(operatorDTO.getFirstName(), operatorDTO.getLastName());
     }
 }

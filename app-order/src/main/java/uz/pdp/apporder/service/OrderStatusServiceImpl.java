@@ -7,13 +7,15 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.ClientDTO;
-import uz.pdp.apporder.payload.OperatorDTO;
 import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.appproduct.aop.AuthFeign;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.util.CommonUtils;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,22 +23,20 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     private final OrderRepository orderRepository;
 
-    @Override
-    public ApiResult<?> transferPaymentWaitingStatus(OrderDTO orderDTO) {
+    private final AuthFeign authFeign;
 
+    @Override
+    public ApiResult<OrderDTO> transferPaymentWaitingStatus(OrderDTO orderDTO) {
         return null;
     }
 
     @Override
-    public ApiResult<?> transferNewStatus(OrderDTO orderDTO) {
+    public ApiResult<OrderDTO> transferNewStatus(OrderDTO orderDTO) {
         return null;
     }
 
     @Override
-    public ApiResult<?> transferAcceptedStatus(Long id) {
-
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
+    public ApiResult<OrderDTO> transferAcceptedStatus(Long id) {
         Order order = orderRepository.getByIdAndStatusEnumOrStatusEnum(
                 id,
                 OrderStatusEnum.NEW,
@@ -50,12 +50,11 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
         orderRepository.save(order);
 
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
-    public ApiResult<?> transferCookingStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+    public ApiResult<OrderDTO> transferCookingStatus(Long id) {
 
         Order order = getOrder(id, OrderStatusEnum.ACCEPTED);
 
@@ -64,24 +63,23 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
         orderRepository.save(order);
 
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
-    public ApiResult<?> transferReadyStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+    public ApiResult<OrderDTO> transferReadyStatus(Long id) {
 
         Order order = getOrder(id, OrderStatusEnum.COOKING);
 
         order.setStatusEnum(OrderStatusEnum.READY);
         order.setReadyAt(LocalDateTime.now());
+        orderRepository.save(order);
 
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
-    public ApiResult<?> transferSentStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+    public ApiResult<OrderDTO> transferSentStatus(Long id) {
 
         Order order = getOrder(id, OrderStatusEnum.READY);
 
@@ -89,33 +87,36 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         order.setSentAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
-    public ApiResult<?> transferFinishedStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
+    public ApiResult<OrderDTO> transferFinishedStatus(Long id) {
         Order order = getOrder(id, OrderStatusEnum.SENT);
 
         order.setStatusEnum(OrderStatusEnum.FINISHED);
         order.setClosedAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     @Override
-    public ApiResult<?> transferRejectedStatus(Long id) {
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
-
-        Order order = getOrder(id, OrderStatusEnum.SENT);
+    public ApiResult<OrderDTO> transferRejectedStatus(Long id) {
+        Order order = orderRepository.getOrderIdAndStatus(
+                id,
+                OrderStatusEnum.PAYMENT_WAITING,
+                OrderStatusEnum.NEW,
+                OrderStatusEnum.SENT
+        ).orElseThrow(() ->
+                RestException.restThrow("Order not found", HttpStatus.BAD_REQUEST)
+        );
 
         order.setStatusEnum(OrderStatusEnum.REJECTED);
         order.setCancelledAt(LocalDateTime.now());
 
         orderRepository.save(order);
-        return ApiResult.successResponse(ApiResult.successResponse(toOrderDTO(order, currentUser)));
+        return ApiResult.successResponse(toOrderDTO(order));
     }
 
     private Order getOrder(Long id, OrderStatusEnum statusEnum) {
@@ -126,13 +127,31 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         );
     }
 
-    private OrderDTO toOrderDTO(Order order, ClientDTO clientDTO) {
+    private OrderDTO toOrderDTO(Order order) {
         return OrderDTO.builder()
                 .branchName(order.getBranch().getName())
-                .clientDTO(clientDTO)
-                .operatorDTO(new OperatorDTO())
+                .clientDTO(getClientDTO(order.getClientId()))
                 .number(order.getNumber())
                 .paymentType(order.getPaymentType())
                 .build();
+    }
+
+    private ClientDTO getClientDTO(UUID uuid) {
+
+        ClientDTO data = authFeign.getClientDTO(uuid, getToken()).getData();
+        if (data == null)
+            throw RestException.restThrow("user not found", HttpStatus.NOT_FOUND);
+        return data;
+    }
+
+    private EmployeeDTO getOperatorDTO(UUID uuid) {
+        return null;
+    }
+
+    private String getToken() {
+        String authorization = CommonUtils.getCurrentRequest().getHeader("Authorization");
+        if (authorization == null)
+            throw RestException.restThrow("Not access", HttpStatus.UNAUTHORIZED);
+        return authorization;
     }
 }

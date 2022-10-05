@@ -13,6 +13,7 @@ public class CategoryDTO {
 
     private String nameUz;
 
+
     private String nameRu;
 
     private Category parentCategory;
