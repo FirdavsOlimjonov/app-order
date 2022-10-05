@@ -1,12 +1,12 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.utils.RestConstants;
+import uz.pdp.appproduct.aop.CheckAuth;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
 import java.util.List;
