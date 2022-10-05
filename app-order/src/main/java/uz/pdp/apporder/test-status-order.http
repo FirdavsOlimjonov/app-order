@@ -1,0 +1,23 @@
+GET http://localhost:8181/api/v1/order-status/transfer-accepted/1
+Content-Type: application/json
+Authorization: token without bearer
+###
+GET http://localhost:8081/api/v1/order-status/transfer-cooking/1
+Content-Type: application/json
+Authorization: token without bearer
+###
+GET http://localhost:8081/api/v1/order-status/transfer-ready/1
+Content-Type: application/json
+Authorization: token without bearer
+###
+GET http://localhost:8081/api/v1/order-status/transfer-sent/1
+Content-Type: application/json
+Authorization: token without bearer
+###
+GET http://localhost:8081/api/v1/order-status/transfer-finished/1
+Content-Type: application/json
+Authorization: token without bearer
+###
+GET http://localhost:8081/api/v1/order-status/transfer-rejected/1
+Content-Type: application/json
+Authorization: token without bearer
