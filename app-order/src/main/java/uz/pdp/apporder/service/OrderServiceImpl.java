@@ -12,9 +12,13 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.*;
+import uz.pdp.apporder.repository.BranchRepository;
+import uz.pdp.apporder.repository.ClientRepository;
+import uz.pdp.apporder.repository.OrderProductRepository;
+import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.utils.CommonUtils;
 import uz.pdp.appproduct.entity.Product;
+import uz.pdp.appproduct.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;

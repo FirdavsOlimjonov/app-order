@@ -4,13 +4,16 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.util.RestConstants;
+
 import java.util.List;
 
-@RequestMapping("/api/category")
-@RestController
+@RequestMapping(CategoryController.BASE_PATH)
 public interface CategoryController {
+    String BASE_PATH = RestConstants.SERVICE_BASE_PATH + "category";
 
-    @PostMapping( "/add")
+
+    @PostMapping("/add")
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 
     @GetMapping(path = "/list")

@@ -1,8 +1,8 @@
-package uz.pdp.telegrambot.util;
+package uz.pdp.apporder.telegrambot.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import uz.pdp.telegrambot.repository.ChatPageStatusRepository;
+import uz.pdp.apporder.telegrambot.repository.ChatPageStatusRepository;
 
 @AllArgsConstructor
 public class NeededUtils {

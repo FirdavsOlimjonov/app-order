@@ -1,4 +1,4 @@
-POST https://localhost:8081/api/category/add
+POST http://localhost/api/order/v1/category/add
 Content-Type: application/json
 
 {
