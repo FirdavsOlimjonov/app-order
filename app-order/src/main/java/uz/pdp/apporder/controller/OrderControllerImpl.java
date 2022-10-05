@@ -42,10 +42,15 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
+    public ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(ViewDTO viewDTO, Integer page, Integer size) {
+        return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
+
+    }
+
+    @Override
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
-
 
 
     @Override
@@ -77,7 +82,7 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public ApiResult<?> editOrder(OrderWebDTO order, Long id) {
-        return orderService.editOrder(order,id);
+        return orderService.editOrder(order, id);
     }
 
 }
