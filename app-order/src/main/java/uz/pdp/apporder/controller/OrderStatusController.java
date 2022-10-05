@@ -1,9 +1,9 @@
 package uz.pdp.apporder.controller;
 
-import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.aop.CheckAuthEmpl;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderDTO;
 

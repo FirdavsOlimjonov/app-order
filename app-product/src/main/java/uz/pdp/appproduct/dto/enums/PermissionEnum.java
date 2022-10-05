@@ -1,8 +1,9 @@
-package uz.pdp.apporder.entity.enums;
+package uz.pdp.appproduct.dto.enums;
 
 
 public enum PermissionEnum {
 
+    ADD_CATEGORY,
     ADD_PRODUCT,
     GET_PRICE_FOR_DELIVERY,
     GET_ALL_PRICES_FOR_DELIVERIES,

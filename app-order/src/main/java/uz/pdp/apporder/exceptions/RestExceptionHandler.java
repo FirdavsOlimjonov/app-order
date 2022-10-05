@@ -18,13 +18,22 @@ import java.util.List;
 @Slf4j
 public class RestExceptionHandler {
 
-    @ExceptionHandler(value = RestException.class)
+    @ExceptionHandler(value = {RestException.class})
     public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(RestException ex) {
-        log.error("Exception: ",ex);
+        log.error("Exception: ", ex);
         ApiResult<List<ErrorData>> result =
                 ApiResult.failResponse(ex.getMessage(),
                         ex.getStatus().value());
         return new ResponseEntity<>(result, ex.getStatus());
+    }
+
+    @ExceptionHandler(value = {uz.pdp.appproduct.exceptions.RestException.class})
+    public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(uz.pdp.appproduct.exceptions.RestException exception) {
+        log.error("Exception: ", exception);
+        ApiResult<List<ErrorData>> result =
+                ApiResult.failResponse(exception.getMessage(),
+                        exception.getStatus().value());
+        return new ResponseEntity<>(result, exception.getStatus());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
@@ -55,14 +64,11 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ApiResult<List<ErrorData>>> exceptionHandle(Exception ex) {
-        System.out.println(Thread.currentThread().getName());
-        log.error("Exception: ",ex);
         ApiResult<List<ErrorData>> apiResult = ApiResult.failResponse(
                 ex.getMessage(),
                 HttpStatus.CONFLICT.value());
         return new ResponseEntity<>(apiResult, HttpStatus.CONFLICT);
     }
-
 
 
 }
