@@ -1,7 +1,6 @@
 package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.apporder.aop.CheckAuth;
 import uz.pdp.apporder.aop.CheckAuthEmpl;
@@ -12,7 +11,6 @@ import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 import uz.pdp.apporder.service.OrderStatisticsInList;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,11 +36,13 @@ public class OrderControllerImpl implements OrderController {
 
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
