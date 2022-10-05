@@ -9,14 +9,17 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(
         scanBasePackages =
-        {
-                "uz.pdp.appproduct",
-                "uz.pdp.apporder",
-        }
+                {
+                        "uz.pdp.appproduct",
+                        "uz.pdp.apporder",
+                }
 )
 
 @EnableEurekaClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {
+        "uz.pdp.appproduct",
+        "uz.pdp.apporder",
+})
 @EntityScan(basePackages = {
         "uz.pdp.appproduct.entity",
         "uz.pdp.apporder.entity",
@@ -26,8 +29,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "uz.pdp.apporder.repository",
         "uz.pdp.appproduct.repository",
         "uz.pdp.apporder.telegrambot.repository",
-
-
 })
 public class AppOrderApplication {
 

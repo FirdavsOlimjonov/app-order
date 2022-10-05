@@ -5,20 +5,20 @@ import uz.pdp.apporder.payload.OrderDTO;
 
 public interface OrderStatusService {
 
-    ApiResult<?> transferPaymentWaitingStatus(OrderDTO orderDTO);
+    ApiResult<OrderDTO> transferPaymentWaitingStatus(OrderDTO orderDTO);
 
-    ApiResult<?> transferNewStatus(OrderDTO orderDTO);
+    ApiResult<OrderDTO> transferNewStatus(OrderDTO orderDTO);
 
-    ApiResult<?> transferAcceptedStatus(Long id);
+    ApiResult<OrderDTO> transferAcceptedStatus(Long id);
 
-    ApiResult<?> transferCookingStatus(Long id);
+    ApiResult<OrderDTO> transferCookingStatus(Long id);
 
-    ApiResult<?> transferReadyStatus(Long id);
+    ApiResult<OrderDTO> transferReadyStatus(Long id);
 
-    ApiResult<?> transferSentStatus(Long id);
+    ApiResult<OrderDTO> transferSentStatus(Long id);
 
-    ApiResult<?> transferFinishedStatus(Long id);
+    ApiResult<OrderDTO> transferFinishedStatus(Long id);
 
-    ApiResult<?> transferRejectedStatus(Long id);
+    ApiResult<OrderDTO> transferRejectedStatus(Long id);
 
 }

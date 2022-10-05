@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.enums.PaymentType;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,13 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderUserDTO {
 
-    @NotBlank
-    private List<OrderProductsDTO> orderProductsDTOList;
+    @NotNull
+    @NotEmpty
+    private Set<OrderProductDTO> orderProductsDTOList;
 
     @NotNull
     private AddressDTO addressDTO;
 
-    @NotBlank
+    @NotNull
     private PaymentType paymentType;
 
 }

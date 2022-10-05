@@ -12,6 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name","category_id"}))
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Product {
 
     private Float price;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(optional = false)
