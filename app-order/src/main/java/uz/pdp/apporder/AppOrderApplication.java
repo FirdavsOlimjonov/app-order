@@ -5,15 +5,30 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages =
+        {
+                "uz.pdp.appproduct",
+                "uz.pdp.apporder",
+        }
+)
+
 @EnableEurekaClient
 @EnableFeignClients
-@EntityScan(basePackages = {"uz.pdp.appproduct.entity", "uz.pdp.telegrambot.entity", "uz.pdp.apporder.entity",})
-@EnableJpaRepositories(basePackages = {"uz.pdp.apporder.repository"})
+@EntityScan(basePackages = {
+        "uz.pdp.appproduct.entity",
+        "uz.pdp.apporder.entity",
+        "uz.pdp.apporder.telegrambot.entity",
+})
+@EnableJpaRepositories(basePackages = {
+        "uz.pdp.apporder.repository",
+        "uz.pdp.appproduct.repository",
+        "uz.pdp.apporder.telegrambot.repository",
+
+
+})
 public class AppOrderApplication {
 
     public static void main(String[] args) {

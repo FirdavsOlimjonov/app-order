@@ -20,18 +20,16 @@ public class PriceForDelivery {
     private Integer id;
 
     @Column(nullable = false)
-    @NotNull
     private Double priceForPerKilometr;
 
     @Column(nullable = false)
-    @NotNull
     private Double initialPrice;
 
     @Column(nullable = false)
-    @NotNull
     private Integer initialDistance;
 
     @OneToOne
+    @NotNull
     private  Branch branch;
 
 }

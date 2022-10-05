@@ -1,6 +1,7 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.apporder.aop.CheckAuth;
 import uz.pdp.apporder.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
@@ -34,12 +35,14 @@ public interface OrderController {
 
     String EDIT_ORDER = "/editOrder";
 
-    String PATH_BASE = "/api/v1/order";
+    String PATH_BASE = "/api/order/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
+    @CheckAuth()
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
 
     @PostMapping(SAVE_WEB)
+    @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
 
@@ -61,7 +64,7 @@ public interface OrderController {
      ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus);
 
     @GetMapping(ORDER_LIST_PATH)
-//    @CheckAuth(permissions = {PermissionEnum.GET_ORDER})
+    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ORDER})
     ApiResult<List<OrderDTO>> getOrderList();
 
     @GetMapping(ODER_STATUS_WITH_COUNT_AND_PRICE_PATH+"/{orderStatus}")

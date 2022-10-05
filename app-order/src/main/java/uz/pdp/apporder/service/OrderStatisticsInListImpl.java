@@ -195,7 +195,6 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
         return orderStatisticsDTO;
     }
 
-
     private OperatorDTOForList mapOperatorDTOToOperatorDTOForList(OperatorDTO operatorDTO){
         return new OperatorDTOForList(operatorDTO.getFirstName(), operatorDTO.getLastName());
     }

@@ -1,4 +1,4 @@
-package uz.pdp.telegrambot.config;
+package uz.pdp.apporder.telegrambot.config;
 
 import lombok.AccessLevel;
 import lombok.Getter;

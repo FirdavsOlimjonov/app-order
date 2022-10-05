@@ -6,6 +6,7 @@ import java.util.*;
 @Getter
 public class SearchingDTO {
 
+
     private List<String> columns = new ArrayList<>();
 
     private String value = "";

@@ -1,0 +1,28 @@
+POST http://localhost/api/order/v1/category/add
+Content-Type: application/json
+
+{
+  "nameUz": "lavash",
+  "nameRu": "lavash",
+  "parentCategory": null
+}
+
+###
+GET https://localhost:8081/api/category/1
+\
+###
+PUT http://localhost:8081/api/categeory/1
+Content-Type: application/json
+Accept-Language: uz
+
+{
+  "id": 1,
+  "nameUz": "ichimliklar",
+  "nameRu": "drinks"
+}
+###
+DELETE http://localhost:8081/api/categeory/1
+
+###
+POST http://localhost:8081/api/categeory/list
+

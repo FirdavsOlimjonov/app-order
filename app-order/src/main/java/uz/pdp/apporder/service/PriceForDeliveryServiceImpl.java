@@ -1,8 +1,10 @@
 package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import uz.pdp.apporder.entity.PriceForDelivery;
+import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.PriceForDeliveryDTO;
 import uz.pdp.apporder.repository.PriceForDeliveryRepository;
@@ -18,7 +20,7 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
     @Override
     public ApiResult<PriceForDelivery> add(PriceForDeliveryDTO priceForDeliveryDTO) {
         if (priceForDeliveryRepository.existsByBranchContains(priceForDeliveryDTO.getBranch().getName())){
-            return ApiResult.successResponse("This branch already exists!");
+            throw RestException.restThrow("This branch already exists!", HttpStatus.CONFLICT);
         }
         PriceForDelivery priceForDelivery = new PriceForDelivery();
         priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
@@ -27,16 +29,15 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         priceForDelivery.setInitialPrice(priceForDelivery.getInitialPrice());
         priceForDeliveryRepository.save(priceForDelivery);
 
-        return ApiResult.successResponse("Added!",priceForDelivery);
+        return ApiResult.successResponse("Branch is successfully added!" , priceForDelivery);
     }
 
     @Override
     public ApiResult<PriceForDelivery> getPriceForDeliveryById(Integer id) {
         Optional<PriceForDelivery> priceForDeliveryRepositoryById = priceForDeliveryRepository.findById(id);
         if (priceForDeliveryRepositoryById.isEmpty()) {
-            return ApiResult.successResponse("This id not exists!");
+            throw RestException.restThrow("Information about prices is not found in this id", HttpStatus.NOT_FOUND);
         }
-
         PriceForDelivery priceForDelivery = priceForDeliveryRepositoryById.get();
         return ApiResult.successResponse(priceForDelivery);
     }
@@ -51,7 +52,7 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
     public ApiResult<Boolean> deletePriceForDeliveryById(Integer id) {
         Optional<PriceForDelivery> priceForDeliveryRepositoryById = priceForDeliveryRepository.findById(id);
         if (priceForDeliveryRepositoryById.isEmpty()){
-            return ApiResult.successResponse("This id not exists!");
+            throw RestException.restThrow("Information about prices is not found in this id", HttpStatus.NOT_FOUND);
         }
         priceForDeliveryRepository.deleteById(id);
         return ApiResult.successResponse("Deleted",true);
@@ -67,7 +68,7 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
     public ApiResult<PriceForDelivery> edit(Integer id, PriceForDeliveryDTO priceForDeliveryDTO) {
         Optional<PriceForDelivery> priceForDeliveryRepositoryById = priceForDeliveryRepository.findById(id);
         if (priceForDeliveryRepositoryById.isEmpty()) {
-            return ApiResult.successResponse("This id not exists!");
+            throw RestException.restThrow("Information about prices is not found in this id", HttpStatus.NOT_FOUND);
         }
 
         PriceForDelivery priceForDelivery = priceForDeliveryRepositoryById.get();
