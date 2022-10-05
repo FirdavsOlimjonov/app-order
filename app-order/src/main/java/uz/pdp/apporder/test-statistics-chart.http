@@ -1,4 +1,4 @@
-POST http://localhost/api/order/v1/order/statistics-order
+POST http://localhost/api/order/v1/order/statistics-order-chart
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost/apiorder/v1/order/statistics-order
+POST http://localhost/apiorder/v1/order/statistics-payment
 Content-Type: application/json
 
 {

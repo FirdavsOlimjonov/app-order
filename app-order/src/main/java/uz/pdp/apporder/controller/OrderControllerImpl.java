@@ -37,6 +37,7 @@ public class OrderControllerImpl implements OrderController {
 
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
@@ -48,6 +49,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
