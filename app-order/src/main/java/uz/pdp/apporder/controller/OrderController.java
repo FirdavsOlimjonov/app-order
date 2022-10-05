@@ -3,15 +3,10 @@ package uz.pdp.apporder.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.aop.CheckAuth;
 import uz.pdp.apporder.aop.CheckAuthEmpl;
+import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
+import uz.pdp.apporder.utils.RestConstants;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,12 +17,13 @@ public interface OrderController {
 
     String GET_ONE_ORDER_PATH = "/get{orderId}";
 
-    String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/orderstatus"; // it is the path of the info of order's
+    String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/order-status"; // it is the path of the info of order's
     // status ,price and count
 
     String ORDER_LIST_PATH = "/list";
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
-    String STATISTICS_ORDER_PATH = "/statistics-order";
+    String STATISTICS_ORDER_PATH = "/statistics-order-chart";
+    String STATISTICS_ORDER_LIST_PATH = "/statistics-order-list";
     String STATISTICS_PAYMENT_PATH = "/statistics-payment";
     String SAVE_MOB_APP = "/save-mob-app";
 
@@ -51,6 +47,13 @@ public interface OrderController {
     @PostMapping(STATISTICS_ORDER_PATH)
     ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
+    @PostMapping(STATISTICS_ORDER_LIST_PATH)
+    @CheckAuth
+    ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(@Valid @RequestBody ViewDTO viewDTO,
+                                                                  @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) Integer page,
+                                                                  @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) Integer size
+    );
+
     @PostMapping(STATISTICS_PAYMENT_PATH)
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);
 
@@ -59,20 +62,20 @@ public interface OrderController {
     ApiResult<OrderDTO> getOneOrder(@PathVariable Long orderId);
 
 
-    @GetMapping(ORDER_LIST_BY_STATUS_PATH+"/{orderStatus}")
+    @GetMapping(ORDER_LIST_BY_STATUS_PATH + "/{orderStatus}")
     @CheckAuthEmpl(permissions = {PermissionEnum.GET_ORDER})
-     ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus);
+    ApiResult<List<OrderDTO>> getOrdersByStatus(@PathVariable String orderStatus);
 
     @GetMapping(ORDER_LIST_PATH)
     @CheckAuthEmpl(permissions = {PermissionEnum.GET_ORDER})
     ApiResult<List<OrderDTO>> getOrderList();
 
-    @GetMapping(ODER_STATUS_WITH_COUNT_AND_PRICE_PATH+"/{orderStatus}")
+    @GetMapping(ODER_STATUS_WITH_COUNT_AND_PRICE_PATH + "/{orderStatus}")
     ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(@PathVariable OrderStatusEnum orderStatus);
 
 
     @CheckAuthEmpl(permissions = {PermissionEnum.EDIT_ORDER})
-    @PutMapping(EDIT_ORDER+"/{orderId}")
+    @PutMapping(EDIT_ORDER + "/{orderId}")
     ApiResult<?> editOrder(@RequestBody OrderWebDTO orderWebDTO, @PathVariable Long orderId);
 
 }
