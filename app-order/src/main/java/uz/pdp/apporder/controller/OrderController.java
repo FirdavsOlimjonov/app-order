@@ -35,7 +35,7 @@ public interface OrderController {
 
     String EDIT_ORDER = "/editOrder";
 
-    String PATH_BASE = "/api/v1/order";
+    String PATH_BASE = "/api/order/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
     @CheckAuth()
