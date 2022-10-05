@@ -1,17 +1,10 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.aop.CheckAuthEmpl;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
-import uz.pdp.apporder.payload.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.OrderChartDTO;
-import uz.pdp.apporder.payload.OrderUserDTO;
+import uz.pdp.apporder.payload.*;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,9 +15,8 @@ public interface OrderController {
 
     String GET_ONE_ORDER_PATH = "/get{orderId}";
 
-    String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/orderstatus"; // it is the path of the info of order's
+    String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/order-status"; // it is the path of the info of order's
     // status ,price and count
-
     String ORDER_LIST_PATH = "/list";
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
     String STATISTICS_ORDER_PATH = "/statistics-order";
@@ -38,7 +30,6 @@ public interface OrderController {
     String PATH_BASE = "/api/order/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
-    @CheckAuth()
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
 
     @PostMapping(SAVE_WEB)

@@ -7,11 +7,11 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.ClientDTO;
-import uz.pdp.apporder.payload.OperatorDTO;
 import uz.pdp.apporder.payload.OrderDTO;
 import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.util.CommonUtils;
 
 import java.time.LocalDateTime;
 
@@ -130,7 +130,7 @@ public class OrderStatusServiceImpl implements OrderStatusService {
         return OrderDTO.builder()
                 .branchName(order.getBranch().getName())
                 .clientDTO(clientDTO)
-                .operatorDTO(new OperatorDTO())
+                .operatorDTO(new EmployeeDTO())
                 .number(order.getNumber())
                 .paymentType(order.getPaymentType())
                 .build();

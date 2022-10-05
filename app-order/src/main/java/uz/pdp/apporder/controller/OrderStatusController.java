@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
+import uz.pdp.appproduct.aop.CheckAuth;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderDTO;
 
