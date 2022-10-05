@@ -8,7 +8,6 @@ import uz.pdp.appproduct.entity.Category;
 import java.util.List;
 
 public interface CategoryService {
-
     ApiResult<CategoryDTO> add(CategoryDTO categoryDTO);
 
     ApiResult<List<CategoryDTO>> getCategories(ViewDTO viewDTO);

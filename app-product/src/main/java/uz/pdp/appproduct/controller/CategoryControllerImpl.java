@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CategoryControllerImpl implements CategoryController {
-
+    
     private final CategoryService categoryService;
 
     @Override

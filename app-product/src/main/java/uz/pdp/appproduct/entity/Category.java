@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Getter
 public class Category {
 
-    /**
+
+    /*
     * this is primary key for category table
     * */
     @Id
@@ -20,8 +21,7 @@ public class Category {
     @Column(nullable = false)
     private String nameUz;
 
-    /**
-    *this is category's name in russian language*/
+    /*this is category's name in russian language*/
     @Column(nullable = false)
     private String nameRu;
 
