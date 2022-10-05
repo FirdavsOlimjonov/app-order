@@ -1,7 +1,7 @@
 package uz.pdp.apporder.entity.enums;
 
 
-public enum PermissionEnum  {
+public enum PermissionEnum {
 
     ADD_PRODUCT,
     GET_PRICE_FOR_DELIVERY,
@@ -15,5 +15,12 @@ public enum PermissionEnum  {
     ADD_ORDER,
     GET_ORDER_FOR_COURIER,
     EDIT_STATUS,
-    GET_ORDER, SHOW_STATISTICS
+    GET_ORDER,
+    SHOW_STATISTICS,
+    ACCEPTED_STATUS,
+    COOKING_STATUS,
+    READY_STATUS,
+    SENT_STATUS,
+    CLOSED_STATUS,
+    REJECTED_STATUS, FINISHED_STATUS,
 }
