@@ -3,6 +3,8 @@ package uz.pdp.appproduct.service;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.entity.Category;
+
 import java.util.List;
 
 public interface CategoryService {
@@ -16,4 +18,6 @@ public interface CategoryService {
     ApiResult<CategoryDTO> edit(CategoryDTO categoryDTO, Integer id);
 
     ApiResult<?> delete(Integer id);
+
+     ApiResult<List<Category>> getCategoriesforMenu();
 }

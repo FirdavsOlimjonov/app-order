@@ -1,17 +1,13 @@
 package uz.pdp.appproduct.service;
 
-import uz.pdp.appproduct.dto.ApiResult;
-import uz.pdp.appproduct.dto.ProductDTO;
-import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.*;
 
 import java.util.List;
 
 public interface ProductService {
     ApiResult<ProductDTO> addProduct(ProductDTO productDTO);
 
-    ApiResult<List<ProductDTO>> getProductsForAdmin(ViewDTO viewDTO,
-                                                    int page,
-                                                    int size);
+    ApiResult<List<ProductDTOProjection>> getProductsForAdmin(ViewDTOForProduct viewDTOForProduct, int page, int size);
 
 
     ApiResult<ProductDTO> getProductForAdmin(Integer id);
@@ -24,4 +20,6 @@ public interface ProductService {
     ApiResult<ProductDTO> getProduct(Integer id);
 
     ApiResult<List<ProductDTO>> getProducts();
+
+    ApiResult<List<ProductDTO>> getProductByCategoryId(Integer category_id);
 }

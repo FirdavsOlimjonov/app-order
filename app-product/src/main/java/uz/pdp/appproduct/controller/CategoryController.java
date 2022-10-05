@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.entity.Category;
+
 import java.util.List;
 
 @RequestMapping("/api/category")
@@ -25,4 +27,10 @@ public interface CategoryController {
 
     @DeleteMapping("/{id}")
     ApiResult<?> delete(@PathVariable Integer id);
+
+
+    @GetMapping("/for-menu")
+    ApiResult<List<Category>> getCategoriesForMenu();
+
+
 }

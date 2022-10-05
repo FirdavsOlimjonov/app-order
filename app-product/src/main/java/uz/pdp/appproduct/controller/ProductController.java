@@ -1,9 +1,7 @@
 package uz.pdp.appproduct.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.appproduct.dto.ApiResult;
-import uz.pdp.appproduct.dto.ProductDTO;
-import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.*;
 import uz.pdp.appproduct.util.RestConstants;
 
 import java.util.List;
@@ -23,9 +21,9 @@ public interface ProductController {
      * bu yol faqat super admin uchun
      */
     @GetMapping(path = "/list")
-    ApiResult<List<ProductDTO>> getProductsForAdmin(@RequestBody(required = false) ViewDTO viewDTO,
-                                                    @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
-                                                    @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
+    ApiResult<List<ProductDTOProjection>> getProductsForAdmin(@RequestBody(required = false) ViewDTOForProduct viewDTO,
+                                                              @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) int page,
+                                                              @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) int size);
 
 
     /**
@@ -53,5 +51,8 @@ public interface ProductController {
 
     @GetMapping(path = "/list-for-users")
     ApiResult<List<ProductDTO>> getProducts();
+
+    @GetMapping(path = "/list-by-category/{id}")
+    ApiResult<List<ProductDTO>> getByCategory(@PathVariable Integer id);
 
 }

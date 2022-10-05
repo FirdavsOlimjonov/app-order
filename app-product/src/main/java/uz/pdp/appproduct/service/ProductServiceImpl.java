@@ -3,9 +3,7 @@ package uz.pdp.appproduct.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import uz.pdp.appproduct.dto.ApiResult;
-import uz.pdp.appproduct.dto.ProductDTO;
-import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.*;
 import uz.pdp.appproduct.entity.Product;
 import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.repository.CategoryRepository;
@@ -13,6 +11,7 @@ import uz.pdp.appproduct.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
@@ -44,9 +43,37 @@ public class ProductServiceImpl implements ProductService {
 
     //todo viewDto orqali olsih qoldi, page ham
     @Override
-    public ApiResult<List<ProductDTO>> getProductsForAdmin(ViewDTO viewDTO, int page, int size) {
-        List<Product> all = productRepository.findAll();
-        return ApiResult.successResponse(getDtosFromEntity(all));
+    public ApiResult<List<ProductDTOProjection>> getProductsForAdmin(ViewDTOForProduct viewDTOForProduct, int page, int size) {
+        StringBuilder stringBuilder  = new StringBuilder(
+                "SELECT * FROM product"
+        );
+        boolean check = false;
+
+        if (!Objects.equals(viewDTOForProduct.getCategoryId(), null)){
+            stringBuilder.append("WHERE category_id = " + viewDTOForProduct.getCategoryId());
+        }
+        if (!Objects.equals(viewDTOForProduct.getIsAscByName(),null)){
+            check = true;
+            String str = "DESC";
+            if (viewDTOForProduct.getIsAscByName())
+                str = "ASC";
+            stringBuilder.append("ORDER BY name " + str);
+        }
+
+        if (!Objects.equals(viewDTOForProduct.getIsAscByPrice(),null)){
+            String str = "DESC";
+            if (viewDTOForProduct.getIsAscByPrice())
+                str = "ASC";
+            if (check)
+            stringBuilder.append(", price " + str);
+            else
+                stringBuilder.append("ORDER BY price " + str);
+        }
+
+        stringBuilder.append(" ; ");
+        String query = stringBuilder.toString();
+        List<ProductDTOProjection> productDTOProjections= productRepository.getProductsByStringQuery(query);
+        return ApiResult.successResponse(productDTOProjections);
     }
 
     //done
@@ -121,6 +148,13 @@ public class ProductServiceImpl implements ProductService {
         List<Product> all = productRepository.findAll();
 
         return ApiResult.successResponse(getDtosFromEntity(all));
+    }
+
+    @Override
+    public ApiResult<List<ProductDTO>> getProductByCategoryId(Integer category_id) {
+        List<Product> allByCategoryId = productRepository.getAllByCategoryId(category_id);
+        List<ProductDTO> dtosFromEntity = getDtosFromEntity(allByCategoryId);
+        return ApiResult.successResponse(dtosFromEntity);
     }
 
     private List<ProductDTO> getDtosFromEntity(List<Product> products) {

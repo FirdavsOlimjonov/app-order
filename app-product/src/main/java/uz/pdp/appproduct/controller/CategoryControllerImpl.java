@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.CategoryDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.service.CategoryService;
 
 import java.util.List;
@@ -43,4 +44,10 @@ public class CategoryControllerImpl implements CategoryController {
     public ApiResult<?> delete(Integer id) {
         return categoryService.delete(id);
     }
+
+    @Override
+    public ApiResult<List<Category>> getCategoriesForMenu() {
+        return categoryService.getCategoriesforMenu();
+    }
+
 }

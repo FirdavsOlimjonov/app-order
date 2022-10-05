@@ -1,7 +1,9 @@
 package uz.pdp.appproduct.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import uz.pdp.appproduct.entity.Category;
+import uz.pdp.appproduct.entity.Product;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     Boolean existsByNameUzIgnoreCase(String nameUz);
+
+
 
     Boolean existsByNameUzIgnoreCaseAndIdNot(String nameUz, Integer id);
 

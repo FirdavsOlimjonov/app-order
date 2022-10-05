@@ -95,6 +95,10 @@ public class CategoryServiceImpl implements CategoryService{
         categoryRepository.deleteById(id);
          return ApiResult.successResponse();
     }
+    public ApiResult<List<Category>> getCategoriesforMenu(){
+        List<Category> all = categoryRepository.findAll();
+        return ApiResult.successResponse(all);
+    }
 
     private Category getCategoryFromCategoryDTO(CategoryDTO categoryDTO) {
         Category category = new Category();
@@ -172,4 +176,6 @@ public class CategoryServiceImpl implements CategoryService{
         }
         return categoryList.stream().map(this::getCategoryDTOFromCategory).collect(Collectors.toList());
     }
+
+
 }
