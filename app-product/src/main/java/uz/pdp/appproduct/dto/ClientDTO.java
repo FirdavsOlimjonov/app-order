@@ -1,4 +1,4 @@
-package uz.pdp.apporder.payload;
+package uz.pdp.appproduct.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -14,9 +14,13 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ClientDTO {
 
-    private UUID userId;
+    private UUID id;
 
     private String name;
 
     private String phoneNumber;
+
+    public UUID getUserId() {
+        return id;
+    }
 }

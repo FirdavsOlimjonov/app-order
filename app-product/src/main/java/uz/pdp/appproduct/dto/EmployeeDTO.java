@@ -1,11 +1,10 @@
-package uz.pdp.apporder.payload;
+package uz.pdp.appproduct.dto;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OperatorDTO {
+public class EmployeeDTO {
 
     private UUID id;
 
@@ -22,6 +21,6 @@ public class OperatorDTO {
 
     private String lastName;
 
-    private Set<PermissionEnum> permissions;
+    private Set<String> permissions;
 
 }

@@ -2,10 +2,10 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.aop.CheckAuthEmpl;
+import uz.pdp.appproduct.aop.CheckAuth;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
@@ -24,6 +24,7 @@ public class OrderControllerImpl implements OrderController {
 
     private final OrderStatisticsInList orderStatisticsInList;
 
+    @CheckAuth
     @Override
     public ApiResult<?> saveOrderFromApp(OrderUserDTO order) {
         return orderService.saveOrder(order);

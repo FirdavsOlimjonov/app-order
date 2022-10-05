@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="prices of delivering CRUD">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +88,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent/app-order/src/main/java/uz/pdp/apporder&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent/app-product/src/main/java/uz/pdp/appproduct/test&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -119,18 +116,26 @@
       <recent name="uz.pdp.apporder.service" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\LESSON\b20\fastfood\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\test" />
       <recent name="D:\LESSON\b20\fastfood\app-order-parent\app-order\src\main\java\uz\pdp\apporder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="uz.pdp.appproduct.util" />
       <recent name="uz.pdp.apporder.order" />
       <recent name="uz.pdp.apporder.service" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.AppOrderApplication">
-    <configuration name="category | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" requestIdentifier="#1" runType="Run single request">
+    <configuration name="OrderForOtabek | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderForOtabek | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderForOtabek | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="4" requestIdentifier="#4" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
@@ -145,7 +150,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.category | #1" />
+        <item itemvalue="HTTP Request.OrderForOtabek | #4" />
+        <item itemvalue="HTTP Request.OrderForOtabek | #3" />
+        <item itemvalue="HTTP Request.OrderForOtabek | #1" />
         <item itemvalue="HTTP Request.category | #2" />
       </list>
     </recent_temporary>
@@ -167,8 +174,8 @@
       <workItem from="1664473513003" duration="4238000" />
       <workItem from="1664705070097" duration="675000" />
       <workItem from="1664862310552" duration="317000" />
-      <workItem from="1664869794908" duration="363000" />
-      <workItem from="1664956973716" duration="520000" />
+      <workItem from="1664869794908" duration="784000" />
+      <workItem from="1664941949836" duration="13176000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -191,7 +198,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664704233285</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="prices of delivering CRUD">
+      <created>1664870393403</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664870393403</updated>
+    </task>
+    <task id="LOCAL-00005" summary="prices of delivering CRUD">
+      <created>1664941962146</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664941962146</updated>
+    </task>
+    <task id="LOCAL-00006" summary="prices of delivering CRUD">
+      <created>1664956860953</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664956860953</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,18 +246,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="order status edit" />
     <MESSAGE value="category second full version" />
-    <MESSAGE value="some changes on StatisticsOrder" />
-    <option name="LAST_COMMIT_MESSAGE" value="some changes on StatisticsOrder" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/CategoryControllerImpl.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="prices of delivering CRUD" />
+    <option name="LAST_COMMIT_MESSAGE" value="prices of delivering CRUD" />
   </component>
 </project>

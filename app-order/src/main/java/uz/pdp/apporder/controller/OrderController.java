@@ -19,7 +19,6 @@ public interface OrderController {
 
     String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/order-status"; // it is the path of the info of order's
     // status ,price and count
-
     String ORDER_LIST_PATH = "/list";
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
     String STATISTICS_ORDER_PATH = "/statistics-order-chart";
@@ -34,7 +33,6 @@ public interface OrderController {
     String PATH_BASE = "/api/order/v1/order";
 
     @PostMapping(SAVE_MOB_APP)
-    @CheckAuth()
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
 
     @PostMapping(SAVE_WEB)
@@ -51,8 +49,7 @@ public interface OrderController {
     @CheckAuth
     ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(@Valid @RequestBody ViewDTO viewDTO,
                                                                   @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) Integer page,
-                                                                  @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) Integer size
-    );
+                                                                  @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) Integer size);
 
     @PostMapping(STATISTICS_PAYMENT_PATH)
     ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(@Valid @RequestBody OrderChartPaymentDTO orderChartPaymentDTO);

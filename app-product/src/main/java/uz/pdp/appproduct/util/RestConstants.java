@@ -6,4 +6,6 @@ public interface RestConstants {
 
     String SERVICE_BASE_PATH = "/api/order/v1/";
 
+    String REQUEST_ATTRIBUTE_CURRENT_USER = "currentUser";
+    String AUTHORIZATION_HEADER = "Authorization";
 }
