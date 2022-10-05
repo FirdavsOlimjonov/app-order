@@ -1,11 +1,13 @@
-POST http://localhost/api/order/v1/category/add
+POST http://localhost/api/order/v1/product/add
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
 
 {
-  "nameUz": "lavash",
-  "nameRu": "lavash",
-  "parentCategory": null
+  "price": 89.18,
+  "name": "test_6560237d7b48",
+  "categoryId": 2,
+  "active": true,
+  "description": "test_44734fe2fd6d"
 }
 
 ###
