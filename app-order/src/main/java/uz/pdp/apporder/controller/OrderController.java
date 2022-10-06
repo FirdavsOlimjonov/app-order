@@ -20,6 +20,7 @@ public interface OrderController {
     String ODER_STATUS_WITH_COUNT_AND_PRICE_PATH = "/order-status"; // it is the path of the info of order's
     // status ,price and count
     String ORDER_LIST_PATH = "/list";
+
     String ORDER_LIST_BY_STATUS_PATH = "/list-by-status";
     String STATISTICS_ORDER_PATH = "/statistics-order-chart";
     String STATISTICS_ORDER_LIST_PATH = "/statistics-order-list";
