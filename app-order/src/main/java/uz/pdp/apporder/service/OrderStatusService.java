@@ -5,10 +5,6 @@ import uz.pdp.apporder.payload.OrderDTO;
 
 public interface OrderStatusService {
 
-    ApiResult<OrderDTO> transferPaymentWaitingStatus(OrderDTO orderDTO);
-
-    ApiResult<OrderDTO> transferNewStatus(OrderDTO orderDTO);
-
     ApiResult<OrderDTO> transferAcceptedStatus(Long id);
 
     ApiResult<OrderDTO> transferCookingStatus(Long id);
