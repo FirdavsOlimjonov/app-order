@@ -1,10 +1,10 @@
-POST http://localhost/api/order/v1/category/add
+POST http://localhost:8181/api/order/v1/category/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTk2OTUyLCJleHAiOjE2NjUwNjg5NTF9.OIT0jiZxqm03Gzpl-EIT_4HVf9jjUaIi0ztvxRL1LviHh2p9kOZa7Fr2kCTGB1d9VgXnZZrX-6W9xVINlkpzLA
 
 {
-  "nameUz": "lavash",
-  "nameRu": "lavash",
+  "nameUz": "kurulma_uz",
+  "nameRu": "kurulma_ru",
   "parentCategory": null
 }
 

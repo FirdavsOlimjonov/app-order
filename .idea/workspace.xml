@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fd1f702-d902-4a9f-a5af-115982565d45" name="Changes" comment="CheckAuthEmpl">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderStatusControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-status-order.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-status-order.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/utils/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/product.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/product.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +33,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -87,20 +102,21 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/java-app/fastfood/app-order-parent/app-order&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrator/Desktop/Back-end/Pdp-java/module_7/api-gateway&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;e6df9fd2e4212103220d48c8f5d309f6&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;271f45d9988c2856782f8498fa9663b6&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
+      &quot;azure&quot;,
       &quot;postgresql&quot;
     ]
   }
@@ -110,6 +126,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="uz.pdp.apporder.controller" />
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.apporder." />
       <recent name="uz.pdp.apporder.service" />
@@ -121,15 +138,25 @@
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="uz.pdp.apporder.order" />
       <recent name="uz.pdp.apporder.service" />
+      <recent name="uz.pdp.apporder.controller" />
+      <recent name="uz.pdp.apporder.order" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.AppOrderApplication">
+    <configuration name="OrderForOtabek | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="category | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="product | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/product.http" requestIdentifier="#1" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="test-status-order | transfer  accept" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-status-order.http" requestIdentifier="transfer  accept" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -141,6 +168,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.test-status-order | transfer  accept" />
+        <item itemvalue="HTTP Request.OrderForOtabek | #1" />
+        <item itemvalue="HTTP Request.product | #1" />
         <item itemvalue="HTTP Request.category | #1" />
         <item itemvalue="HTTP Request.category | #2" />
       </list>
@@ -165,6 +195,14 @@
       <workItem from="1664862310552" duration="317000" />
       <workItem from="1664869794908" duration="363000" />
       <workItem from="1664976731899" duration="2158000" />
+      <workItem from="1664980339893" duration="5359000" />
+      <workItem from="1664987825689" duration="391000" />
+      <workItem from="1664988957010" duration="6000" />
+      <workItem from="1664988978953" duration="234000" />
+      <workItem from="1664989244801" duration="920000" />
+      <workItem from="1664993214909" duration="3945000" />
+      <workItem from="1665027483489" duration="1360000" />
+      <workItem from="1665055490342" duration="3688000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -222,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664978774571</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="CheckAuthEmpl">
+      <created>1664980382566</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664980382566</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,7 +305,16 @@
           <line>27</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatusServiceImpl.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
