@@ -20,4 +20,5 @@ public interface BranchService {
 
     ApiResult<Branch> edit(Integer id, BranchDTO branchDTO);
 
+    ApiResult<String> geoLocation(Double lat, Double lon);
 }

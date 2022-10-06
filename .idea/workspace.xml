@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="adding OrderStatisticsDTO path">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="Add Map of Branch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/utils/RestConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/utils/RestConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +40,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Zuhra" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -84,6 +80,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -91,7 +88,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent/app-product/src/main/java/uz/pdp/appproduct/test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/senior/Documents/app-fast-food/service-registry&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -141,7 +138,10 @@
     <configuration name="OrderForOtabek | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="4" requestIdentifier="#4" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
+    <configuration name="category | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="6" requestIdentifier="#6" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -153,10 +153,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.category | #6" />
+        <item itemvalue="HTTP Request.generated-requests | #6" />
         <item itemvalue="HTTP Request.OrderForOtabek | #4" />
         <item itemvalue="HTTP Request.OrderForOtabek | #3" />
         <item itemvalue="HTTP Request.OrderForOtabek | #1" />
-        <item itemvalue="HTTP Request.category | #2" />
       </list>
     </recent_temporary>
   </component>
@@ -179,6 +180,9 @@
       <workItem from="1664862310552" duration="317000" />
       <workItem from="1664869794908" duration="784000" />
       <workItem from="1664941949836" duration="13176000" />
+      <workItem from="1665011081988" duration="1616000" />
+      <workItem from="1665015247342" duration="5691000" />
+      <workItem from="1665066064656" duration="939000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -222,7 +226,28 @@
       <option name="project" value="LOCAL" />
       <updated>1664956860953</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Map of Branch">
+      <created>1665021651577</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665021651577</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add Map of Branch">
+      <created>1665021673711</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665021673711</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add Map of Branch">
+      <created>1665066140735</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665066140736</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,6 +275,7 @@
     <MESSAGE value="order status edit" />
     <MESSAGE value="category second full version" />
     <MESSAGE value="prices of delivering CRUD" />
-    <option name="LAST_COMMIT_MESSAGE" value="prices of delivering CRUD" />
+    <MESSAGE value="Add Map of Branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Map of Branch" />
   </component>
 </project>
