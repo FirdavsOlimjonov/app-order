@@ -3,6 +3,9 @@ package uz.pdp.apporder.payload;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.CurrierDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +21,7 @@ public class OrderDTO {
 
     private ClientDTO clientDTO;
 
-    private OperatorDTO operatorDTO;
+    private EmployeeDTO operatorDTO;
 
     private PaymentType paymentType;
 

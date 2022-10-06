@@ -3,7 +3,6 @@ package uz.pdp.apporder.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import uz.pdp.apporder.aop.OpenFeign;
 import uz.pdp.apporder.entity.Branch;
 import uz.pdp.apporder.entity.ClientAddress;
 import uz.pdp.apporder.entity.Order;
@@ -16,9 +15,13 @@ import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.ClientRepository;
 import uz.pdp.apporder.repository.OrderProductRepository;
 import uz.pdp.apporder.repository.OrderRepository;
-import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.appproduct.aop.AuthFeign;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
 import uz.pdp.appproduct.entity.Product;
 import uz.pdp.appproduct.repository.ProductRepository;
+import uz.pdp.appproduct.util.CommonUtils;
+import uz.pdp.appproduct.util.RestConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,30 +38,31 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final BranchRepository branchRepository;
     private final ClientRepository clientRepository;
-    private final OpenFeign openFeign;
+    private final AuthFeign openFeign;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
-        ClientDTO currentUser = (ClientDTO) CommonUtils.getCurrentRequest().getAttribute("currentUser");
+        ClientDTO currentClient = CommonUtils.getCurrentClient();
 
         saveOrder(new OrderWebDTO(null,
                         orderDTO.getOrderProductsDTOList(),
                         orderDTO.getAddressDTO(),
                         orderDTO.getPaymentType()),
-                currentUser.getUserId(),
-                null,null);
+                currentClient.getUserId(),
+                null, new Order());
 
         return ApiResult.successResponse("Order successfully saved!");
     }
+
     @Override
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
 
-        OperatorDTO currentEmployee = (OperatorDTO) CommonUtils
+        EmployeeDTO currentEmployee = (EmployeeDTO) CommonUtils
                 .getCurrentRequest().getAttribute("currentUser");
 
         ClientDTO clientDTO = Objects.requireNonNull(
-                openFeign.getClientDTOAndSet(orderDTO.getClientFromWebDTO(),
+                openFeign.getClientDTOAndSet(orderDTO.getClient(),
                         CommonUtils.getCurrentRequest().getHeader("Authorization")).getData()
         );
 
@@ -73,37 +77,31 @@ public class OrderServiceImpl implements OrderService {
     private void saveOrder(OrderWebDTO orderDTO, UUID clientId, UUID operatorId, Order order) {
 
         // TODO: 9/27/22 Filial Id ni aniqlash
-        Branch branch = findNearestBranch(orderDTO.getAddressDTO());
+        Branch branch = findNearestBranch(orderDTO.getAddress());
 
 
         // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
-        Float shippingPrice = findShippingPrice(branch, orderDTO.getAddressDTO());
+        Float shippingPrice = findShippingPrice(branch, orderDTO.getAddress());
 
-
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddressDTO().getLat(),
-                orderDTO.getAddressDTO().getLng(),
-                orderDTO.getAddressDTO().getAddress(),
-                orderDTO.getAddressDTO().getExtraAddress());
+        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLat(),
+                orderDTO.getAddress().getLng(),
+                orderDTO.getAddress().getAddress(),
+                orderDTO.getAddress().getExtraAddress());
 
 
         List<Product> productList = productRepository.findAllById(
                 orderDTO
-                        .getOrderProductsDTOList()
+                        .getProducts()
                         .stream()
-                        .map(OrderProductsDTO::getProductId)
+                        .map(OrderProductDTO::getProductId)
                         .collect(Collectors.toList())
         );
 
-
-        if (Objects.isNull(order))
-            order = new Order();
-        ArrayList<OrderProduct> orderProducts = new ArrayList<>();
-        for (int i = 0; i < productList.size(); i++) {
-            orderProducts.add(new OrderProduct(order, productList.get(i),
-                    orderDTO.getOrderProductsDTOList().get(i).getQuantity(),
-                    productList.get(i).getPrice()));
-        }
-
+        List<OrderProduct> orderProducts =
+                productList
+                        .stream()
+                        .map(product -> mapOrderProduct(orderDTO, order, product))
+                        .collect(Collectors.toList());
 
         if (orderDTO.getPaymentType().name().equals(PaymentType.CASH.name())
                 || orderDTO.getPaymentType().name().equals(PaymentType.TERMINAL.name()))
@@ -188,14 +186,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ApiResult<?> editOrder(OrderWebDTO newOrder, Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(()->RestException
+        Order order = orderRepository.findById(id).orElseThrow(() -> RestException
                 .restThrow("No such Order", HttpStatus.NOT_FOUND));
 
-        OperatorDTO currentEmployee = (OperatorDTO) CommonUtils
+        EmployeeDTO currentEmployee = (EmployeeDTO) CommonUtils
                 .getCurrentRequest().getAttribute("currentUser");
 
         ClientDTO clientDTO = Objects.requireNonNull(
-                openFeign.getClientDTOAndSet(newOrder.getClientFromWebDTO(),
+                openFeign.getClientDTOAndSet(newOrder.getClient(),
                         CommonUtils.getCurrentRequest().getHeader("Authorization")).getData()
         );
 
@@ -203,7 +201,6 @@ public class OrderServiceImpl implements OrderService {
 
         return ApiResult.successResponse("Order successfully updated");
     }
-
 
 
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
@@ -228,10 +225,12 @@ public class OrderServiceImpl implements OrderService {
 
         orderDTO.setProductsSum(calculateProductsSum(order));
 
-        String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
+        String token = CommonUtils.getCurrentRequest().getHeader(RestConstants.AUTHORIZATION_HEADER);
 
         orderDTO.setClientDTO(Objects.requireNonNull(openFeign.getClientDTO(order.getClientId(), token).getData()));
-        orderDTO.setOperatorDTO(Objects.requireNonNull(openFeign.getOperatorDTO(order.getOperatorId(), token).getData()));
+
+        if (Objects.nonNull(order.getOperatorId()))
+            orderDTO.setOperatorDTO(Objects.requireNonNull(openFeign.getEmployeeDTO(order.getOperatorId(), token).getData()));
 
         if (Objects.nonNull(order.getCurrierId())) {
             orderDTO.setCurrierDTO(Objects.requireNonNull(openFeign.getCurrierDTO(order.getCurrierId(), CommonUtils.getCurrentRequest().getHeader("Authorization")).getData()));
@@ -271,5 +270,16 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.getOrderByStatusEnum(statusEnum);
     }
 
+
+    private OrderProduct mapOrderProduct(OrderWebDTO orderDTO, Order order, Product product) {
+        return new OrderProduct(
+                order,
+                product,
+                orderDTO
+                        .orderProductDTOMap()
+                        .get(product.getId())
+                        .getQuantity(),
+                product.getPrice());
+    }
 
 }

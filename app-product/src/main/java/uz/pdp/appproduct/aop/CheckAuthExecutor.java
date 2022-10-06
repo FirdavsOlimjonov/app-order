@@ -1,17 +1,15 @@
-package uz.pdp.apporder.aop;
+package uz.pdp.appproduct.aop;
 
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import uz.pdp.apporder.exceptions.RestException;
-import uz.pdp.apporder.payload.ApiResult;
-import uz.pdp.apporder.payload.ClientDTO;
-import uz.pdp.apporder.payload.OperatorDTO;
-import uz.pdp.apporder.utils.CommonUtils;
+import uz.pdp.appproduct.dto.ApiResult;
+import uz.pdp.appproduct.dto.ClientDTO;
+import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.exceptions.RestException;
+import uz.pdp.appproduct.util.CommonUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -21,7 +19,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class CheckAuthExecutor {
-    private final OpenFeign openFeign;
+    private final AuthFeign openFeign;
 
     @Before(value = "@annotation(checkAuth)")
     public void checkAuth(CheckAuth checkAuth) {
@@ -33,7 +31,7 @@ public class CheckAuthExecutor {
         getUserDTOIfIdNullThrow(checkAuthEmpl);
     }
 
-    public void getUserDTOIfIdNullThrow(CheckAuth checkAuth){
+    public void getUserDTOIfIdNullThrow(CheckAuth checkAuth) {
 
         String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
 
@@ -50,7 +48,7 @@ public class CheckAuthExecutor {
         setRequestUserDTO(clientDTO);
     }
 
-    public void getUserDTOIfIdNullThrow(CheckAuthEmpl checkAuthEmpl){
+    public void getUserDTOIfIdNullThrow(CheckAuthEmpl checkAuthEmpl) {
 
 
         String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
@@ -58,31 +56,35 @@ public class CheckAuthExecutor {
         if (Objects.isNull(token))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
 
-        ApiResult<OperatorDTO> authorizedOperatorDTO = openFeign.getAuthorizedOperatorDTO(token);
+        ApiResult<EmployeeDTO> authorizedEmployeeDTO = openFeign.getAuthorizedEmployeeDTO(token);
 
-        OperatorDTO operatorDTO = Objects.requireNonNull(authorizedOperatorDTO.getData());
+        EmployeeDTO operatorDTO = Objects.requireNonNull(authorizedEmployeeDTO.getData());
 
         if (Objects.isNull(operatorDTO.getId()))
             throw RestException.restThrow("Bad Request", HttpStatus.UNAUTHORIZED);
 
-        if (checkAuthEmpl.permissions().length>0){
-            if (Arrays.stream(checkAuthEmpl.permissions()).noneMatch(k -> operatorDTO.getPermissions().contains(k)))
+        if (checkAuthEmpl.permissions().length > 0) {
+            if (Arrays.stream(checkAuthEmpl
+                            .permissions())
+                    .noneMatch(k -> operatorDTO
+                            .getPermissions()
+                            .contains(k.name())))
                 throw RestException.restThrow("No Permission, Restricted", HttpStatus.FORBIDDEN);
         }
 
-        setRequestOperatorDTO(operatorDTO);
+        setRequestEmployeeDTO(operatorDTO);
     }
 
-    private void setRequestOperatorDTO(OperatorDTO operatorDTO) {
+    private void setRequestEmployeeDTO(EmployeeDTO operatorDTO) {
         HttpServletRequest currentRequest = CommonUtils.getCurrentRequest();
         if (Objects.nonNull(currentRequest))
-            currentRequest.setAttribute("currentUser",operatorDTO);
+            currentRequest.setAttribute("currentUser", operatorDTO);
     }
 
     private void setRequestUserDTO(ClientDTO clientDTO) {
         HttpServletRequest currentRequest = CommonUtils.getCurrentRequest();
         if (Objects.nonNull(currentRequest))
-            currentRequest.setAttribute("currentUser",clientDTO);
+            currentRequest.setAttribute("currentUser", clientDTO);
     }
 
 

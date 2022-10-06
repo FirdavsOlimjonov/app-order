@@ -8,9 +8,10 @@ import uz.pdp.appproduct.util.RestConstants;
 
 import java.util.List;
 
-@RequestMapping("api/product")
-@RestController
+@RequestMapping(ProductController.BASE_PATH)
 public interface ProductController {
+
+    String BASE_PATH = RestConstants.SERVICE_BASE_PATH + "product";
 
     /**
      * bu yol faqat super admin uchun

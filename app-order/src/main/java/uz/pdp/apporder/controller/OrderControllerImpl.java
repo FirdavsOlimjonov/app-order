@@ -1,18 +1,16 @@
 package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.apporder.aop.CheckAuth;
-import uz.pdp.apporder.aop.CheckAuthEmpl;
+import uz.pdp.appproduct.aop.CheckAuth;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
-import uz.pdp.apporder.entity.enums.PermissionEnum;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 import uz.pdp.apporder.service.OrderStatisticsInList;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,6 +24,7 @@ public class OrderControllerImpl implements OrderController {
 
     private final OrderStatisticsInList orderStatisticsInList;
 
+    @CheckAuth
     @Override
     public ApiResult<?> saveOrderFromApp(OrderUserDTO order) {
         return orderService.saveOrder(order);
@@ -38,15 +37,22 @@ public class OrderControllerImpl implements OrderController {
 
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
 
     @Override
+    public ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(ViewDTO viewDTO, Integer page, Integer size) {
+        return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
+
+    }
+
+    @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
-
 
 
     @Override
@@ -78,7 +84,7 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public ApiResult<?> editOrder(OrderWebDTO order, Long id) {
-        return orderService.editOrder(order,id);
+        return orderService.editOrder(order, id);
     }
 
 }

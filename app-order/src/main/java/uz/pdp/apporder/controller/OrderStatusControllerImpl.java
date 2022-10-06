@@ -14,42 +14,42 @@ public class OrderStatusControllerImpl implements OrderStatusController {
     private final OrderStatusService orderStatusService;
 
     @Override
-    public ApiResult<?> transferPaymentWaiting(OrderDTO orderDTO) {
+    public ApiResult<OrderDTO> transferPaymentWaiting(OrderDTO orderDTO) {
         return orderStatusService.transferPaymentWaitingStatus(orderDTO);
     }
 
     @Override
-    public ApiResult<?> transferNew(OrderDTO orderDTO) {
+    public ApiResult<OrderDTO> transferNew(OrderDTO orderDTO) {
         return orderStatusService.transferNewStatus(orderDTO);
     }
 
     @Override
-    public ApiResult<?> transferAccepted(Long id) {
+    public ApiResult<OrderDTO> transferAccepted(Long id) {
         return orderStatusService.transferAcceptedStatus(id);
     }
 
     @Override
-    public ApiResult<?> transferCooking(Long id) {
+    public ApiResult<OrderDTO> transferCooking(Long id) {
         return orderStatusService.transferCookingStatus(id);
     }
 
     @Override
-    public ApiResult<?> transferReady(Long id) {
+    public ApiResult<OrderDTO> transferReady(Long id) {
         return orderStatusService.transferReadyStatus(id);
     }
 
     @Override
-    public ApiResult<?> transferSent(Long id) {
+    public ApiResult<OrderDTO> transferSent(Long id) {
         return orderStatusService.transferSentStatus(id);
     }
 
     @Override
-    public ApiResult<?> transferFinished(Long id) {
+    public ApiResult<OrderDTO> transferFinished(Long id) {
         return orderStatusService.transferFinishedStatus(id);
     }
 
     @Override
-    public ApiResult<?> transferRejected(Long id) {
+    public ApiResult<OrderDTO> transferRejected(Long id) {
         return orderStatusService.transferRejectedStatus(id);
     }
 }
