@@ -13,13 +13,13 @@ public interface PriceForDeliveryController {
 
     String BASE_PATH = RestConstants.SERVICE_BASE_PATH + "price-for-delivery";
 
-    String ADD_PATH = PriceForDeliveryController.BASE_PATH + "/add";
-//    String EDIT_PATH = PriceForDeliveryController.BASE_PATH + "/edit/{id}";
+    String ADD_PATH = "/add";
+//    String EDIT_PATH = "/edit/{id}";
 
-    String GET_ALL_PATH = PriceForDeliveryController.BASE_PATH + "/list";
-    String GET_BY_ID_PATH = PriceForDeliveryController.BASE_PATH + "/{id}";
-    String DELETE_BY_ID_PATH = PriceForDeliveryController.BASE_PATH + "/{id}";
-    String DELETE_ALL_PATH = PriceForDeliveryController.BASE_PATH + "/delete-all";
+    String GET_ALL_PATH = "/list";
+    String GET_BY_ID_PATH ="/{id}";
+    String DELETE_BY_ID_PATH = "/{id}";
+    String DELETE_ALL_PATH = "/delete-all";
 
 
     @PostMapping(PriceForDeliveryController.ADD_PATH)

@@ -2,11 +2,11 @@
 #GET http://localhost/api/auth/v1/profile/read-profile
 #AUTHORIZATION:
 #
-####
-#POST http://localhost/api/order/v1/price-for-delivery/api/order/v1/price-for-delivery/add
-#
+###
+#POST http://localhost/api/order/v1/price-for-delivery/add
+#Content-Type: application/json
 #{
-#  "branch": {
+#  "branch":{
 #    "id": 51,
 #    "name": "test_28b2fb6a3583",
 #    "address": {
@@ -26,17 +26,17 @@
 #  "initialDistance": 50
 #}
 ####
-#GET http://localhost/api/order/v1/price-for-delivery/api/order/v1/price-for-delivery/list
+#GET http://localhost/api/order/v1/price-for-delivery/list
 #
 ####
-#GET http://localhost/api/order/v1/price-for-delivery/api/order/v1/price-for-delivery/{{id}}
+#GET http://localhost/api/order/v1/price-for-delivery/{{id}}
 #
 #
 ####
-#DELETE http://localhost/api/order/v1/price-for-delivery/api/order/v1/price-for-delivery/{{id}}
+#DELETE http://localhost/api/order/v1/price-for-delivery/{{id}}
 #
 ####
-#DELETE http://localhost/api/order/v1/price-for-delivery/api/order/v1/price-for-delivery/delete-all
+#DELETE http://localhost/api/order/v1/price-for-delivery/delete-all
 #
 ####
 #PUT http://localhost/api/order/v1/price-for-delivery/edit/{{id}}
