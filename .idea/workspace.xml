@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="adding OrderStatisticsDTO path">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Discount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/enums/PermissionEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/enums/PermissionEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +180,8 @@
       <workItem from="1664862310552" duration="317000" />
       <workItem from="1664869794908" duration="784000" />
       <workItem from="1664941949836" duration="13176000" />
-      <workItem from="1664965002065" duration="5838000" />
+      <workItem from="1664965002065" duration="5971000" />
+      <workItem from="1665028527329" duration="3873000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -236,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664965129431</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="adding OrderStatisticsDTO path">
+      <created>1665028482445</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665028482445</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
