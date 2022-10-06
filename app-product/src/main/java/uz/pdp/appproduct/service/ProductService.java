@@ -18,7 +18,7 @@ public interface ProductService {
 
     ApiResult<?> deleteProduct(Integer id);
 
-    ApiResult editProduct(Integer id, ProductDTO productDTO);
+    ApiResult<ProductDTO> editProduct(Integer id, ProductDTO productDTO);
 
 
     ApiResult<ProductDTO> getProduct(Integer id);
