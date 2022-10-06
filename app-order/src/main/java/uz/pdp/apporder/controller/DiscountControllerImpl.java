@@ -35,7 +35,17 @@ public class DiscountControllerImpl implements DiscountController {
     }
 
     @Override
+    public ApiResult<DiscountDTO> getActiveDiscountForProduct(Integer productId) {
+        return discountService.getActiveDiscountForProduct(productId);
+    }
+
+    @Override
     public ApiResult<List<DiscountDTO>> getDiscounts() {
         return discountService.getDiscounts();
+    }
+
+    @Override
+    public ApiResult<List<DiscountDTO>> getActiveDiscounts() {
+        return discountService.getActiveDiscounts();
     }
 }
