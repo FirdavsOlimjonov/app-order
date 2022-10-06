@@ -9,7 +9,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0I
 }
 
 ###
-GET https://localhost:8081/api/category/1
+GET http://localhost/api/order/v1/category/1
+
 ###
 PUT http://localhost:8081/api/categeory/1
 Content-Type: application/json
@@ -24,5 +25,5 @@ Accept-Language: uz
 DELETE http://localhost:8081/api/categeory/1
 
 ###
-POST http://localhost:8081/api/categeory/list
+GET http://localhost/api/order/v1/categeory/list
 
