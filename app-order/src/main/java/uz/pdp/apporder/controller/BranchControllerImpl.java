@@ -50,4 +50,9 @@ public class BranchControllerImpl implements BranchController {
         ApiResult<Branch> edit = branchService.edit(id, branchDTO);
         return edit;
     }
+
+    @Override
+    public ApiResult<String> geoLocation(Double lat, Double lon) {
+        return branchService.geoLocation(lat, lon);
+    }
 }

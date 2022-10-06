@@ -26,3 +26,6 @@ DELETE http://localhost:8081/api/categeory/1
 ###
 POST http://localhost:8081/api/categeory/list
 
+
+###
+GET https://api-maps.yandex.ru/2.1?apikey=30e833bb-c8ef-49da-a73c-0680d3cf958d&lang=ru_RU

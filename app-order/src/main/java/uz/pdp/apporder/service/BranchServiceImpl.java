@@ -1,16 +1,19 @@
 package uz.pdp.apporder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import uz.pdp.apporder.entity.Branch;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.BranchDTO;
 import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.service.BranchService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -78,5 +81,20 @@ public class BranchServiceImpl implements BranchService {
         branch.getAddress().setStreet(branchDTO.getStreet());
         branch.getAddress().setPostalCode(branchDTO.getPostalCode());
         return ApiResult.successResponse("Updated!");
+    }
+
+    /**
+     * BU PULLIK API EKAN, TEKIN API TOPIB QOYSA ISHLAYDI ANIQ!
+     * @param lat
+     * @param lon
+     * @return String
+     */
+    @Override
+    public ApiResult<String> geoLocation(Double lat, Double lon) {
+        String url = "https://api-maps.yandex.ru/2.1/?apikey=506127d8-5d3d-41dd-8928-ba1de79e5850&lang=ru_RU\n";
+        RestTemplate restTemplate = new RestTemplate();
+        var data = Objects.requireNonNull(restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<String>() {
+        })).getBody();
+        return ApiResult.successResponse("success", data);
     }
 }
