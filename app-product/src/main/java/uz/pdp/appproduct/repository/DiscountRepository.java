@@ -11,8 +11,8 @@ import uz.pdp.appproduct.entity.Discount;
  */
 
 @Repository
-public interface DiscountRepository extends JpaRepository<Discount, Long> {
+public interface DiscountRepository extends JpaRepository<Discount, Integer> {
 
-    boolean existsById(Long id);
+    boolean existsById(Integer id);
 
 }

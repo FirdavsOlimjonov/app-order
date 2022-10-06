@@ -1,34 +1,30 @@
-package uz.pdp.appproduct.entity;
+package uz.pdp.appproduct.dto;
 
 import lombok.*;
-
-import javax.persistence.*;
 
 /**
  * Me: muhammadqodir
  * Project: app-order-parent/IntelliJ IDEA
- * Date:Thu 06/10/22 21:09
+ * Date:Thu 06/10/22 22:26
  */
+
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
-@Entity
-public class Discount {
+@Builder
+public class DiscountDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    private Product product;
+    private Integer productId;
     private String name;
 
     private Short percent;
 
 
     private Long startDate;
+
     private Long endDate;
 
 }
