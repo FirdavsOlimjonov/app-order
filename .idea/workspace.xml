@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="&#10;.">
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="Branch change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Branch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +183,8 @@
       <workItem from="1665011081988" duration="1616000" />
       <workItem from="1665015247342" duration="5419000" />
       <workItem from="1665074855233" duration="373000" />
-      <workItem from="1665075278171" duration="388000" />
+      <workItem from="1665075278171" duration="793000" />
+      <workItem from="1665087050337" duration="1479000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -242,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665074977217</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Branch change">
+      <created>1665075690936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665075690936</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +278,7 @@
     <MESSAGE value="category second full version" />
     <MESSAGE value="prices of delivering CRUD" />
     <MESSAGE value="&#10;." />
-    <option name="LAST_COMMIT_MESSAGE" value="&#10;." />
+    <MESSAGE value="Branch change" />
+    <option name="LAST_COMMIT_MESSAGE" value="Branch change" />
   </component>
 </project>
