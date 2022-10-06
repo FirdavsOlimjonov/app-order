@@ -1,7 +1,6 @@
 package uz.pdp.apporder.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import uz.pdp.appproduct.entity.Product;
 
 import javax.persistence.*;
@@ -9,6 +8,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
