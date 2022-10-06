@@ -29,7 +29,8 @@ public class DiscountServiceImpl implements DiscountService {
     public ApiResult<DiscountDTO> add(AddDiscountDTO addDiscountDTO) {
         Product product = productRepository.findById(addDiscountDTO.getProductId()).orElseThrow();
 
-        Discount discount = new Discount(null, product,
+        Discount discount = new Discount(null,
+                product,
                 addDiscountDTO.getDiscount(),
                 addDiscountDTO.getStartDate(),
                 addDiscountDTO.getEndDate());
