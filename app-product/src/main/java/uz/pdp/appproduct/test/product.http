@@ -1,19 +1,19 @@
-POST http://localhost:8181/api/order/v1/product/add
+POST http://localhost/api/order/v1/product/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTk2OTUyLCJleHAiOjE2NjUwNjg5NTF9.OIT0jiZxqm03Gzpl-EIT_4HVf9jjUaIi0ztvxRL1LviHh2p9kOZa7Fr2kCTGB1d9VgXnZZrX-6W9xVINlkpzLA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
 
 {
-  "price": 200,
-  "name": "hp",
+  "price": 89.18,
+  "name": "test_6560237d7b48",
   "categoryId": 1,
   "active": true,
-  "description": "hp good"
+  "description": "test_44734fe2fd6d"
 }
 
 ###
 GET https://localhost:8081/api/category/1
 ###
-PUT http://localhost:8081/api/categeory/1
+PUT http://localhost:81/api/categeory/1
 Content-Type: application/json
 Accept-Language: uz
 
@@ -28,3 +28,13 @@ DELETE http://localhost:8081/api/categeory/1
 ###
 POST http://localhost:8081/api/categeory/list
 
+###
+POST http://localhost/api/order/v1/category/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY1MDY1ODk1LCJleHAiOjE2NjUxMzc4OTV9.bSZu6FkjjijeneymCQlWoF4DxPKLw1P-qbahtMwLxhs7BCczoKj55gPgVxGmtm_tMchr7GQbRMkG2gOvUh_GkQ
+
+{
+  "nameUz": "lavash",
+  "nameRu": "lavash",
+  "parentCategory": null
+}

@@ -1,15 +1,16 @@
-POST http://localhost:8181/api/order/v1/category/add
+POST http://localhost/api/order/v1/category/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTk2OTUyLCJleHAiOjE2NjUwNjg5NTF9.OIT0jiZxqm03Gzpl-EIT_4HVf9jjUaIi0ztvxRL1LviHh2p9kOZa7Fr2kCTGB1d9VgXnZZrX-6W9xVINlkpzLA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY1MDY1ODk1LCJleHAiOjE2NjUxMzc4OTV9.bSZu6FkjjijeneymCQlWoF4DxPKLw1P-qbahtMwLxhs7BCczoKj55gPgVxGmtm_tMchr7GQbRMkG2gOvUh_GkQ
 
 {
-  "nameUz": "kurulma_uz",
-  "nameRu": "kurulma_ru",
+  "nameUz": "lavash",
+  "nameRu": "lavash",
   "parentCategory": null
 }
 
 ###
-GET https://localhost:8081/api/category/1
+GET http://localhost/api/order/v1/category/1
+
 ###
 PUT http://localhost:8081/api/categeory/1
 Content-Type: application/json
@@ -24,5 +25,5 @@ Accept-Language: uz
 DELETE http://localhost:8081/api/categeory/1
 
 ###
-POST http://localhost:8081/api/categeory/list
+GET http://localhost/api/order/v1/categeory/list
 

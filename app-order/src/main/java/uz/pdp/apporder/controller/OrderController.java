@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.utils.RestConstants;
-import uz.pdp.appproduct.aop.CheckAuth;
 import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
@@ -46,7 +45,7 @@ public interface OrderController {
     ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(@Valid @RequestBody OrderChartDTO orderChartDTO);
 
     @PostMapping(STATISTICS_ORDER_LIST_PATH)
-    @CheckAuth
+//    @CheckAuthEmpl(permissions = PermissionEnum.SHOW_STATISTICS_FOR_LIST)
     ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(@Valid @RequestBody ViewDTO viewDTO,
                                                                   @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_NUMBER) Integer page,
                                                                   @RequestParam(defaultValue = RestConstants.DEFAULT_PAGE_SIZE) Integer size);
