@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="" />
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="adding OrderStatisticsDTO path">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/resources/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/BranchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/BranchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/BranchControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/BranchControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/BranchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/BranchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/BranchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/BranchServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -179,8 +188,7 @@
       <workItem from="1664869794908" duration="784000" />
       <workItem from="1664941949836" duration="13176000" />
       <workItem from="1665011081988" duration="1616000" />
-      <workItem from="1665015247342" duration="5691000" />
-      <workItem from="1665066064656" duration="939000" />
+      <workItem from="1665015247342" duration="5419000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -224,28 +232,7 @@
       <option name="project" value="LOCAL" />
       <updated>1664956860953</updated>
     </task>
-    <task id="LOCAL-00007" summary="Add Map of Branch">
-      <created>1665021651577</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1665021651577</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Add Map of Branch">
-      <created>1665021673711</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1665021673711</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Add Map of Branch">
-      <created>1665066140735</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1665066140736</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +260,6 @@
     <MESSAGE value="order status edit" />
     <MESSAGE value="category second full version" />
     <MESSAGE value="prices of delivering CRUD" />
-    <MESSAGE value="Add Map of Branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Map of Branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="prices of delivering CRUD" />
   </component>
 </project>
