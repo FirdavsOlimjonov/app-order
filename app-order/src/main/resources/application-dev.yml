@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/order_parent
     username: postgres
-    password: 1223
+    password: 12
 
   jpa:
     hibernate:
