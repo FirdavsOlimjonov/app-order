@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce444f88-9a4c-4a14-9b39-f44b2776a533" name="Changes" comment="promontions">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/template/AbsIntegerEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/template/AbsLongEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/CourierPromotions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/ProductPromotions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/DiscountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotions.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/template/Ketmon.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +114,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="uz.pdp.apporder.entity" />
       <recent name="uz.pdp.apporder.service" />
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.apporder." />
@@ -129,11 +127,11 @@
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="uz.pdp.apporder.entity" />
       <recent name="uz.pdp.apporder.entity.template" />
       <recent name="uz.pdp.apporder.repository" />
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.appproduct.util" />
-      <recent name="uz.pdp.apporder.order" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.AppOrderApplication">

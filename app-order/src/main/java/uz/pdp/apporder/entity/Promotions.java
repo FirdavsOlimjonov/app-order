@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.template.AbsIntegerEntity;
-import uz.pdp.apporder.entity.template.Ketmon;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ public class Promotions extends AbsIntegerEntity {
 
 
     @ManyToOne
-    private Ketmon ketmon;
+    private CourierPromotions courierPromotions;
 
     @Column(nullable = false)
     private boolean isAnd;
