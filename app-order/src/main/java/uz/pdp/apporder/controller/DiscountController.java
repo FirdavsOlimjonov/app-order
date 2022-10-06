@@ -20,7 +20,6 @@ public interface DiscountController {
     String GET_PATH = "/{id}";
     String GET_ALL_PATH = "/list";
 
-
     @PostMapping(value = ADD_PATH)
     ApiResult<DiscountDTO> add(@RequestBody @Valid AddDiscountDTO addDiscountDTO);
 
@@ -35,6 +34,5 @@ public interface DiscountController {
 
     @GetMapping(value = GET_ALL_PATH)
     ApiResult<List<DiscountDTO>> getDiscounts();
-
 
 }
