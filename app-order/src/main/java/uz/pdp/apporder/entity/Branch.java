@@ -19,12 +19,12 @@ public class Branch {
     @OneToOne(optional = false)
     private Address address;
 
-    @Column(nullable = false)
+    /*@Column(nullable = false)
     private Double standardDistance;
 
     @Column(nullable = false)
     private Double standardDistancePrice;
 
     @Column(nullable = false)
-    private Double standardDistanceMorePrice;
+    private Double standardDistanceMorePrice;*/
 }
