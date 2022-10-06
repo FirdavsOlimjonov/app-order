@@ -15,6 +15,7 @@ import uz.pdp.appproduct.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +84,36 @@ public class DiscountServiceImpl implements DiscountService {
         List<Discount> all = discountRepository.findAll();
 
         return ApiResult.successResponse(mapDiscountsToDiscountDTOs(all));
+    }
+
+
+    /**
+     * This method is used for getting current active discounts for product
+     *
+     * @param productId to get discounts for this product
+     * @return DiscountDTO if exists  returns null if there isn't active discount
+     */
+    @Override
+    public ApiResult<DiscountDTO> getActiveDiscountForProduct(Integer productId) {
+        if (!productRepository.existsById(productId))
+            throw RestException.restThrow("product not fount", HttpStatus.NOT_FOUND);
+
+        Optional<Discount> optionalDiscount = discountRepository
+                .findByProductIdAndEndDateIsAfter(
+                        productId,
+                        System.currentTimeMillis());
+        if (optionalDiscount.isEmpty())
+            return null;
+
+        return ApiResult.successResponse(mapDiscountToDiscountDTO(optionalDiscount.get()));
+
+    }
+
+    @Override
+    public ApiResult<List<DiscountDTO>> getActiveDiscounts() {
+        List<Discount> discountList = discountRepository.findAllByEndDateIsAfter(System.currentTimeMillis());
+
+        return ApiResult.successResponse(mapDiscountsToDiscountDTOs(discountList));
     }
 
 
