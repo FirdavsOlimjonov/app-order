@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5fd1f702-d902-4a9f-a5af-115982565d45" name="Changes" comment="CheckAuthEmpl">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-statistics-chart.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-statistics-chart.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,6 +134,9 @@
     <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
       <method v="2" />
     </configuration>
+    <configuration name="test-statistics-chart | ##" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-statistics-chart.http" index="3" requestIdentifier="##" runType="Run single request">
+      <method v="2" />
+    </configuration>
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="app-order" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="uz.pdp.apporder.AppOrderApplication" />
@@ -143,6 +146,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.test-statistics-chart | ##" />
         <item itemvalue="HTTP Request.category | #1" />
         <item itemvalue="HTTP Request.category | #2" />
       </list>
@@ -167,7 +171,8 @@
       <workItem from="1664862310552" duration="317000" />
       <workItem from="1664869794908" duration="363000" />
       <workItem from="1664976731899" duration="2574000" />
-      <workItem from="1665028849401" duration="729000" />
+      <workItem from="1665028849401" duration="1358000" />
+      <workItem from="1665058264603" duration="773000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -239,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664979043153</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="CheckAuthEmpl">
+      <created>1665034754037</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665034754037</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
