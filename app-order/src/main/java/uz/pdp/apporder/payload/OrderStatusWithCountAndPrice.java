@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,5 +19,7 @@ public class OrderStatusWithCountAndPrice {
     private Integer count;
 
     private Double price;
+
+    private List<OrderDTO> orderDTOList;
 
 }

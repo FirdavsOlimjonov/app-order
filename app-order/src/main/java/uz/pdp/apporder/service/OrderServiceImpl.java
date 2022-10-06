@@ -23,10 +23,7 @@ import uz.pdp.appproduct.repository.ProductRepository;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -167,22 +164,35 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse(orderDto);
     }
 
+    // TODO: 10/5/22
     @Override
-    public ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus) {
-        int count = 0;
-        Double price = 0d;
-        for (Order order : orderRepository.findByStatusEnum(orderStatus)) {
-            count++;
-            Double aDouble = orderProductRepository.countSumOfOrder(order.getId());
-            price += aDouble;
-        }
-        OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
+    public ApiResult<List<OrderStatusWithCountAndPrice>> getOrderStatusCountPrice() {
+        List<OrderStatusEnum> orderStatusList = getOrderStatusList();
+        List<OrderStatusWithCountAndPrice> orderStatusWithCountAndPriceList = new ArrayList<>();
 
-        orderStatusWithCountAndPrice.setCount(count);
-        orderStatusWithCountAndPrice.setPrice(price);
-        orderStatusWithCountAndPrice.setStatusEnum(orderStatus);
-        return ApiResult.successResponse(orderStatusWithCountAndPrice);
+
+        for (OrderStatusEnum orderStatusEnum : orderStatusList) {
+            OrderStatusWithCountAndPrice orderStatusWithCountAndPrice = new OrderStatusWithCountAndPrice();
+            orderStatusWithCountAndPrice.setStatusEnum(orderStatusEnum);
+            orderStatusWithCountAndPrice.setCount(orderRepository.countAllByStatusEnum(orderStatusEnum));
+            Double totalSumOfOrdersByStatus = 0d;
+            for (Order order : orderRepository.findByStatusEnum(orderStatusEnum)) {
+              totalSumOfOrdersByStatus +=  orderProductRepository.countSumOfOrder(order.getId());
+            }
+            orderStatusWithCountAndPrice.setPrice(totalSumOfOrdersByStatus);
+            List<OrderDTO> orderDTOList = new ArrayList<>();
+            for (Order order : orderRepository.getOrderByStatusEnum(orderStatusEnum)) {
+                orderDTOList.add(mapOrderToOrderDTO(order));
+            }
+            orderStatusWithCountAndPrice.setOrderDTOList(orderDTOList);
+            orderStatusWithCountAndPriceList.add(orderStatusWithCountAndPrice);
+        }
+        return ApiResult.successResponse(orderStatusWithCountAndPriceList);
     }
+    List<OrderStatusEnum> getOrderStatusList(){
+        return Arrays.asList(OrderStatusEnum.values());
+    }
+
 
     @Override
     public ApiResult<?> editOrder(OrderWebDTO newOrder, Long id) {

@@ -27,9 +27,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
     List<Order> getOrderByStatusEnum(OrderStatusEnum statusEnum);
 
+
     List<Order> findByStatusEnum(OrderStatusEnum orderEnum);
 
     Integer countAllByStatusEnum(OrderStatusEnum orderEnum);
+
 
     @Query(value = "SELECT * FROM get_result_of_query(:query)", nativeQuery = true)
     List<StatisticsOrderDTOProjection> getOrdersByStringQuery(@Param("query") String query);

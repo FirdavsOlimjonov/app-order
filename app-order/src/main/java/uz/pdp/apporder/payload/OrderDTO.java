@@ -8,6 +8,7 @@ import uz.pdp.appproduct.dto.CurrierDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 
 @Getter
 @Setter
@@ -38,4 +39,8 @@ public class OrderDTO {
     private LocalDateTime orderedAtByStatus;
 
     private CurrierDTO currierDTO;
+
+    {
+        orderedAt.getLong(ChronoField.NANO_OF_SECOND);
+    }
 }

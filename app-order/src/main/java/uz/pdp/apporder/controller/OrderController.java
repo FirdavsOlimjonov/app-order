@@ -58,8 +58,8 @@ public interface OrderController {
     @CheckAuthEmpl(permissions = {PermissionEnum.GET_ORDER})
     ApiResult<List<OrderDTO>> getOrderList();
 
-    @GetMapping(ODER_STATUS_WITH_COUNT_AND_PRICE_PATH+"/{orderStatus}")
-    ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(@PathVariable OrderStatusEnum orderStatus);
+    @GetMapping(ODER_STATUS_WITH_COUNT_AND_PRICE_PATH)
+    ApiResult<List<OrderStatusWithCountAndPrice>> getOrderStatusCountPrice();
 
 
     @CheckAuthEmpl(permissions = {PermissionEnum.EDIT_ORDER})

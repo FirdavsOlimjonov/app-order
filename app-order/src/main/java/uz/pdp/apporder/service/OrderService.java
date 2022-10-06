@@ -19,7 +19,7 @@ public interface OrderService {
 
     ApiResult<List<OrderDTO>> getOrders();
 
-    ApiResult<OrderStatusWithCountAndPrice> getOrderStatusCountPrice(OrderStatusEnum orderStatus);
+    ApiResult<List<OrderStatusWithCountAndPrice>> getOrderStatusCountPrice();
 
     ApiResult<?> editOrder(OrderWebDTO newOrder,Long id);
 }
