@@ -11,7 +11,7 @@ import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
@@ -185,7 +185,7 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
 
         String token = CommonUtils.getCurrentRequest().getHeader("Authorization");
 
-        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId()),token).getData();
+        ClientDTO clientDTO = openFeign.getClientDTO(UUID.fromString(projection.getClientId()), token).getData();
 
         EmployeeDTO operatorDTO = openFeign.getEmployeeDTO(UUID.fromString(projection.getOperatorId()), token).getData();
 
@@ -199,7 +199,7 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
         return orderStatisticsDTO;
     }
 
-    private OperatorDTOForList mapOperatorDTOToOperatorDTOForList(EmployeeDTO operatorDTO){
+    private OperatorDTOForList mapOperatorDTOToOperatorDTOForList(EmployeeDTO operatorDTO) {
         return new OperatorDTOForList(operatorDTO.getFirstName(), operatorDTO.getLastName());
     }
 }

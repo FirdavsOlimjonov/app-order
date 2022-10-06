@@ -41,6 +41,16 @@ public class OrderStatisticsChartDTO {
     private OrderStatusEnum orderStatusEnum;
 
 
+    public OrderStatisticsChartDTO(double paymentChash,
+                                   double paymentPayme, double paymentClick,
+                                   double paymentTerminal, double totalPayment) {
+        this.paymentPayme = paymentPayme;
+        this.paymentClick = paymentClick;
+        this.paymentChash = paymentChash;
+        this.paymentTerminal = paymentTerminal;
+        this.totalPayment = totalPayment;
+    }
+
     public OrderStatisticsChartDTO(Map<?, Integer> intervalData,
                                    Integer branchId,
                                    LocalDate fromDate,

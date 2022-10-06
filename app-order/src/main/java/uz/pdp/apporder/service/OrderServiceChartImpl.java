@@ -36,77 +36,18 @@ public class OrderServiceChartImpl implements OrderServiceChart {
      */
     public ApiResult<OrderStatisticsChartDTO> getStatisticsOrder(OrderChartDTO orderChartDTO) {
 
-        checkOrderChartDTO(orderChartDTO.getBranchId(),
+        checkOrderChartDTO(
+                orderChartDTO.getBranchId(),
                 orderChartDTO.getTillDate(),
                 orderChartDTO.getFromDate(),
-                orderChartDTO.getOrderStatusEnum());
+                orderChartDTO.getOrderStatusEnum()
+                );
 
         Map<?, Integer> map = countingOrderByStatusAndDate(orderChartDTO);
 
-        OrderStatisticsChartDTO orderStatisticsDTO = new OrderStatisticsChartDTO(
-                map, orderChartDTO.getBranchId(),
-                orderChartDTO.getFromDate(),
-                orderChartDTO.getTillDate(),
-                orderChartDTO.getOrderStatusEnum()
-        );
-
-        return ApiResult.successResponse(orderStatisticsDTO);
-
+        return ApiResult.successResponse(mapOrderChartDTOToOrderStatisticsDTO(orderChartDTO, map));
     }
 
-
-    /**
-     * Bu getStatisticsForChart method qismi
-     *
-     */
-    private Map<?,Integer> countingOrderByStatusAndDate(OrderChartDTO orderChartDTO) {
-
-        LocalDate fromDate = orderChartDTO.getFromDate();
-        LocalDate tillDate = orderChartDTO.getTillDate();
-
-        if (fromDate.plusDays(30).atStartOfDay().isBefore(tillDate.atStartOfDay())) {
-            Map<Month,Integer> monthMap = new TreeMap<>();
-            countingByMonth(orderChartDTO,fromDate,tillDate, monthMap);
-            return monthMap;
-        }
-        else {
-            Map<LocalDate,Integer> dayMap = new TreeMap<>();
-            while (tillDate.atStartOfDay().isAfter(fromDate.atStartOfDay())) {
-                dayMap.put(fromDate,getCountByDay(orderChartDTO, fromDate));
-                fromDate = fromDate.plusDays(1);
-            }
-            return dayMap;
-        }
-    }
-
-    /**
-     * count order by day
-     */
-    private int getCountByDay(OrderChartDTO orderChartDTO,
-                              LocalDate fromDate) {
-        int count = 0;
-
-        List<Order> all = orderRepository.findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(
-                LocalDateTime.from(fromDate.atStartOfDay()),
-                LocalDateTime.from(fromDate.plusDays(1).atStartOfDay())
-        );
-
-
-
-        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
-        boolean aNull = Objects.isNull(orderChartDTO.getBranchId());
-
-        for (Order order : all) {
-            if (rejected) {
-                if (aNull)
-                    count++;
-                else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
-                    count++;
-            } else
-                count++;
-        }
-        return count;
-    }
 
     /**
      * depend on counting
@@ -132,53 +73,21 @@ public class OrderServiceChartImpl implements OrderServiceChart {
         }
     }
 
-
-    /**
-     *
-     * Tegilmasin
-     * Bu getStatisticsForChart methodi qismi
-     *
-     */
-    private void checkOrderChartDTO(Integer branchId,
-                                    LocalDate tillDate,
-                                    LocalDate fromDate,
-                                    OrderStatusEnum orderStatusEnum) {
-
-        if (!Objects.isNull(branchId) && !branchRepository.existsById(branchId))
-            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
-
-        if (tillDate.isBefore(fromDate))
-            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
-
-        if (tillDate.isAfter(LocalDate.now()))
-            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
-
-        if (!Objects.isNull(orderStatusEnum)&&!orderStatusEnum.equals(OrderStatusEnum.FINISHED)
-                && !orderStatusEnum.equals(OrderStatusEnum.REJECTED))
-            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
-                    , HttpStatus.NOT_FOUND);
-    }
-
     /**
      * show payment statistics by payment
      */
     @Override
     public ApiResult<OrderStatisticsChartDTO> getStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
 
-        OrderStatisticsChartDTO statisticsChartDTO = new OrderStatisticsChartDTO();
-
         checkOrderChartDTO(orderChartPaymentDTO.getBranchId(),
                 orderChartPaymentDTO.getTillDate(),
                 orderChartPaymentDTO.getFromDate(),
                 null);
 
-        sumPayment(orderChartPaymentDTO,statisticsChartDTO);
-
-        return ApiResult.successResponse(statisticsChartDTO);
+        return ApiResult.successResponse(sumPayment(orderChartPaymentDTO));
     }
 
-    private void sumPayment(OrderChartPaymentDTO orderChartPaymentDTO,
-                            OrderStatisticsChartDTO statisticsChartDTO){
+    private OrderStatisticsChartDTO sumPayment(OrderChartPaymentDTO orderChartPaymentDTO){
 
         LocalDate fromDate = orderChartPaymentDTO.getFromDate();
         LocalDate tillDate = orderChartPaymentDTO.getTillDate();
@@ -211,11 +120,10 @@ public class OrderServiceChartImpl implements OrderServiceChart {
 
         double totalPayment= paymentChash+paymentPayme+paymentClick+paymentTerminal;
 
-        statisticsChartDTO.setPaymentChash(paymentChash);
-        statisticsChartDTO.setPaymentPayme(paymentPayme);
-        statisticsChartDTO.setPaymentClick(paymentClick);
-        statisticsChartDTO.setPaymentTerminal(paymentTerminal);
-        statisticsChartDTO.setTotalPayment(totalPayment);
+        return returnStatisticsChartDTO(
+                paymentChash, paymentPayme,
+                paymentClick, paymentTerminal, totalPayment
+        );
     }
 
     private double getSumByPaymentType(PaymentType paymentType, LocalDate fromDate){
@@ -236,4 +144,108 @@ public class OrderServiceChartImpl implements OrderServiceChart {
         return payment;
 
     }
+
+    /**
+     * count order by day
+     */
+    private int getCountByDay(OrderChartDTO orderChartDTO,
+                              LocalDate fromDate) {
+        int count = 0;
+
+        List<Order> all = orderRepository.findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(
+                LocalDateTime.from(fromDate.atStartOfDay()),
+                LocalDateTime.from(fromDate.plusDays(1).atStartOfDay())
+        );
+
+        boolean rejected = orderChartDTO.getOrderStatusEnum().equals(OrderStatusEnum.REJECTED);
+        boolean aNull = Objects.isNull(orderChartDTO.getBranchId());
+
+        for (Order order : all) {
+            if (rejected) {
+                if (aNull)
+                    count++;
+                else if (Objects.equals(order.getBranch().getId(), orderChartDTO.getBranchId()))
+                    count++;
+            } else
+                count++;
+        }
+        return count;
+    }
+
+    /**
+     *
+     * Tegilmasin
+     * Bu getStatisticsForChart methodi qismi
+     *
+     */
+    private void checkOrderChartDTO(
+            Integer branchId,
+            LocalDate tillDate,
+            LocalDate fromDate,
+            OrderStatusEnum orderStatusEnum
+    ) {
+
+        if (!Objects.isNull(branchId) && !branchRepository.existsById(branchId))
+            throw RestException.restThrow("Bunday filial mavjud emas!", HttpStatus.NOT_FOUND);
+
+        if (tillDate.isBefore(fromDate))
+            throw RestException.restThrow("Vaqtlar no'togri berilgan!", HttpStatus.BAD_REQUEST);
+
+        if (tillDate.isAfter(LocalDate.now()))
+            throw RestException.restThrow("Kelajakda nima bo'lishini xudo biladi!", HttpStatus.BAD_REQUEST);
+
+        if (!Objects.isNull(orderStatusEnum)&&!orderStatusEnum.equals(OrderStatusEnum.FINISHED)
+                && !orderStatusEnum.equals(OrderStatusEnum.REJECTED))
+            throw RestException.restThrow("Faqat Rejected va Finished statuslari uchungina statistica mavjud!"
+                    , HttpStatus.NOT_FOUND);
+    }
+
+
+    /**
+     * Bu getStatisticsForChart method qismi
+     *
+     */
+    private Map<?,Integer> countingOrderByStatusAndDate(OrderChartDTO orderChartDTO) {
+
+        LocalDate fromDate = orderChartDTO.getFromDate();
+        LocalDate tillDate = orderChartDTO.getTillDate();
+
+        if (fromDate.plusDays(30).atStartOfDay().isBefore(tillDate.atStartOfDay())) {
+            Map<Month,Integer> monthMap = new TreeMap<>();
+            countingByMonth(orderChartDTO,fromDate,tillDate, monthMap);
+            return monthMap;
+        }
+        else {
+            Map<LocalDate,Integer> dayMap = new TreeMap<>();
+            while (tillDate.atStartOfDay().isAfter(fromDate.atStartOfDay())) {
+                dayMap.put(fromDate,getCountByDay(orderChartDTO, fromDate));
+                fromDate = fromDate.plusDays(1);
+            }
+            return dayMap;
+        }
+    }
+
+
+
+    private static OrderStatisticsChartDTO mapOrderChartDTOToOrderStatisticsDTO(OrderChartDTO orderChartDTO,
+                                                                                Map<?, Integer> map) {
+        return new OrderStatisticsChartDTO(
+                map, orderChartDTO.getBranchId(),
+                orderChartDTO.getFromDate(),
+                orderChartDTO.getTillDate(),
+                orderChartDTO.getOrderStatusEnum()
+        );
+    }
+
+    private OrderStatisticsChartDTO returnStatisticsChartDTO(double paymentChash,
+                                                             double paymentPayme, double paymentClick,
+                                                             double paymentTerminal, double totalPayment) {
+
+        return new OrderStatisticsChartDTO(
+                paymentChash,paymentPayme,
+                paymentClick, paymentTerminal,totalPayment
+        );
+    }
+
+
 }

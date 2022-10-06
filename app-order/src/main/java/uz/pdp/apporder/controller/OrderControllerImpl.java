@@ -37,15 +37,22 @@ public class OrderControllerImpl implements OrderController {
 
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
 
     @Override
+    public ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(ViewDTO viewDTO, Integer page, Integer size) {
+        return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
+
+    }
+
+    @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
-
 
 
     @Override
@@ -80,7 +87,7 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public ApiResult<?> editOrder(OrderWebDTO order, Long id) {
-        return orderService.editOrder(order,id);
+        return orderService.editOrder(order, id);
     }
 
 }
