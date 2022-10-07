@@ -28,6 +28,6 @@ public interface BranchController {
     @PutMapping("/{id}")
     ApiResult<Branch> edit(@PathVariable Integer id, @RequestBody BranchDTO branchDTO);
 
-    @GetMapping("/map/{lat}/{lon}")
-    ApiResult<String> geoLocation(@PathVariable Double lat, @PathVariable Double lon);
+    @GetMapping("/map/{lat}/{lng}")
+    ApiResult<String> geoLocation(@PathVariable Double lat, @PathVariable Double lng);
 }

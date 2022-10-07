@@ -52,7 +52,7 @@ public class BranchControllerImpl implements BranchController {
     }
 
     @Override
-    public ApiResult<String> geoLocation(Double lat, Double lon) {
-        return branchService.geoLocation(lat, lon);
+    public ApiResult<String> geoLocation(Double lat, Double lng) {
+        return branchService.geoLocation(lat, lng);
     }
 }

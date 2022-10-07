@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private final BranchRepository branchRepository;
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
+    private final BranchService branchService;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -83,8 +84,8 @@ public class OrderServiceImpl implements OrderService {
         // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
         Float shippingPrice = findShippingPrice(branch, orderDTO.getAddress());
 
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLat(),
-                orderDTO.getAddress().getLng(),
+        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLatitude(),
+                orderDTO.getAddress().getLongitude(),
                 orderDTO.getAddress().getAddress(),
                 orderDTO.getAddress().getExtraAddress());
 
@@ -204,12 +205,30 @@ public class OrderServiceImpl implements OrderService {
 
 
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
+    private Branch findNearestBranch(AddressDTO location) {
+        Branch chosenBranch = null;
+        if (Objects.nonNull(location)) {
+            List<Branch> branches = branchService.getAll().getData();
+            Double distance = null;
+            for (Branch branch : branches)
+                if (Objects.isNull(distance)) {
+                    distance = Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                            + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2)
+                    );
+                    chosenBranch = branch;
+                } else if (distance < Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                        + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2))) {
+                    distance = Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                            + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2));
+                    chosenBranch = branch;
+                }
+        }
+        return chosenBranch;
     }
 
     // TODO: 10/3/22  shipping narxini aniqlash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
+
         return 500F;
     }
 

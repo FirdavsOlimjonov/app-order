@@ -87,15 +87,17 @@ public class BranchServiceImpl implements BranchService {
      * BU PULLIK API EKAN, TEKIN API TOPIB QOYSA ISHLAYDI ANIQ!
      *
      * @param lat
-     * @param lon
+     * @param lng
      * @return String
      */
     @Override
-    public ApiResult<String> geoLocation(Double lat, Double lon) {
-        String url = "https://api-maps.yandex.ru/2.1/?apikey=506127d8-5d3d-41dd-8928-ba1de79e5850&lang=ru_RU\n";
+    public ApiResult<String> geoLocation(Double lat, Double lng) {
+        String url = "https://api-maps.yandex.ru/2.1/?apikey=506127d8-5d3d-41dd-8928-ba1de79e5850&lang=ru_RU&lat="+lat+"&lng="+lng;
+
         RestTemplate restTemplate = new RestTemplate();
-        var data = Objects.requireNonNull(restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<String>() {
-        })).getBody();
+
+        var data = Objects.requireNonNull(restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<String>() {})).getBody();
+
         return ApiResult.successResponse("success", data);
     }
 }

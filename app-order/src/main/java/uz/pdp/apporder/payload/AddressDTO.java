@@ -12,9 +12,9 @@ import lombok.Setter;
 public class AddressDTO {
 
 
-    private Float lat;
+    private Float latitude;
 
-    private Float lng;
+    private Float longitude;
 
     private String address;
 
