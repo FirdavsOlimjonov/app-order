@@ -29,6 +29,8 @@ public class OrderDTO {
 
     private Float productsSum;
 
+    private Float discountSum;
+
     private Integer number;
 
     private String branchName;

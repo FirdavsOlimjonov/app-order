@@ -8,6 +8,7 @@ import uz.pdp.apporder.payload.DiscountDTO;
 import uz.pdp.apporder.service.DiscountService;
 
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class DiscountControllerImpl implements DiscountController {
