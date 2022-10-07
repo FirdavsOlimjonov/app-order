@@ -8,6 +8,7 @@ import uz.pdp.appproduct.dto.DiscountDTO;
 import uz.pdp.appproduct.service.DiscountService;
 
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class DiscountControllerImpl implements DiscountController {
@@ -35,7 +36,17 @@ public class DiscountControllerImpl implements DiscountController {
     }
 
     @Override
+    public ApiResult<DiscountDTO> getActiveDiscountForProduct(Integer productId) {
+        return discountService.getActiveDiscountForProduct(productId);
+    }
+
+    @Override
     public ApiResult<List<DiscountDTO>> getDiscounts() {
         return discountService.getDiscounts();
+    }
+
+    @Override
+    public ApiResult<List<DiscountDTO>> getActiveDiscounts() {
+        return discountService.getActiveDiscounts();
     }
 }

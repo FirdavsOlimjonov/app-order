@@ -25,8 +25,7 @@ public class Discount {
     private Product product;
     private String name;
 
-    private Short percent;
-
+    private Float discount;
 
     private Long startDate;
     private Long endDate;

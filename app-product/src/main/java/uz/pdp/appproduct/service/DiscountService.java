@@ -16,4 +16,9 @@ public interface DiscountService {
     ApiResult<DiscountDTO> get(Integer id);
 
     ApiResult<List<DiscountDTO>> getDiscounts();
+
+    ApiResult<DiscountDTO> getActiveDiscountForProduct(Integer productId);
+
+    ApiResult<List<DiscountDTO>> getActiveDiscounts();
+
 }

@@ -1,30 +1,31 @@
 package uz.pdp.appproduct.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-/**
- * Me: muhammadqodir
- * Project: app-order-parent/IntelliJ IDEA
- * Date:Thu 06/10/22 22:26
- */
+import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DiscountDTO {
 
+    @NotNull
     private Integer id;
 
+    @NotNull
     private Integer productId;
-    private String name;
 
-    private Short percent;
+    @NotNull
+    private Float discount;
 
-
+    @NotNull
     private Long startDate;
 
+    @NotNull
     private Long endDate;
 
 }

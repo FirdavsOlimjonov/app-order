@@ -14,6 +14,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 
     boolean existsByNameAndCategoryIdAndIdNot(String name, Integer category_id, Integer id);
+
+
+    @Query("select sum(p.price * d.discount / 100) from Product p join Discount d on d.product.id = p.id where p.id in :productiIds")
+    Float getOverallSumOfProductsDiscount(List<Integer> ids);
 }
 
 

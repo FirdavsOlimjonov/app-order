@@ -132,6 +132,12 @@ public class ProductServiceImpl implements ProductService {
         return ApiResult.successResponse(getDTOListFromEntity(all));
     }
 
+    @Override
+    public Float getDiscountAmountOfProducts(List<Integer> productIds) {
+
+        return productRepository.getOverallSumOfProductsDiscount(productIds);
+    }
+
     private List<ProductDTO> getDTOListFromEntity(List<Product> products) {
         return products
                 .stream()
