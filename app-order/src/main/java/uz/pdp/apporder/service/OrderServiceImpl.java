@@ -18,8 +18,11 @@ import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.entity.Discount;
 import uz.pdp.appproduct.entity.Product;
+import uz.pdp.appproduct.repository.DiscountRepository;
 import uz.pdp.appproduct.repository.ProductRepository;
+import uz.pdp.appproduct.service.ProductService;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
@@ -39,6 +42,9 @@ public class OrderServiceImpl implements OrderService {
     private final BranchRepository branchRepository;
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
+
+    private final DiscountRepository discountRepository;
+    private final ProductService productService;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -108,7 +114,6 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusEnum(OrderStatusEnum.NEW);
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
-
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientId);
@@ -225,6 +230,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderDTO.setProductsSum(calculateProductsSum(order));
 
+        orderDTO.setDiscountSum(calculateDiscountSumForOrder(order));
+
         String token = CommonUtils.getCurrentRequest().getHeader(RestConstants.AUTHORIZATION_HEADER);
 
         orderDTO.setClientDTO(Objects.requireNonNull(openFeign.getClientDTO(order.getClientId(), token).getData()));
@@ -236,6 +243,16 @@ public class OrderServiceImpl implements OrderService {
             orderDTO.setCurrierDTO(Objects.requireNonNull(openFeign.getCurrierDTO(order.getCurrierId(), CommonUtils.getCurrentRequest().getHeader("Authorization")).getData()));
         }
         return orderDTO;
+    }
+
+    private Float calculateDiscountSumForOrder(Order order) {
+
+        List<Integer> collect = order.getOrderProducts()
+                .stream()
+                .map(OrderProduct::getId)
+                .collect(Collectors.toList());
+
+        return productService.getDiscountAmountOfProducts(collect);
     }
 
     private Float calculateProductsSum(Order order) {
