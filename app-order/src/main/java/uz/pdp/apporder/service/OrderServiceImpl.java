@@ -15,11 +15,8 @@ import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
-import uz.pdp.appproduct.entity.Discount;
 import uz.pdp.appproduct.entity.Product;
-import uz.pdp.appproduct.repository.DiscountRepository;
 import uz.pdp.appproduct.repository.ProductRepository;
-import uz.pdp.appproduct.service.ProductService;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
@@ -44,8 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final BranchService branchService;
     private final PriceForDeliveryRepository priceForDeliveryRepository;
 
-    private final DiscountRepository discountRepository;
-    private final ProductService productService;
+    private final DiscountService discountService;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -319,15 +315,16 @@ public class OrderServiceImpl implements OrderService {
                 .map(OrderProduct::getId)
                 .collect(Collectors.toList());
 
-        return productService.getDiscountAmountOfProducts(collect);
+        return discountService.getDiscountsSumOfProducts(collect).orElse(0F);
     }
 
     private Float calculateProductsSum(Order order) {
-        float sum = 0F;
-        for (OrderProduct orderProduct : order.getOrderProducts()) {
-            sum += orderProduct.getUnitPrice();
-        }
-        return sum;
+        double sum = order
+                .getOrderProducts()
+                .stream()
+                .mapToDouble(value -> value.getUnitPrice() * value.getQuantity())
+                .sum();
+        return (float) sum;
     }
 
     private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {
