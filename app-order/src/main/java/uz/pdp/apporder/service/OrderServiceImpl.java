@@ -11,10 +11,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
@@ -40,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
     private final BranchService branchService;
+    private final PriceForDeliveryRepository priceForDeliveryRepository;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -205,6 +203,16 @@ public class OrderServiceImpl implements OrderService {
 
 
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
+
+    /**
+     * Eng yaqin Branchgacha bo'lgan kesma uzunligi o'lchangan,
+     * Yandex yoki Google mapni api ni
+     * olib kelish kerak va eng yaqin
+     * branchga yo'lni topib uzunligini aniqlash kerak!
+     *
+     * @param location
+     * @return Branch
+     */
     private Branch findNearestBranch(AddressDTO location) {
         Branch chosenBranch = null;
         if (Objects.nonNull(location)) {
@@ -212,24 +220,37 @@ public class OrderServiceImpl implements OrderService {
             Double distance = null;
             for (Branch branch : branches)
                 if (Objects.isNull(distance)) {
-                    distance = Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
-                            + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2)
-                    );
+                    distance = getDistance(branch, location);
                     chosenBranch = branch;
-                } else if (distance < Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
-                        + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2))) {
-                    distance = Math.sqrt(Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
-                            + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2));
+                } else if (distance < getDistance(branch, location)) {
+                    distance = getDistance(branch, location);
                     chosenBranch = branch;
                 }
         }
         return chosenBranch;
     }
 
+    private Double getDistance(Branch branch, AddressDTO location) {
+        return Math.sqrt(
+                Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                        + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2)
+        );
+    }
+
     // TODO: 10/3/22  shipping narxini aniqlash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
+        branch = findNearestBranch(addressDTO);
 
-        return 500F;
+        Double distance = getDistance(branch, addressDTO);
+
+        var priceForDelivery = priceForDeliveryRepository.findByBranch(branch).orElseThrow(() -> RestException.restThrow("No such branch price for delivery", HttpStatus.NOT_FOUND));
+
+        if (priceForDelivery.getPriceForPerKilometre() <= distance) {
+            return priceForDelivery.getPriceForPerKilometre();
+        }
+
+        var shippingPrice = priceForDelivery.getInitialPrice() + priceForDelivery.getInitialDistance();
+        return shippingPrice;
     }
 
     private OrderDTO mapOrderToOrderDTO(Order order) {

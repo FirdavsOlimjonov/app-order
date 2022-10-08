@@ -20,10 +20,10 @@ public class PriceForDelivery {
     private Integer id;
 
     @Column(nullable = false)
-    private Double priceForPerKilometre;
+    private Float priceForPerKilometre;
 
     @Column(nullable = false)
-    private Double initialPrice;
+    private Float initialPrice;
 
     @Column(nullable = false)
     private Integer initialDistance;
