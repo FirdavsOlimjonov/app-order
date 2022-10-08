@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="Branch nearest distance">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/PriceForDelivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/PriceForDelivery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/PriceForDeliveryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/PriceForDeliveryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/PriceForDeliveryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/PriceForDeliveryDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +187,7 @@
       <workItem from="1665087050337" duration="1479000" />
       <workItem from="1665113987723" duration="3329000" />
       <workItem from="1665173022996" duration="4334000" />
-      <workItem from="1665252482928" duration="2946000" />
+      <workItem from="1665252482928" duration="3251000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -262,7 +259,21 @@
       <option name="project" value="LOCAL" />
       <updated>1665175866548</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Branch nearest distance">
+      <created>1665259154683</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259154683</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Branch nearest distance">
+      <created>1665259331735</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259331735</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
