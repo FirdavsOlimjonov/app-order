@@ -26,4 +26,6 @@ public enum PermissionEnum {
     SENT_STATUS,
     CLOSED_STATUS,
     REJECTED_STATUS, FINISHED_STATUS,
+    ADD_FEEDBACK,
+    CHANGE_STATUS;
 }
