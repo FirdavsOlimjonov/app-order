@@ -58,11 +58,10 @@ public class ProductServiceImpl implements ProductService {
     //done
     @Override
     public ApiResult<ProductDTO> getProductForAdmin(Integer id) {
-        if (productRepository.existsById(id)) {
-            throw RestException.restThrow("id is not available", HttpStatus.NOT_FOUND);
-        }
 
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository
+                .findById(id)
+                .orElseThrow(() -> RestException.restThrow("id is not available", HttpStatus.NOT_FOUND));
 
         return ApiResult.successResponse(mapProductToProductDTO(product));
     }
