@@ -37,3 +37,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0I
 GET http://localhost/api/order/v1/order/order-status
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
+
+
+###
+POST localhost/api/order/v1/order/
+Content-Type: application/json
+
+{}

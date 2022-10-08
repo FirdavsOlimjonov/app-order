@@ -21,9 +21,11 @@ import uz.pdp.apporder.telegrambot.entity.ChatPageStatus;
 import uz.pdp.apporder.telegrambot.payload.StatusEnum;
 import uz.pdp.apporder.telegrambot.repository.ChatPageStatusRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static uz.pdp.apporder.telegrambot.util.MessageTg.*;
 
 @Component
 @Setter
@@ -58,7 +60,7 @@ public class CommandsBot extends SpringWebhookBot {
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         Message updateMessage = update.getMessage();
         Long chatId = updateMessage.getChatId();
-        if ( !repository.existsById(chatId)){
+        if (!repository.existsById(chatId)) {
 
             repository.save(new ChatPageStatus(chatId, StatusEnum.STATUS_START));
         }
@@ -105,12 +107,8 @@ public class CommandsBot extends SpringWebhookBot {
             }
         } else if (update.hasMessage() && updateMessage.hasText()) {
             String messageText = updateMessage.getText();
-            Message command = updateMessage;
-
-            switch (messageText) {
-                case "/start":
-                    return startAnswer(command);
-
+            if ("/start".equals(messageText)) {
+                return startAnswer(updateMessage);
             }
         } else if (update.hasMessage() && updateMessage.hasContact()) {
             Message message = sendCode(updateMessage, pageStatus);
@@ -181,18 +179,19 @@ public class CommandsBot extends SpringWebhookBot {
 
     @SneakyThrows
     public BotApiMethod<?> startAnswer(Message message) {
-        String text = "Ro'yxatdan o'tish uchun telefon raqamingizni";
-        return send(message, text, getMenuForStart());
+        return send(message, SHARE_CONTACT, getMenuForStart());
     }
 
-    private BotApiMethod<?> send(Message message, String text1, ReplyKeyboardMarkup buttonMenu) throws TelegramApiException {
-        SendMessage markdown = SendMessage.builder()
+    private BotApiMethod<?> send(Message message,
+                                 String text,
+                                 ReplyKeyboardMarkup buttonMenu) {
+        SendMessage sendMessage = new SendMessage();
+        return SendMessage.builder()
                 .chatId(String.valueOf(message.getChatId()))
-                .parseMode("Markdown")
-                .text(text1)
+                .parseMode("MarkdownV2")
+                .text(text)
                 .replyMarkup(buttonMenu)
                 .build();
-        return markdown;
     }
 
     private static ReplyKeyboardMarkup getMenuForStart() {
