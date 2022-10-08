@@ -47,7 +47,6 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(ViewDTO viewDTO, Integer page, Integer size) {
         return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
-
     }
 
     @Override

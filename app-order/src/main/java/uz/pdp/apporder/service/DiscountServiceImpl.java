@@ -116,6 +116,11 @@ public class DiscountServiceImpl implements DiscountService {
         return ApiResult.successResponse(mapDiscountsToDiscountDTOs(discountList));
     }
 
+    @Override
+    public Optional<Float> getDiscountsSumOfProducts(List<Integer> collect) {
+        return discountRepository.getOverallSumOfProductsDiscount(collect, System.currentTimeMillis());
+    }
+
 
     private DiscountDTO mapDiscountToDiscountDTO(Discount discount) {
         return new DiscountDTO(discount.getId(),
