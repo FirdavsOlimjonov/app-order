@@ -1,9 +1,10 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.payload.AddDiscountDTO;
+import uz.pdp.apporder.payload.promotion.AddPromotionDTO;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.DiscountDTO;
+import uz.pdp.apporder.payload.promotion.PromotionDTO;
 import uz.pdp.appproduct.util.RestConstants;
 
 import javax.validation.Valid;
@@ -24,20 +25,24 @@ public interface PromotionsController {
     String GET_PATH = "/{id}";
 
     String GET_ALL_PATH = "/list";
+    String GET_ALL_BY_STATUS_PATH = "/get-promotion";
 
     @PostMapping(value = ADD_PATH)
-    ApiResult<DiscountDTO> add(@RequestBody @Valid AddDiscountDTO addDiscountDTO);
+    ApiResult<DiscountDTO> add(@Valid @RequestBody AddPromotionDTO addPromotionDTO);
 
     @PutMapping(value = EDIT_PATH)
-    ApiResult<DiscountDTO> edit(@RequestBody @Valid DiscountDTO discountDTO);
+    ApiResult<DiscountDTO> edit(@Valid @RequestBody PromotionDTO promotionDTO);
 
-    @PostMapping(value = STOP_PATH)
-    ApiResult<Boolean> end(@PathVariable @NotNull Integer id);
+    @GetMapping(value = STOP_PATH)
+    ApiResult<Boolean> end(@NotNull Long id);
 
     @GetMapping(value = GET_PATH)
-    ApiResult<DiscountDTO> get(@PathVariable @NotNull Integer id);
+    ApiResult<PromotionDTO> get(@NotNull Long id);
 
-    @GetMapping(value = GET_ALL_PATH)
-    ApiResult<List<DiscountDTO>> getDiscounts();
+    @GetMapping(GET_ALL_PATH)
+    ApiResult<List<PromotionDTO>> getPromotions();
+
+    @PostMapping(value = GET_ALL_BY_STATUS_PATH)
+    ApiResult<List<PromotionDTO>> getPromotions(@Valid @RequestBody Boolean isActive);
 
 }

@@ -1,9 +1,10 @@
-package uz.pdp.apporder.entity;
+package uz.pdp.apporder.entity.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.apporder.entity.template.AbsIntegerEntity;
 
 import javax.persistence.*;
 
@@ -12,10 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiscountPromotion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class DiscountPromotion extends AbsIntegerEntity {
 
     @Column(nullable = false)
     private Float moreThan;
@@ -23,4 +21,9 @@ public class DiscountPromotion {
     @Column(nullable = false)
     private Float discount;
 
+    public DiscountPromotion(Integer id,Float moreThan, Float discount) {
+        super(id);
+        this.moreThan = moreThan;
+        this.discount = discount;
+    }
 }
