@@ -25,5 +25,4 @@ public interface ProductService {
 
     ApiResult<List<ProductDTO>> getProducts();
 
-    Float getDiscountAmountOfProducts(List<Integer> productIds);
 }

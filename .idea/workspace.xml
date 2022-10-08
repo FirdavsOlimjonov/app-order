@@ -4,14 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="adding OrderStatisticsDTO path">
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="starting discounts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/component/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderStatisticsInListImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/OrderControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/DiscountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/DiscountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/DiscountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/enums/PermissionEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/enums/PermissionEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountControllerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/AddDiscountDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/DiscountDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/DiscountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/ProductServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +59,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Zuhra" />
+        <entry key="$PROJECT_DIR$" value="Yusupov_Muhammadqodir" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -86,6 +99,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -134,7 +148,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.AppOrderApplication">
-    <configuration name="OrderForOtabek | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="3" requestIdentifier="#3" runType="Run single request">
+    <configuration name="OrderForOtabek | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="OrderForOtabek | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="4" requestIdentifier="#4" runType="Run single request">
@@ -158,11 +172,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.OrderForOtabek | #1" />
         <item itemvalue="HTTP Request.category | #5" />
         <item itemvalue="HTTP Request.category | #2" />
         <item itemvalue="HTTP Request.category | #1" />
         <item itemvalue="HTTP Request.OrderForOtabek | #4" />
-        <item itemvalue="HTTP Request.OrderForOtabek | #3" />
       </list>
     </recent_temporary>
   </component>
@@ -186,6 +200,7 @@
       <workItem from="1664869794908" duration="784000" />
       <workItem from="1664941949836" duration="13176000" />
       <workItem from="1664965002065" duration="5838000" />
+      <workItem from="1665249563771" duration="2202000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
