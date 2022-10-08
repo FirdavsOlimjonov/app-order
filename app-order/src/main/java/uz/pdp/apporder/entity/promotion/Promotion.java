@@ -1,9 +1,10 @@
-package uz.pdp.apporder.entity;
+package uz.pdp.apporder.entity.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.apporder.entity.template.AbsLongEntity;
 
 import javax.persistence.*;
 
@@ -12,11 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Promotion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Promotion extends AbsLongEntity {
 
     @Column(nullable = false)
     private Long startDate;

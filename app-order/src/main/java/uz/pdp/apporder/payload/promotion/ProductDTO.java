@@ -1,4 +1,4 @@
-package uz.pdp.appproduct.dto;
+package uz.pdp.apporder.payload.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductDTO {
+
+    private Integer id;
+
     private Float price;
 
     private String name;

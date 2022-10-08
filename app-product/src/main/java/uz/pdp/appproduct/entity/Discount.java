@@ -23,12 +23,13 @@ public class Discount {
 
     @OneToOne
     private Product product;
+
     private String name;
 
     private Short percent;
 
-
     private Long startDate;
+
     private Long endDate;
 
 }

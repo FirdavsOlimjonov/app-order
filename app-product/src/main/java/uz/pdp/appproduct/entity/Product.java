@@ -32,4 +32,14 @@ public class Product {
     private Discount discount;
 
     private String description;
+
+
+    public Product(Integer id, boolean active, Float price, String name, Category category, String description) {
+        this.id = id;
+        this.active = active;
+        this.price = price;
+        this.name = name;
+        this.category = category;
+        this.description = description;
+    }
 }
