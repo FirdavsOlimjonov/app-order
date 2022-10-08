@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="getting current active discounts for one product and all active discounts">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/BonusProductPromotion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/DeliveryPromotion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/DiscountPromotion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/ProductPromotion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotion.java" afterDir="false" />
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="building promotion entities">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/DiscountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountControllerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/DiscountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountServiceImpl.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +194,7 @@
       <workItem from="1665028527329" duration="10975000" />
       <workItem from="1665075123191" duration="3547000" />
       <workItem from="1665105926012" duration="1849000" />
-      <workItem from="1665208921694" duration="3227000" />
+      <workItem from="1665208921694" duration="4459000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -273,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665077707680</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="building promotion entities">
+      <created>1665212939909</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665212939909</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -304,6 +311,7 @@
     <MESSAGE value="adding OrderStatisticsDTO path" />
     <MESSAGE value="starting discounts" />
     <MESSAGE value="getting current active discounts for one product and all active discounts" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting current active discounts for one product and all active discounts" />
+    <MESSAGE value="building promotion entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="building promotion entities" />
   </component>
 </project>
