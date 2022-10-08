@@ -4,38 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/AddPromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/BonusProductPromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DeliveryPromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DiscountPromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductPromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/PromotionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/template/PromotionDTOType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/BonusProductPromotionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/DeliveryPromotionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/DiscountPromotionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/ProductPromotionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/repository/PromotionRepository.java" afterDir="false" />
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="building promotion entities">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionsControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionControllerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/BonusProductPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/BonusProductPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/CourierPromotions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/DeliveryPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/DeliveryPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/DiscountPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/DiscountPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/ProductPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/ProductPromotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/ProductPromotions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/Promotion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/Promotions.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/template/AbsIntegerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/template/AbsIntegerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountControllerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/DiscountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountServiceImpl.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,9 +25,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="com.haulmont.jpb.JpaEntity" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -141,11 +118,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="uz.pdp.apporder.repository" />
-      <recent name="uz.pdp.apporder.payload.promotion" />
-      <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.apporder.entity" />
       <recent name="uz.pdp.apporder.service" />
+      <recent name="uz.pdp.apporder.payload" />
+      <recent name="uz.pdp.apporder." />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\LESSON\b20\fastfood\app-order-parent\app-product\src\main\java\uz\pdp\appproduct\test" />
@@ -155,9 +131,9 @@
       <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="uz.pdp.apporder.repository" />
       <recent name="uz.pdp.apporder.controller" />
       <recent name="uz.pdp.apporder.entity" />
+      <recent name="uz.pdp.apporder.repository" />
       <recent name="uz.pdp.apporder.payload" />
       <recent name="uz.pdp.appproduct.util" />
     </key>
@@ -218,8 +194,7 @@
       <workItem from="1665028527329" duration="10975000" />
       <workItem from="1665075123191" duration="3547000" />
       <workItem from="1665105926012" duration="1849000" />
-      <workItem from="1665208921694" duration="3227000" />
-      <workItem from="1665225563787" duration="16824000" />
+      <workItem from="1665208921694" duration="4459000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -298,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665077707680</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="building promotion entities">
+      <created>1665212939909</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665212939909</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,6 +311,7 @@
     <MESSAGE value="adding OrderStatisticsDTO path" />
     <MESSAGE value="starting discounts" />
     <MESSAGE value="getting current active discounts for one product and all active discounts" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting current active discounts for one product and all active discounts" />
+    <MESSAGE value="building promotion entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="building promotion entities" />
   </component>
 </project>
