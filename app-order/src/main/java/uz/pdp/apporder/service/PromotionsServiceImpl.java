@@ -13,8 +13,6 @@ import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.entity.Product;
 import uz.pdp.appproduct.repository.CategoryRepository;
-import uz.pdp.appproduct.repository.ProductRepository;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,8 +25,6 @@ public class PromotionsServiceImpl implements PromotionsService {
 
     private final DiscountPromotionRepository discountPromotionRepository;
 
-    private final ProductRepository productRepository;
-
     private final PromotionRepository promotionRepository;
 
     private final DeliveryPromotionRepository deliveryPromotionRepository;
@@ -40,30 +36,30 @@ public class PromotionsServiceImpl implements PromotionsService {
     private final BonusProductPromotionRepository bonusProductPromotionRepository;
 
 
-    private <T extends PromotionDTOType> Promotion checkPromotion(T otherPromotion){
+    private <T extends PromotionDTOType> Promotion checkPromotion(T otherPromotion) {
         Promotion promotion = new Promotion();
 
         byte notNullCount = 0;
 
         checkPromotionDate(otherPromotion.getStartDate(), otherPromotion.getEndDate());
 
-        if (Objects.nonNull(promotion.getDiscountPromotion()) && notNullCount++ == 0) {
+        if (Objects.nonNull(promotion.getDiscountPromotion()) && notNullCount++ == 0)
             promotion.setDiscountPromotion(checkPromotion(otherPromotion.getDiscountPromotion()));
-        }
-        if (Objects.nonNull(otherPromotion.getDeliveryPromotion()) && notNullCount++ == 0) {
+
+        if (Objects.nonNull(otherPromotion.getDeliveryPromotion()) && notNullCount++ == 0)
             promotion.setDeliveryPromotion(checkDelivery(otherPromotion.getDeliveryPromotion()));
-        }
-        if (Objects.nonNull(otherPromotion.getProductPromotion()) && notNullCount++ == 0) {
+
+        if (Objects.nonNull(otherPromotion.getProductPromotion()) && notNullCount++ == 0)
             promotion.setProductPromotion(checkProductPromotion(otherPromotion.getProductPromotion()));
-        }
-        if (Objects.nonNull(otherPromotion.getBonusProductPromotion()) && notNullCount++ == 0) {
+
+        if (Objects.nonNull(otherPromotion.getBonusProductPromotion()) && notNullCount++ == 0)
             promotion.setBonusProductPromotion(checkBonusProduct(otherPromotion.getBonusProductPromotion()));
-        }
+
         if (notNullCount == 0)
-            throw RestException.restThrow("promotion has problem", HttpStatus.BAD_REQUEST);
+            throw RestException.restThrow("don't have promotion. Only 1 promotion is required!", HttpStatus.BAD_REQUEST);
 
         if (notNullCount > 1)
-            throw RestException.restThrow("promotion has problem", HttpStatus.BAD_REQUEST);
+            throw RestException.restThrow("There are "+notNullCount + " promotions. Only 1 promotion is required!", HttpStatus.BAD_REQUEST);
 
         return promotion;
     }
@@ -86,12 +82,57 @@ public class PromotionsServiceImpl implements PromotionsService {
     @Override
     public ApiResult<PromotionDTO> edit(PromotionDTO promotionDTO) {
 
-        return null;
+        if (!promotionRepository.existsById(promotionDTO.getId()))
+            throw RestException.restThrow("promotion not found", HttpStatus.NOT_FOUND);
+
+        Promotion promotion = checkPromotion(promotionDTO);
+
+        checkExistsPromotionAndSave(promotion);
+
+        Promotion save = promotionRepository.save(promotion);
+
+        return ApiResult.successResponse(promotionToPromotionDTO(save));
+    }
+
+    private void checkExistsPromotionAndSave(Promotion promotion) {
+
+        if (promotion.getProductPromotion() != null &&
+                promotionRepository.existsByIdAndProductPromotionId(promotion.getId(), promotion.getProductPromotion().getId()))
+            productPromotionRepository.save(promotion.getProductPromotion());
+
+        else if (promotion.getDeliveryPromotion() != null &&
+                promotionRepository.existsByIdAndDeliveryPromotionId(promotion.getId(), promotion.getDeliveryPromotion().getId()))
+            deliveryPromotionRepository.save(promotion.getDeliveryPromotion());
+
+        else if (promotion.getDiscountPromotion() != null &&
+                promotionRepository.existsByIdAndDiscountPromotionId(promotion.getId(), promotion.getDiscountPromotion().getId()))
+            discountPromotionRepository.save(promotion.getDiscountPromotion());
+
+        else if (promotion.getBonusProductPromotion() != null &&
+                promotionRepository.existsByIdAndBonusProductPromotionId(promotion.getId(), promotion.getBonusProductPromotion().getId()))
+            bonusProductPromotionRepository.save(promotion.getBonusProductPromotion());
+
+        else
+            throw RestException.restThrow("product promotion not found", HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ApiResult<Boolean> stopPromotion(Long id) {
-        return null;
+
+        Promotion promotion = promotionRepository.findById(id).orElseThrow(() ->
+                RestException.restThrow("Promotion not found", HttpStatus.NOT_FOUND)
+        );
+
+        long time = new Date().getTime();
+
+        if (promotion.getEndDate() < new Date().getTime())
+            throw RestException.restThrow("promotion already finished", HttpStatus.BAD_REQUEST);
+
+        promotion.setEndDate(time);
+
+        promotionRepository.save(promotion);
+
+        return ApiResult.successResponse();
     }
 
     @Override
@@ -244,10 +285,6 @@ public class PromotionsServiceImpl implements PromotionsService {
         return promotionDTOS;
     }
 
-    private Promotion promotionDTOToPromotion(PromotionDTO promotionDTO) {
-        return null;
-    }
-
     private List<ProductDTO> getDTOListFromEntity(List<Product> products) {
         return products
                 .stream()
@@ -271,9 +308,10 @@ public class PromotionsServiceImpl implements PromotionsService {
                 product.isActive(),
                 product.getDescription());
     }
+
     private Product mapProductDTOToProduct(ProductDTO product) {
         Category category_not_found = categoryRepository.findById(product.getCategoryId()).orElseThrow(() ->
-                RestException.restThrow("category not found",HttpStatus.NOT_FOUND)
+                RestException.restThrow("category not found", HttpStatus.NOT_FOUND)
         );
 
         return new Product(
@@ -286,28 +324,13 @@ public class PromotionsServiceImpl implements PromotionsService {
         );
     }
 
-
     private ProductPromotion productPromotionDTOToProductPromotion(ProductPromotionDTO promotionDTO) {
-
-        List<Product> allById = productRepository.findAllById(promotionDTO.getBonusProducts()
-                .stream()
-                .map(ProductDTO::getId)
-                .collect(Collectors.toList()));
 
         return new ProductPromotion(
                 promotionDTO.getId(),
                 promotionDTO.getMoreThan(),
                 mapProductDTOToProduct(promotionDTO.getBonusProducts()),
                 promotionDTO.isCanAllBeTaken()
-        );
-    }
-
-    private ProductPromotionDTO productPromotionToProductPromotionDTO(ProductPromotion promotion) {
-        return new ProductPromotionDTO(
-                promotion.getId(),
-                promotion.getMoreThan(),
-                getDTOListFromEntity(promotion.getBonusProducts()),
-                promotion.isCanAllBeTaken()
         );
     }
 
@@ -319,5 +342,4 @@ public class PromotionsServiceImpl implements PromotionsService {
                 mapProductDTOToProduct(bonus.getProductDTO())
         );
     }
-
 }
