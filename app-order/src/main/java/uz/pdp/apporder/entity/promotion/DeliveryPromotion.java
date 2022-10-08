@@ -30,9 +30,4 @@ public class DeliveryPromotion extends AbsIntegerEntity {
         this.endTime = endTime;
     }
 
-    public DeliveryPromotion(Float moreThan, Long startTime, Long endTime) {
-        this.moreThan = moreThan;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 }
