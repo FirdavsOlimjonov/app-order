@@ -17,6 +17,8 @@ public interface AuthFeign {
     String GET_EMPLOYEE_BY_TOKEN = "/api/auth/v1/user/me";
     String GET_CLIENT_BY_ID = "/api/auth/v1/user/by-id/{userId}";
 
+    String VERIFICATION_BY_PHONE = "/verification-phone-number/{phoneNumber}";
+
     @RequestMapping(method = RequestMethod.GET, value = GET_EMPLOYEE_BY_TOKEN, consumes = "application/json")
     ApiResult<ClientDTO> getAuthorizedClientDTO(@RequestHeader(RestConstants.AUTHORIZATION_HEADER) String token);
 
@@ -35,4 +37,7 @@ public interface AuthFeign {
 
     @RequestMapping(method = RequestMethod.POST, value = "api/auth/v1/internal/client", consumes = "application/json")
     ApiResult<ClientDTO> getClientDTOAndSet(@RequestBody ClientDTO clientDTO, @RequestHeader(RestConstants.AUTHORIZATION_HEADER) String token);
+
+    @GetMapping(value = VERIFICATION_BY_PHONE, consumes = "applicaton/json")
+    ApiResult<?> verificationPhone(@PathVariable("phoneNumber") String phoneNumber, @RequestHeader(RestConstants.AUTHORIZATION_HEADER) String token);
 }
