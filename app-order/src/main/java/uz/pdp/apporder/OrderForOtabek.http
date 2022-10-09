@@ -1,4 +1,4 @@
-POST localhost:8181/api/order/v1/order/save-mob-app
+POST localhost:8080/api/order/v1/order/save-mob-app
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0IjoxNjY0OTUwOTg2LCJleHAiOjE2NjUwMjI5ODZ9.KdDUir8xBMbt5R-_hH0R1E6zXKYyVG3VSkWTI-AXJRN0qtrqznGWNDMmeunOdkO_IsaGSLfsojiWvCCy3yx_6w
 
@@ -6,18 +6,22 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0I
   "orderProductsDTOList": [
     {
       "productId": 1,
-      "quantity": 2
+      "quantity": 33
     },
     {
-      "productId": 1,
-      "quantity": 1
+      "productId": 2,
+      "quantity": 3
+    },
+    {
+      "productId": 2,
+      "quantity": 30
     }
   ],
   "addressDTO": {
     "lat": 80.59,
     "lng": 40.57,
-    "address": "t",
-    "extraAddress": "i"
+    "address": "test_9af5064ea73e",
+    "extraAddress": "test_806faa177a26"
   },
   "paymentType": "CASH"
 }
