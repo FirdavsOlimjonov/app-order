@@ -20,12 +20,12 @@ public class BonusProductPromotion extends AbsIntegerEntity {
     private Float moreThan;
 
     @Column(nullable = false)
-    private Float bonusCount;
+    private Short bonusCount;
 
     @ManyToOne
     private Product product;
 
-    public BonusProductPromotion(Integer id, Float moreThan, Float bonusCount, Product product) {
+    public BonusProductPromotion(Integer id, Float moreThan, Short bonusCount, Product product) {
         super(id);
         this.moreThan = moreThan;
         this.bonusCount = bonusCount;

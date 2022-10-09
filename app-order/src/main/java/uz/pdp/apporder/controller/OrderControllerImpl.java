@@ -2,6 +2,8 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
 import uz.pdp.appproduct.aop.CheckAuth;
 import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
@@ -35,6 +37,16 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<?> saveOrderFromWeb(OrderWebDTO order) {
         return orderService.saveOrder(order);
+    }
+
+    @Override
+    public ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId) {
+        return orderService.getOrderPromotions(orderId);
+    }
+
+    @Override
+    public ApiResult<OrderDTO> getOrderPromotions(AcceptPromotionDTO acceptPromotionDTO) {
+        return orderService.acceptOrderPromotion(acceptPromotionDTO);
     }
 
 

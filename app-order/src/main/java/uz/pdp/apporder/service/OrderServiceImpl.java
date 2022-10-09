@@ -12,6 +12,9 @@ import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.entity.promotion.*;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
+import uz.pdp.apporder.payload.promotion.PromotionDTO;
 import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
@@ -139,22 +142,7 @@ public class OrderServiceImpl implements OrderService {
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
 
-        Promotion promotion = promotionsService.get1ActivePromotion().orElse(null);
-
-        if (Objects.nonNull(promotion)){
-
-            DiscountPromotion discountPromotion = promotion.getDiscountPromotion();
-            DeliveryPromotion deliveryPromotion = promotion.getDeliveryPromotion();
-            ProductPromotion productPromotion = promotion.getProductPromotion();
-            BonusProductPromotion bonusProductPromotion = promotion.getBonusProductPromotion();
-
-            if (Objects.nonNull(discountPromotion)){
-                Float discount = discountPromotion.getDiscount();
-                Float moreThan = discountPromotion.getMoreThan();
-
-            }
-
-        }
+        Float overallSum = calculateProductsSum(order);
 
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
@@ -247,6 +235,41 @@ public class OrderServiceImpl implements OrderService {
         saveOrder(newOrder, clientDTO.getUserId(), currentEmployee.getId(), order);
 
         return ApiResult.successResponse("Order successfully updated");
+    }
+
+    @Override
+    public ApiResult<OrderDTO> acceptOrderPromotion(AcceptPromotionDTO acceptPromotionDTO) {
+        Long promotionId = acceptPromotionDTO.getPromotionId();
+        Promotion promotion = promotionRepository.findById(promotionId)
+                .orElseThrow(() -> RestException.restThrow("PROMOTION_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        Long orderId = acceptPromotionDTO.getOrderId();
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> RestException.restThrow("ORDER_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        if (acceptPromotionDTO.isProductPromotion()) {
+
+            ProductPromotion productPromotion = promotion.getProductPromotion();
+
+            Product product = productPromotion
+                    .getBonusProducts()
+                    .stream()
+                    .filter(p -> p.getId().equals(acceptPromotionDTO.getChosenProductId()))
+                    .findFirst()
+                    .orElseThrow(() -> RestException.restThrow("PRODUCT_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+
+            if (Objects.nonNull(product)) {
+                List<OrderProduct> orderProducts = order.getOrderProducts();
+
+                orderProducts.add(new OrderProduct(order, product, (short) 1, product.getPrice()));
+                order.setOrderProducts(orderProducts);
+            }
+        }
+
+        return ApiResult.successResponse(mapOrderToOrderDTO(order));
+
     }
 
 

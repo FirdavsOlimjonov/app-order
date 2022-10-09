@@ -47,7 +47,7 @@ public class Order {
 
     private Float deliverySum;
 
-    private Double overAllSum;
+    private Float overAllSum;
 
     private Integer number;
 

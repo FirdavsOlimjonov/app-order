@@ -29,10 +29,13 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
 
     String SAVE_WEB = "/save-web";
+    String GET_ORDER_PROMOTIONS = "/discount_promotions{orderId}";
+    String ACCEPT_PROMOTION_PATH = "/accept";
 
     String EDIT_ORDER = "/editOrder";
 
     String PATH_BASE = "/api/order/v1/order";
+
 
     String ORDERS_FOR_CURRIER = "/all-orders-currier/{id}";
     String ORDERS_FOR_CURRIER_BY_DATE = "/all-orders-currier/{id}/{date}";
@@ -44,6 +47,11 @@ public interface OrderController {
     @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
+    @GetMapping(GET_ORDER_PROMOTIONS)
+    ApiResult<OrderWithPromotionDTO> getOrderPromotions(@PathVariable Long orderId);
+
+    @PostMapping(ACCEPT_PROMOTION_PATH)
+    ApiResult<OrderDTO> getOrderPromotions(@Valid @RequestBody AcceptPromotionDTO acceptPromotionDTO );
 
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
