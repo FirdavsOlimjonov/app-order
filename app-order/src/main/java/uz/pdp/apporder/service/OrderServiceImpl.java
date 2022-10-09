@@ -23,10 +23,8 @@ import uz.pdp.appproduct.repository.ProductRepository;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +51,31 @@ public class OrderServiceImpl implements OrderService {
                 null, new Order());
 
         return ApiResult.successResponse("Order successfully saved!");
+    }
+
+    /**
+     * Kurier ning bir sanadagi zakazlari ro'yxati
+     * @param id = @id
+     * @param localDate = @localDate
+     * @return List<OrderForCurrierDTO>
+     */
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).toList();
+        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
+    }
+
+    /**
+     * Kurierning barcha zakazlari
+     * @param id = @id
+     * @return List<OrderForCurrierDTO>
+     */
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+        List<Order> orders = orderRepository.findAllByCurrierIdOrderOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).toList();
+        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
     }
 
     @Override
@@ -281,5 +304,28 @@ public class OrderServiceImpl implements OrderService {
                         .getQuantity(),
                 product.getPrice());
     }
+    public OrderForCurrierDTO mapOrderToOrderForHistory(Order order){
+        OrderForCurrierDTO orderForCurrierDTO = new OrderForCurrierDTO();
+
+        Float totalProductsPrice = calculateProductsSum(order);
+
+        orderForCurrierDTO.setOrderNumber(order.getNumber());
+
+        orderForCurrierDTO.setBranchName(order.getBranch().getName());
+
+        orderForCurrierDTO.setOrderedDate(order.getOrderedAt().toLocalDate());
+
+        orderForCurrierDTO.setProductsSum(totalProductsPrice);
+
+        orderForCurrierDTO.setDeliverySum(order.getDeliverySum());
+
+        orderForCurrierDTO.setPaymentType(order.getPaymentType());
+
+        orderForCurrierDTO.setClientAddress(order.getAddress().getAddress());
+
+        return orderForCurrierDTO;
+
+    }
+
 
 }

@@ -8,15 +8,19 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
     List<Order> findAllByStatusEnumEquals(OrderStatusEnum statusEnum);
+     Optional<List<Order>> findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(UUID id, LocalDate localDate);
 
+     Optional<List<Order>> findAllByCurrierIdOrderOrderByOrderedAtDesc(UUID id);
     List<Order> findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(LocalDateTime begin, LocalDateTime end);
 
     List<Order> getOrdersByOrderByOrderedAt();
