@@ -22,7 +22,6 @@ public interface DiscountController {
     String GET_ALL_ACTIVE_DISCOUNTS_PATH = "/active-discounts";
     String GET_ALL_PATH = "/list";
 
-
     @PostMapping(value = ADD_PATH)
     ApiResult<DiscountDTO> add(@RequestBody @Valid AddDiscountDTO addDiscountDTO);
 
