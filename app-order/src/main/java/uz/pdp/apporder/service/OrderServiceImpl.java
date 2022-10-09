@@ -40,6 +40,8 @@ public class OrderServiceImpl implements OrderService {
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
 
+    private final DiscountService discountService;
+
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
@@ -108,7 +110,6 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusEnum(OrderStatusEnum.NEW);
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
-
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientId);
@@ -225,6 +226,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderDTO.setProductsSum(calculateProductsSum(order));
 
+        orderDTO.setDiscountSum(calculateDiscountSumForOrder(order));
+
         String token = CommonUtils.getCurrentRequest().getHeader(RestConstants.AUTHORIZATION_HEADER);
 
         orderDTO.setClientDTO(Objects.requireNonNull(openFeign.getClientDTO(order.getClientId(), token).getData()));
@@ -238,12 +241,23 @@ public class OrderServiceImpl implements OrderService {
         return orderDTO;
     }
 
+    private Float calculateDiscountSumForOrder(Order order) {
+
+        List<Integer> collect = order.getOrderProducts()
+                .stream()
+                .map(OrderProduct::getId)
+                .collect(Collectors.toList());
+
+        return discountService.getDiscountsSumOfProducts(collect).orElse(0F);
+    }
+
     private Float calculateProductsSum(Order order) {
-        float sum = 0F;
-        for (OrderProduct orderProduct : order.getOrderProducts()) {
-            sum += orderProduct.getUnitPrice();
-        }
-        return sum;
+        double sum = order
+                .getOrderProducts()
+                .stream()
+                .mapToDouble(value -> value.getUnitPrice() * value.getQuantity())
+                .sum();
+        return (float) sum;
     }
 
     private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {

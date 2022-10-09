@@ -18,7 +18,7 @@ public interface DiscountController {
     String EDIT_PATH = "/{id}";
     String STOP_PATH = "/stop/{id}";
     String GET_PATH = "/{id}";
-    String GET_ACTIVE_DISCOUNT_FOR_PRODUCT_PATH = "/{productId}";
+    String GET_DISCOUNT_FOR_PRODUCT_PATH = "/{productId}";
     String GET_ALL_ACTIVE_DISCOUNTS_PATH = "/active-discounts";
     String GET_ALL_PATH = "/list";
 
@@ -35,7 +35,7 @@ public interface DiscountController {
     @GetMapping(value = GET_PATH)
     ApiResult<DiscountDTO> get(@PathVariable @NotNull Integer id);
 
-    @GetMapping(value = GET_ACTIVE_DISCOUNT_FOR_PRODUCT_PATH)
+    @GetMapping(value = GET_DISCOUNT_FOR_PRODUCT_PATH)
     ApiResult<DiscountDTO> getActiveDiscountForProduct(@PathVariable @NotNull Integer productId);
 
     @GetMapping(value = GET_ALL_PATH)
