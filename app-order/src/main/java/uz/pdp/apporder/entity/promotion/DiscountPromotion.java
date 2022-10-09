@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.template.AbsIntegerEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class DiscountPromotion extends AbsIntegerEntity {
     @Column(nullable = false)
     private Float discount;
 
-    public DiscountPromotion(Integer id,Float moreThan, Float discount) {
+    public DiscountPromotion(Integer id, Float moreThan, Float discount) {
         super(id);
         this.moreThan = moreThan;
         this.discount = discount;

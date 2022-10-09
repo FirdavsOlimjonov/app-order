@@ -1,0 +1,12 @@
+POST http://localhost/api/order/v1/promotion/add
+Content-Type: application/json
+
+{
+  "startDate": 1665407875333,
+  "endDate": 1665708875333,
+  "deliveryPromotion": {
+    "moreThan": 44.89,
+    "startTime": 1665305000,
+    "endTime": 1665908000
+  }
+}

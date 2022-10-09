@@ -16,7 +16,7 @@ public class DiscountPromotionDTO {
 
     private Float discount;
 
-    public DiscountPromotion toDiscountPromotion(DiscountPromotionDTO discountPromotionDTO){
+    public static DiscountPromotion toDiscountPromotion(DiscountPromotionDTO discountPromotionDTO){
         return new DiscountPromotion(
                 discountPromotionDTO.getId(),
                 discountPromotionDTO.getMoreThan(),
@@ -24,13 +24,10 @@ public class DiscountPromotionDTO {
         );
     }
 
-    public DiscountPromotionDTO toDiscountPromotionDTO(DiscountPromotion discountPromotion){
-        return DiscountPromotionDTO
-                .builder()
-                .id(discountPromotion.getId())
-                .discount(discountPromotion.getDiscount())
-                .moreThan(discountPromotion.getMoreThan())
-                .build();
+    public static DiscountPromotionDTO mapDiscountPromotionToDiscountPromotionDTO(DiscountPromotion discountPromotion) {
+        return new DiscountPromotionDTO(discountPromotion.getId(),
+                discountPromotion.getMoreThan(),
+                discountPromotion.getDiscount());
     }
 
 }

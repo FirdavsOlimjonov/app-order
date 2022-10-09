@@ -6,18 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.payload.promotion.template.PromotionDTOType;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddPromotionDTO implements PromotionDTOType {
 
-    @NotNull
     private Long startDate;
 
-    @NotNull
     private Long endDate;
 
     private DeliveryPromotionDTO deliveryPromotion;

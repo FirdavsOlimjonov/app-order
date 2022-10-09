@@ -4,15 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="building promotion entities">
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="deleting discount classes in app-product">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/discount-romotions-test.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/promotoin-test.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/DiscountControllerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Discount.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/repository/DiscountRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/service/DiscountServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/controller/PromotionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/DiscountPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/DiscountPromotion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/ProductPromotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/ProductPromotion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/Promotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/Promotion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/AddPromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/AddPromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/BonusProductPromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/BonusProductPromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DeliveryPromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DeliveryPromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DiscountPromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/DiscountPromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductPromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/ProductPromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/PromotionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/promotion/PromotionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,13 +150,13 @@
     <configuration name="category | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="category | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="5" requestIdentifier="#5" runType="Run single request">
-      <method v="2" />
-    </configuration>
     <configuration name="product | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/product.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="product | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/product.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="promotoin-test | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/promotoin-test.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="test-discount | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-discount.http" requestIdentifier="#1" runType="Run single request">
@@ -163,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.promotoin-test | #1" />
         <item itemvalue="HTTP Request.test-discount | #1" />
         <item itemvalue="HTTP Request.product | #1" />
         <item itemvalue="HTTP Request.product | #3" />
         <item itemvalue="HTTP Request.category | #1" />
-        <item itemvalue="HTTP Request.category | #5" />
       </list>
     </recent_temporary>
   </component>
@@ -194,7 +202,8 @@
       <workItem from="1665028527329" duration="10975000" />
       <workItem from="1665075123191" duration="3547000" />
       <workItem from="1665105926012" duration="1849000" />
-      <workItem from="1665208921694" duration="6964000" />
+      <workItem from="1665208921694" duration="14801000" />
+      <workItem from="1665312367975" duration="5639000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
@@ -294,7 +303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665253835515</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="deleting discount classes in app-product">
+      <created>1665302157304</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1665302157304</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,5 +344,22 @@
     <MESSAGE value="building promotion entities" />
     <MESSAGE value="deleting discount classes in app-product" />
     <option name="LAST_COMMIT_MESSAGE" value="deleting discount classes in app-product" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PromotionsServiceImpl.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/promotion/ProductPromotion.java</url>
+          <line>25</line>
+          <properties field="bonusProduct" class="uz.pdp.apporder.entity.promotion.ProductPromotion" />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

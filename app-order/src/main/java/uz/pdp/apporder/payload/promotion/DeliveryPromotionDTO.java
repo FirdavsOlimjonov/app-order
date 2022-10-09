@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.pdp.apporder.entity.promotion.DeliveryPromotion;
 
-import javax.persistence.Column;
-
 
 @Setter
 @Getter
@@ -17,9 +15,7 @@ public class DeliveryPromotionDTO {
 
     private Integer id;
 
-    @Column
     private Float moreThan;
-
 
     private Long startTime;
 
@@ -34,7 +30,7 @@ public class DeliveryPromotionDTO {
         );
     }
 
-    public DeliveryPromotionDTO toDeliveryPromotionDTO(DeliveryPromotion deliveryPromotion) {
+    public static DeliveryPromotionDTO mapDeliveryPromotionToDeliveryPromotionDTO(DeliveryPromotion deliveryPromotion) {
         return new DeliveryPromotionDTO(
                 deliveryPromotion.getId(),
                 deliveryPromotion.getMoreThan(),

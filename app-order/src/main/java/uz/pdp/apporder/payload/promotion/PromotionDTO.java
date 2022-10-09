@@ -2,10 +2,11 @@ package uz.pdp.apporder.payload.promotion;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uz.pdp.apporder.payload.promotion.template.PromotionDTOType;
-
-import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -14,13 +15,10 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class PromotionDTO implements PromotionDTOType {
 
-    @NotNull
     private Long id;
 
-    @NotNull
     private Long startDate;
 
-    @NotNull
     private Long endDate;
 
     private DeliveryPromotionDTO deliveryPromotion;
@@ -31,32 +29,4 @@ public class PromotionDTO implements PromotionDTOType {
 
     private BonusProductPromotionDTO bonusProductPromotion;
 
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setStartDate(Long startDate) {
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(Long endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setDeliveryPromotion(DeliveryPromotionDTO deliveryPromotion) {
-        this.deliveryPromotion = deliveryPromotion;
-    }
-
-    public void setProductPromotion(ProductPromotionDTO productPromotion) {
-        this.productPromotion = productPromotion;
-    }
-
-    public void setDiscountPromotion(DiscountPromotionDTO discountPromotion) {
-        this.discountPromotion = discountPromotion;
-    }
-
-    public void setBonusProductPromotion(BonusProductPromotionDTO bonusProductPromotion) {
-        this.bonusProductPromotion = bonusProductPromotion;
-    }
 }

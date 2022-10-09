@@ -1,7 +1,7 @@
 package uz.pdp.apporder.controller;
 
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.promotion.AddPromotionDTO;
 import uz.pdp.apporder.payload.promotion.PromotionDTO;
 import uz.pdp.appproduct.util.RestConstants;
@@ -22,12 +22,11 @@ public interface PromotionController {
     String GET_NOT_ACTIVE_PROMOTION_PATH = "/non-active-promotions";
     String GET_ALL_PATH = "/list";
 
-
     @PostMapping(value = ADD_PATH)
-    ApiResult<PromotionDTO> add(@RequestBody @Valid AddPromotionDTO promotionDTO);
+    ApiResult<PromotionDTO> add(@RequestBody @Valid @NotNull AddPromotionDTO promotionDTO);
 
     @PutMapping(value = EDIT_PATH)
-    ApiResult<PromotionDTO> edit(@RequestBody @Valid PromotionDTO promotionDTO);
+    ApiResult<PromotionDTO> edit(@RequestBody @Valid @NotNull PromotionDTO promotionDTO);
 
     @PostMapping(value = STOP_PATH)
     ApiResult<Boolean> end(@PathVariable @NotNull Long id);
