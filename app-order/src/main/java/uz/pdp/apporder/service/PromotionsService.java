@@ -23,4 +23,6 @@ public interface PromotionsService {
     ApiResult<List<PromotionDTO>> getPromotions(Boolean isActive);
 
     Optional<Promotion> get1ActivePromotion();
+
+    PromotionDTO promotionToPromotionDTO(Promotion promotion);
 }

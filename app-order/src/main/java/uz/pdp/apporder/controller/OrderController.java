@@ -3,6 +3,8 @@ package uz.pdp.apporder.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
 import uz.pdp.apporder.utils.RestConstants;
 import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
@@ -26,10 +28,13 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
 
     String SAVE_WEB = "/save-web";
+    String GET_ORDER_PROMOTIONS = "/discount_promotions{orderId}";
+    String ACCEPT_PROMOTION_PATH = "/accept";
 
     String EDIT_ORDER = "/editOrder";
 
     String PATH_BASE = "/api/order/v1/order";
+
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -38,6 +43,11 @@ public interface OrderController {
     @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
+    @GetMapping(GET_ORDER_PROMOTIONS)
+    ApiResult<OrderWithPromotionDTO> getOrderPromotions(@PathVariable Long orderId);
+
+    @PostMapping(ACCEPT_PROMOTION_PATH)
+    ApiResult<OrderDTO> getOrderPromotions(@Valid @RequestBody AcceptPromotionDTO acceptPromotionDTO );
 
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 

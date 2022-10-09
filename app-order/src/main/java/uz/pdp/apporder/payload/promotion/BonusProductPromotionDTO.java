@@ -16,7 +16,7 @@ public class BonusProductPromotionDTO {
 
     private Float moreThan;
 
-    private Float bonusCount;
+    private Short bonusCount;
 
     private ProductDTO productDTO;
 }

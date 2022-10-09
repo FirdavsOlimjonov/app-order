@@ -41,8 +41,10 @@ public class PromotionsServiceImpl implements PromotionsService {
 
         checkPromotionDate(otherPromotion.getStartDate(), otherPromotion.getEndDate());
 
-        if (Objects.nonNull(promotion.getDiscountPromotion()) && notNullCount++ == 0)
+        if (Objects.nonNull(promotion.getDiscountPromotion())) {
+            notNullCount++;
             promotion.setDiscountPromotion(checkPromotion(otherPromotion.getDiscountPromotion()));
+        }
 
         if (Objects.nonNull(otherPromotion.getDeliveryPromotion()) && notNullCount++ == 0)
             promotion.setDeliveryPromotion(checkDelivery(otherPromotion.getDeliveryPromotion()));
@@ -248,7 +250,8 @@ public class PromotionsServiceImpl implements PromotionsService {
 
     //todo MAPPING PART
 
-    private PromotionDTO promotionToPromotionDTO(Promotion promotion) {
+    @Override
+    public PromotionDTO promotionToPromotionDTO(Promotion promotion) {
         return new PromotionDTO(
                 promotion.getId(),
                 promotion.getStartDate(),
