@@ -9,6 +9,7 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.apporder.entity.promotion.*;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.repository.BranchRepository;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
 
+    private final PromotionsService promotionsService;
     private final DiscountService discountService;
 
     @Override
@@ -110,6 +112,24 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusEnum(OrderStatusEnum.NEW);
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
+
+        Promotion promotion = promotionsService.get1ActivePromotion().orElse(null);
+
+        if (Objects.nonNull(promotion)){
+
+            DiscountPromotion discountPromotion = promotion.getDiscountPromotion();
+            DeliveryPromotion deliveryPromotion = promotion.getDeliveryPromotion();
+            ProductPromotion productPromotion = promotion.getProductPromotion();
+            BonusProductPromotion bonusProductPromotion = promotion.getBonusProductPromotion();
+
+            if (Objects.nonNull(discountPromotion)){
+                Float discount = discountPromotion.getDiscount();
+                Float moreThan = discountPromotion.getMoreThan();
+
+            }
+
+        }
+
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientId);

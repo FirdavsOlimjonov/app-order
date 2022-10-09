@@ -13,10 +13,8 @@ import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.entity.Product;
 import uz.pdp.appproduct.repository.CategoryRepository;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -172,6 +170,11 @@ public class PromotionsServiceImpl implements PromotionsService {
                         .map(this::promotionToPromotionDTO)
                         .collect(Collectors.toList())
         );
+    }
+
+    @Override
+    public Optional<Promotion> get1ActivePromotion() {
+        return promotionRepository.get1ActivePromotion(System.currentTimeMillis());
     }
 
 
