@@ -82,27 +82,29 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ApiResult<ProductDTO> editProduct(Integer id, ProductDTO productDTO) {
 
-        if (productRepository.existsById(id))
-            throw RestException.restThrow("id is not available", HttpStatus.NOT_FOUND);
+        Product product = productRepository.
+                findById(id).
+                orElseThrow(() -> RestException.
+                        restThrow("this product does not exists", HttpStatus.NOT_FOUND));
 
-        if (categoryRepository.existsById(id))
-            throw RestException.restThrow("category is not available", HttpStatus.NOT_FOUND);
+        Category category = categoryRepository.
+                findById(productDTO.getCategoryId())
+                .orElseThrow(() ->
+                        RestException.restThrow("category is not available", HttpStatus.NOT_FOUND));
 
-        if (productRepository.existsByNameAndIdNot(productDTO.getName(), productDTO.getCategoryId()))
+        if (productRepository.existsByNameAndCategoryIdAndIdNot(productDTO.getName(), productDTO.getCategoryId(), id))
             throw RestException.restThrow("this product is already exists", HttpStatus.CONFLICT);
 
-
-        Product product = productRepository.findById(id).get();
 
         product.setName(productDTO.getName());
         product.setActive(productDTO.isActive());
         product.setPrice(productDTO.getPrice());
         product.setDescription(productDTO.getDescription());
-        product.setCategory(categoryRepository.findById(productDTO.getCategoryId()).get());
+        product.setCategory(category);
 
         productRepository.save(product);
 
-        Product edited = productRepository.findById(id).get();
+        Product edited = productRepository.findById(id).orElseThrow();
 
         return ApiResult.successResponse(mapProductToProductDTO(edited));
     }
@@ -110,10 +112,11 @@ public class ProductServiceImpl implements ProductService {
     //done
     @Override
     public ApiResult<ProductDTO> getProduct(Integer id) {
-        if (productRepository.existsById(id))
-            throw RestException.restThrow("id is not available", HttpStatus.NOT_FOUND);
+        Product product = productRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> RestException.restThrow("id is not available", HttpStatus.NOT_FOUND));
 
-        Product product = productRepository.findById(id).get();
 
         if (product.isActive())
             throw RestException.restThrow("this product is not active", HttpStatus.LOCKED);

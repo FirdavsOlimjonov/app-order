@@ -5,11 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity(name = "category")
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
+@Setter
 public class Category {
-
-
     /*
     * this is primary key for category table
     * */
@@ -28,4 +29,5 @@ public class Category {
     /*category may have parent category. this is category's parent*/
     @ManyToOne
     private Category parentCategory;
+
 }

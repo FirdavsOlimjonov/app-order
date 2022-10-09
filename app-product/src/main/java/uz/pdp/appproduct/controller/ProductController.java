@@ -43,7 +43,7 @@ public interface ProductController {
     ApiResult<?> deleteProduct(@PathVariable Integer id);
 
     @PutMapping("/{id}")
-    ApiResult editProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO);
+    ApiResult<ProductDTO> editProduct(@PathVariable Integer id, @RequestBody ProductDTO productDTO);
 
 
     /**

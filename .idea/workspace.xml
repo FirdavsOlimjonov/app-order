@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="prices of delivering CRUD">
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/PriceForDelivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/entity/PriceForDelivery.java" afterDir="false" />
-    <list default="true" id="5fd1f702-d902-4a9f-a5af-115982565d45" name="Changes" comment="CheckAuthEmpl">
+    <list default="true" id="be51e4fa-7843-4112-9825-09287656413b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/util/MessageTg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/bot/CommandsBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/bot/CommandsBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/controller/WebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/controller/WebhookController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,37 +18,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="Zuhra" />
-                <branch-info repo="$PROJECT_DIR$" source="Lucy" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="Zuhra" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="JpbToolWindowState">
@@ -73,10 +54,7 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectId" id="2FRMVz1WnGOMr3gcZyCUiad4xwC" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2FkFbDaos0dYvqtpePzNoM59bNf" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -89,69 +67,16 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent/app-order/src/main/java/uz/pdp/apporder&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;e6df9fd2e4212103220d48c8f5d309f6&quot;
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/java-app/fastfood/app-order-parent/app-order",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "spring.configuration.checksum": "e6df9fd2e4212103220d48c8f5d309f6"
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
-    ]
   }
 }</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
-  <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="uz.pdp.apporder.payload" />
-      <recent name="uz.pdp.apporder." />
-      <recent name="uz.pdp.apporder.service" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\LESSON\b20\fastfood\app-order-parent\app-order\src\main\java\uz\pdp\apporder" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\hp\Desktop\Back-end\Pdp-java\module_7\fast-food\app-order-parent\app-order\src\main\java\uz\pdp\apporder\entity" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="uz.pdp.apporder.order" />
-      <recent name="uz.pdp.apporder.service" />
-    </key>
-  </component>
   <component name="RunManager" selected="Spring Boot.AppOrderApplication">
-    <configuration name="category | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" requestIdentifier="#1" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="category | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/test/category.http" index="2" requestIdentifier="#2" runType="Run single request">
+    <configuration name="OrderForOtabek | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" index="5" requestIdentifier="#5" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="AppOrderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -163,99 +88,26 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.category | #1" />
-        <item itemvalue="HTTP Request.category | #2" />
+        <item itemvalue="HTTP Request.OrderForOtabek | #5" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5fd1f702-d902-4a9f-a5af-115982565d45" name="Changes" comment="CheckAuthEmpl" />
-      <created>1664450477592</created>
+      <changelist id="be51e4fa-7843-4112-9825-09287656413b" name="Changes" comment="" />
+      <created>1665028244807</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1664450477592</updated>
-      <workItem from="1664450479924" duration="606000" />
-      <workItem from="1664451116647" duration="426000" />
-      <workItem from="1664451554147" duration="7994000" />
-      <workItem from="1664471341028" duration="118000" />
-      <workItem from="1664471471585" duration="64000" />
-      <workItem from="1664471547212" duration="102000" />
-      <workItem from="1664473513003" duration="4238000" />
-      <workItem from="1664705070097" duration="675000" />
-      <workItem from="1664862310552" duration="317000" />
-      <workItem from="1664869794908" duration="363000" />
-      <workItem from="1664976731899" duration="2158000" />
+      <updated>1665028244807</updated>
+      <workItem from="1665028246447" duration="603000" />
+      <workItem from="1665029105595" duration="3709000" />
+      <workItem from="1665114542348" duration="679000" />
     </task>
-    <task id="LOCAL-00001" summary="order status edit">
-      <created>1664477203724</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1664477203724</updated>
-    </task>
-    <task id="LOCAL-00002" summary="category second full version">
-      <created>1664521535395</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1664521535396</updated>
-    </task>
-    <task id="LOCAL-00003" summary="category second full version">
-      <created>1664704233285</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1664704233285</updated>
-    </task>
-    <task id="LOCAL-00004" summary="CheckAuthEmpl">
-      <created>1664939627009</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1664939627010</updated>
-    </task>
-    <task id="LOCAL-00005" summary="CheckAuthEmpl">
-      <created>1664939686318</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1664939686318</updated>
-    </task>
-    <task id="LOCAL-00006" summary="CheckAuthEmpl">
-      <created>1664978668687</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1664978668687</updated>
-    </task>
-    <task id="LOCAL-00007" summary="CheckAuthEmpl">
-      <created>1664978764547</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1664978764547</updated>
-    </task>
-    <task id="LOCAL-00008" summary="CheckAuthEmpl">
-      <created>1664978774571</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1664978774571</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="UnknownFeatures">
-    <option featureType="dependencySupport" implementationName="java:org.apache.kafka:kafka_2.13" />
-    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
-    <option featureType="dependencySupport" implementationName="java:com.google.inject:guice" />
-    <option featureType="dependencySupport" implementationName="java:org.apache.kafka:kafka-clients" />
-    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -267,22 +119,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="order status edit" />
-    <MESSAGE value="category second full version" />
-    <MESSAGE value="CheckAuthEmpl" />
-    <option name="LAST_COMMIT_MESSAGE" value="CheckAuthEmpl" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app-product/src/main/java/uz/pdp/appproduct/controller/CategoryControllerImpl.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

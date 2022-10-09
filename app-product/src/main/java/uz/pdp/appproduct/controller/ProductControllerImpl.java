@@ -2,9 +2,11 @@ package uz.pdp.appproduct.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.ProductDTO;
 import uz.pdp.appproduct.dto.ViewDTO;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.appproduct.service.ProductService;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 public class ProductControllerImpl implements ProductController {
     private final ProductService productService;
 
-
+    @CheckAuthEmpl(permissions = {PermissionEnum.ADD_PRODUCT})
     @Override
     public ApiResult<ProductDTO> addProduct(ProductDTO productDTO) {
         return productService.addProduct(productDTO);
@@ -35,6 +37,7 @@ public class ProductControllerImpl implements ProductController {
         return productService.deleteProduct(id);
     }
 
+    @CheckAuthEmpl(permissions = {PermissionEnum.EDIT_PRODUCT})
     @Override
     public ApiResult<ProductDTO> editProduct(Integer id, ProductDTO productDTO) {
         return productService.editProduct(id, productDTO);
