@@ -12,7 +12,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTMwODUwMjM2IiwiaWF0I
 GET http://localhost/api/order/v1/category/1
 
 ###
-PUT http://localhost:8081/api/categeory/1
+PUT http://localhost/api/order/v1/category/1
 Content-Type: application/json
 Accept-Language: uz
 
@@ -22,7 +22,7 @@ Accept-Language: uz
   "nameRu": "drinks"
 }
 ###
-DELETE http://localhost:8081/api/categeory/1
+DELETE http://localhost/api/order/v1/category/1
 
 ###
 GET http://localhost/api/order/v1/categeory/list

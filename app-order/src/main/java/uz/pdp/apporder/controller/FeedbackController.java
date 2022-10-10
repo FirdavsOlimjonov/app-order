@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.entity.Feedback;
 import uz.pdp.apporder.payload.FeedbackDTO;
 import uz.pdp.appproduct.dto.ApiResult;
-
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping(FeedbackController.PATH_BASE)
 public interface FeedbackController {
@@ -14,6 +14,8 @@ public interface FeedbackController {
     String ADD_BY_OPERATOR_PATH = "add-by-operator";
     String ADD_CLIENT_PATH = "add";
     String CHANGE_STATUS_PATH = "change-status";
+
+    String GET_ALL_PATH="/list";
 
     @PostMapping(ADD_BY_OPERATOR_PATH)
     ApiResult<Boolean> addByOperator(@Valid @RequestBody FeedbackDTO feedbackDTO);
@@ -25,4 +27,6 @@ public interface FeedbackController {
     ApiResult<Feedback> changeStatus(@RequestParam("id") Integer id,
                                      @RequestParam("accept") Boolean accept);
 
+    @GetMapping(value = GET_ALL_PATH)
+    ApiResult<List<FeedbackDTO>> getAllFeedback();
 }

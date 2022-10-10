@@ -13,9 +13,10 @@ import uz.pdp.appproduct.dto.EmployeeDTO;
 import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
-
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +62,27 @@ public class FeedbackServiceImpl implements FeedbackService{
         return ApiResult.successResponse(feedback);
     }
 
+    @Override
+    public ApiResult<List<FeedbackDTO>> getAllFeedback() {
+        EmployeeDTO operator = getOperator();
+        List<Feedback> all = feedbackRepository.findAll();
+
+        return ApiResult.successResponse(getDTOListFromEntity(all));
+    }
+    private List<FeedbackDTO> getDTOListFromEntity(List<Feedback> products) {
+        return products
+                .stream()
+                .map(this::mapFeedbackToFeedbackDTO)
+                .collect(Collectors.toList());
+    }
+
+    private FeedbackDTO mapFeedbackToFeedbackDTO(Feedback feedback) {
+        return new FeedbackDTO(feedback.getText(),
+                               feedback.getPhoneNumber(),
+                               feedback.getAccept());
+    }
+
+
     private Feedback mapFeedbackDTOToFeedback(FeedbackDTO feedbackDTO){
         return Feedback.builder()
                 .text(feedbackDTO.getText())
@@ -68,7 +90,6 @@ public class FeedbackServiceImpl implements FeedbackService{
                 .accept(null)
                 .createdAt(LocalDateTime.now())
                 .build();
-
     }
 
     private EmployeeDTO getOperator() {

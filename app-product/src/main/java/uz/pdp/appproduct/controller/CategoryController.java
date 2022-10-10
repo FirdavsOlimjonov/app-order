@@ -11,21 +11,25 @@ import java.util.List;
 @RequestMapping(CategoryController.BASE_PATH)
 public interface CategoryController {
     String BASE_PATH = RestConstants.SERVICE_BASE_PATH + "category";
+    String ADD_PATH = "/add";
+    String GET_ALL_PATH="/list";
+    String GET_PATH = "/{id}";
+    String EDIT_PATH = "/{id}";
+    String DELETE_PATH = "/{id}";
 
-
-    @PostMapping("/add")
+    @PostMapping(ADD_PATH)
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 
-    @GetMapping(path = "/list")
+    @GetMapping(path = GET_ALL_PATH)
     ApiResult<List<CategoryDTO>> getCategories(@RequestBody(required = false) ViewDTO viewDTO);
 
-    @GetMapping("/{id}")
+    @GetMapping(GET_PATH)
     ApiResult<CategoryDTO> get(@PathVariable Integer id);
 
 
-    @PutMapping("/{id}")
+    @PutMapping(EDIT_PATH)
     ApiResult<CategoryDTO> edit(@PathVariable Integer id, @RequestBody CategoryDTO categoryDTO);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(DELETE_PATH)
     ApiResult<?> delete(@PathVariable Integer id);
 }

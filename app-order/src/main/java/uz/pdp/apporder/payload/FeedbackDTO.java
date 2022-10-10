@@ -12,9 +12,13 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackDTO {
+
     @NotNull
     String text;
 
     @NotNull
     String phoneNumber;
+
+    @NotNull
+    Boolean accept;
 }

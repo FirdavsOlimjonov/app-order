@@ -10,6 +10,8 @@ import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.ApiResult;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class FeedbackControllerImpl implements FeedbackController{
@@ -32,5 +34,11 @@ public class FeedbackControllerImpl implements FeedbackController{
     @CheckAuthEmpl(permissions = {PermissionEnum.CHANGE_STATUS})
     public ApiResult<Feedback> changeStatus(Integer id, Boolean accept) {
         return feedbackService.changeStatus(id, accept);
+    }
+
+    @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_FEEDBACK})
+    public ApiResult<List<FeedbackDTO>> getAllFeedback() {
+        return feedbackService.getAllFeedback();
     }
 }

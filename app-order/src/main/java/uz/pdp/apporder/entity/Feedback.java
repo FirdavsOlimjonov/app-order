@@ -35,5 +35,4 @@ public class Feedback {
     String phoneNumber;
 
     Boolean accept;
-
 }
