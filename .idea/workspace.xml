@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5fd1f702-d902-4a9f-a5af-115982565d45" name="Changes" comment="CheckAuthEmpl">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-statistics-chart.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/test-statistics-chart.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +40,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Zuhra" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -98,7 +97,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;e6df9fd2e4212103220d48c8f5d309f6&quot;
+    &quot;spring.configuration.checksum&quot;: &quot;ddaaed0cae2d7a996afe150d7b83db0b&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -173,6 +172,7 @@
       <workItem from="1664976731899" duration="2574000" />
       <workItem from="1665028849401" duration="1358000" />
       <workItem from="1665058264603" duration="773000" />
+      <workItem from="1665216613964" duration="300000" />
     </task>
     <task id="LOCAL-00001" summary="order status edit">
       <created>1664477203724</created>
