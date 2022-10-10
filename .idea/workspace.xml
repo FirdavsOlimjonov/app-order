@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be51e4fa-7843-4112-9825-09287656413b" name="Changes" comment="Orders for currier" />
+    <list default="true" id="8718bcd3-19c5-4d7c-a5dc-69007c83e3fb" name="Changes" comment="Branch nearest distance">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/PriceForDeliveryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/payload/PriceForDeliveryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/OrderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PriceForDeliveryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/service/PriceForDeliveryServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +23,16 @@
       </list>
     </option>
   </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="REBASE" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
@@ -48,27 +61,56 @@
     </option>
   </component>
   <component name="ProjectId" id="2FkFbDaos0dYvqtpePzNoM59bNf" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/LESSON/b20/fastfood/app-order-parent",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "spring.configuration.checksum": "e6df9fd2e4212103220d48c8f5d309f6"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/LESSON/b20/fastfood/app-order-parent&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;e6df9fd2e4212103220d48c8f5d309f6&quot;
+  &lt;component name=&quot;PropertiesComponent&quot;&gt;{
+  &amp;quot;keyToString&amp;quot;: {
+    &amp;quot;Git.Branch.Popup.ShowAllRemotes&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;RequestMappingsPanelOrder0&amp;quot;: &amp;quot;0&amp;quot;,
+    &amp;quot;RequestMappingsPanelOrder1&amp;quot;: &amp;quot;1&amp;quot;,
+    &amp;quot;RequestMappingsPanelWidth0&amp;quot;: &amp;quot;75&amp;quot;,
+    &amp;quot;RequestMappingsPanelWidth1&amp;quot;: &amp;quot;75&amp;quot;,
+    &amp;quot;RunOnceActivity.OpenProjectViewOnStart&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;RunOnceActivity.ShowReadmeOnStart&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;WebServerToolWindowFactoryState&amp;quot;: &amp;quot;false&amp;quot;,
+    &amp;quot;last_opened_file_path&amp;quot;: &amp;quot;/home/senior/Documents/app-fast-food/app-order-parent&amp;quot;,
+    &amp;quot;node.js.detected.package.eslint&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;node.js.detected.package.tslint&amp;quot;: &amp;quot;true&amp;quot;,
+    &amp;quot;node.js.selected.package.eslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
+    &amp;quot;node.js.selected.package.tslint&amp;quot;: &amp;quot;(autodetect)&amp;quot;,
+    &amp;quot;nodejs_package_manager_path&amp;quot;: &amp;quot;npm&amp;quot;,
+    &amp;quot;project.structure.last.edited&amp;quot;: &amp;quot;Modules&amp;quot;,
+    &amp;quot;project.structure.proportion&amp;quot;: &amp;quot;0.15&amp;quot;,
+    &amp;quot;project.structure.side.proportion&amp;quot;: &amp;quot;0.2&amp;quot;,
+    &amp;quot;settings.editor.selected.configurable&amp;quot;: &amp;quot;preferences.lookFeel&amp;quot;,
+    &amp;quot;spring.configuration.checksum&amp;quot;: &amp;quot;e6df9fd2e4212103220d48c8f5d309f6&amp;quot;
+  },
+  &amp;quot;keyToStringList&amp;quot;: {
+    &amp;quot;DatabaseDriversLRU&amp;quot;: [
+      &amp;quot;postgresql&amp;quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -96,10 +138,26 @@
       <created>1665028244807</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1665028244807</updated>
-      <workItem from="1665028246447" duration="603000" />
-      <workItem from="1665029105595" duration="3709000" />
-      <workItem from="1665114542348" duration="679000" />
+      <updated>1664450477592</updated>
+      <workItem from="1664450479924" duration="606000" />
+      <workItem from="1664451116647" duration="426000" />
+      <workItem from="1664451554147" duration="7994000" />
+      <workItem from="1664471341028" duration="118000" />
+      <workItem from="1664471471585" duration="64000" />
+      <workItem from="1664471547212" duration="102000" />
+      <workItem from="1664473513003" duration="4238000" />
+      <workItem from="1664705070097" duration="675000" />
+      <workItem from="1664862310552" duration="317000" />
+      <workItem from="1664869794908" duration="784000" />
+      <workItem from="1664941949836" duration="13176000" />
+      <workItem from="1665011081988" duration="1616000" />
+      <workItem from="1665015247342" duration="5419000" />
+      <workItem from="1665074855233" duration="373000" />
+      <workItem from="1665075278171" duration="793000" />
+      <workItem from="1665087050337" duration="1479000" />
+      <workItem from="1665113987723" duration="3329000" />
+      <workItem from="1665173022996" duration="4334000" />
+      <workItem from="1665252482928" duration="3251000" />
     </task>
     <task id="LOCAL-00001" summary="Orders for currier">
       <created>1665330106639</created>
@@ -108,7 +166,98 @@
       <option name="project" value="LOCAL" />
       <updated>1665330106639</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="category second full version">
+      <created>1664521535395</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664521535396</updated>
+    </task>
+    <task id="LOCAL-00003" summary="category second full version">
+      <created>1664704233285</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1664704233285</updated>
+    </task>
+    <task id="LOCAL-00004" summary="prices of delivering CRUD">
+      <created>1664870393403</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1664870393403</updated>
+    </task>
+    <task id="LOCAL-00005" summary="prices of delivering CRUD">
+      <created>1664941962146</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664941962146</updated>
+    </task>
+    <task id="LOCAL-00006" summary="prices of delivering CRUD">
+      <created>1664956860953</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664956860953</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&#10;.">
+      <created>1665068559436</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1665068559436</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&#10;.">
+      <created>1665074977216</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1665074977217</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Branch change">
+      <created>1665075690936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665075690936</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Branch nearest distance">
+      <created>1665175866548</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1665175866548</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Branch nearest distance">
+      <created>1665259154683</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259154683</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Branch nearest distance">
+      <created>1665259331735</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259331735</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Branch nearest distance">
+      <created>1665259426049</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259426049</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Branch nearest distance">
+      <created>1665259699562</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1665259699562</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
