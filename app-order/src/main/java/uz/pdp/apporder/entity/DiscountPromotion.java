@@ -1,35 +1,26 @@
 package uz.pdp.apporder.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PriceForDelivery {
-
+public class DiscountPromotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private Double priceForPerKilometre;
+    private Float moreThan;
 
     @Column(nullable = false)
-    private Double initialPrice;
-
-    @Column(nullable = false)
-    private Integer initialDistance;
-
-    @OneToOne
-    @NotNull
-    private  Branch branch;
+    private Float discount;
 
 }
