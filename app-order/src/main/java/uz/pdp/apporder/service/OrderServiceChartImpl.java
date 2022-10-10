@@ -7,12 +7,14 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.apporder.repository.BranchRepository;
+import uz.pdp.apporder.repository.OrderProductRepository;
+import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.ApiResult;
 import uz.pdp.apporder.payload.OrderChartDTO;
 import uz.pdp.apporder.payload.OrderChartPaymentDTO;
 import uz.pdp.apporder.payload.OrderStatisticsChartDTO;
-import uz.pdp.apporder.repository.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -246,6 +248,4 @@ public class OrderServiceChartImpl implements OrderServiceChart {
                 paymentClick, paymentTerminal,totalPayment
         );
     }
-
-
 }

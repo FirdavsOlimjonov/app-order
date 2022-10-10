@@ -15,6 +15,7 @@ import uz.pdp.appproduct.dto.EmployeeDTO;
 import uz.pdp.appproduct.util.CommonUtils;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -24,16 +25,6 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     private final OrderRepository orderRepository;
 
     private final AuthFeign authFeign;
-
-    @Override
-    public ApiResult<OrderDTO> transferPaymentWaitingStatus(OrderDTO orderDTO) {
-        return null;
-    }
-
-    @Override
-    public ApiResult<OrderDTO> transferNewStatus(OrderDTO orderDTO) {
-        return null;
-    }
 
     @Override
     public ApiResult<OrderDTO> transferAcceptedStatus(Long id) {
@@ -136,16 +127,22 @@ public class OrderStatusServiceImpl implements OrderStatusService {
                 .build();
     }
 
+    private EmployeeDTO getEmployeeDTO(UUID uuid) {
+        uz.pdp.appproduct.dto.ApiResult<EmployeeDTO> employeeDTO = authFeign.getEmployeeDTO(uuid, getToken());
+
+        if (Objects.isNull(employeeDTO.getData())||
+                Objects.isNull(employeeDTO.getData().getPermissions()))
+            throw RestException.restThrow("not access", HttpStatus.UNAUTHORIZED);
+
+        return employeeDTO.getData();
+    }
+
     private ClientDTO getClientDTO(UUID uuid) {
 
         ClientDTO data = authFeign.getClientDTO(uuid, getToken()).getData();
         if (data == null)
             throw RestException.restThrow("user not found", HttpStatus.NOT_FOUND);
         return data;
-    }
-
-    private EmployeeDTO getOperatorDTO(UUID uuid) {
-        return null;
     }
 
     private String getToken() {

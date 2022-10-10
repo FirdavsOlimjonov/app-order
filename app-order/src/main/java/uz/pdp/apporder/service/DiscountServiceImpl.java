@@ -29,7 +29,8 @@ public class DiscountServiceImpl implements DiscountService {
     public ApiResult<DiscountDTO> add(AddDiscountDTO addDiscountDTO) {
         Product product = productRepository.findById(addDiscountDTO.getProductId()).orElseThrow();
 
-        Discount discount = new Discount(null, product,
+        Discount discount = new Discount(null,
+                product,
                 addDiscountDTO.getDiscount(),
                 addDiscountDTO.getStartDate(),
                 addDiscountDTO.getEndDate());
@@ -113,6 +114,11 @@ public class DiscountServiceImpl implements DiscountService {
         List<Discount> discountList = discountRepository.findAllByEndDateIsAfter(System.currentTimeMillis());
 
         return ApiResult.successResponse(mapDiscountsToDiscountDTOs(discountList));
+    }
+
+    @Override
+    public Optional<Float> getDiscountsSumOfProducts(List<Integer> collect) {
+        return discountRepository.getOverallSumOfProductsDiscount(collect, System.currentTimeMillis());
     }
 
 
