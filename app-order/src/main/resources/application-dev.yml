@@ -3,7 +3,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/order_parent
     username: postgres
     password: root123
-
+  kafka:
+    bootstrap-servers: localhost:9092
   jpa:
     hibernate:
       ddl-auto: update
