@@ -48,6 +48,8 @@ public class OrderServiceImpl implements OrderService {
     private final PromotionsService promotionsService;
     private final DiscountService discountService;
 
+    private final PromotionRepository promotionRepository;
+
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
 
@@ -63,9 +65,66 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
+    @Override
+    public ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> RestException.restThrow("ORDER_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        Float overallSum = order.getOverAllSum();
+        Float shippingPrice = order.getDeliverySum();
+        List<OrderProduct> orderProducts = order.getOrderProducts();
+
+        Promotion promotion = promotionsService.get1ActivePromotion().orElse(null);
+
+        if (Objects.nonNull(promotion)) {
+
+            DiscountPromotion discountPromotion = promotion.getDiscountPromotion();
+            DeliveryPromotion deliveryPromotion = promotion.getDeliveryPromotion();
+            BonusProductPromotion bonusProductPromotion = promotion.getBonusProductPromotion();
+
+            if (Objects.nonNull(discountPromotion)) {
+                Float discount = discountPromotion.getDiscount();
+                Float moreThan = discountPromotion.getMoreThan();
+                if (overallSum > moreThan) {
+                    overallSum = overallSum - (overallSum * discount / 100);
+                }
+            }
+
+            if (Objects.nonNull(deliveryPromotion)) {
+                Float moreThan = deliveryPromotion.getMoreThan();
+                if (overallSum > moreThan) {
+                    if (System.currentTimeMillis() < deliveryPromotion.getEndTime()
+                            && System.currentTimeMillis() > deliveryPromotion.getStartTime()) {
+                        shippingPrice = 0F;
+                    }
+                }
+            }
+
+            if (Objects.nonNull(bonusProductPromotion)) {
+                Float moreThan = bonusProductPromotion.getMoreThan();
+                Short bonusCount = bonusProductPromotion.getBonusCount();
+                Product product = bonusProductPromotion.getProduct();
+
+                if (overallSum > moreThan) {
+                    OrderProduct product1 = new OrderProduct(order, product, bonusCount, product.getPrice());
+                    orderProducts.add(product1);
+                }
+            }
+        }
+
+        order.setOverAllSum(overallSum);
+        order.setOrderProducts(orderProducts);
+        order.setDeliverySum(shippingPrice);
+        Order save = orderRepository.save(order);
+        OrderDTO orderDTO = mapOrderToOrderDTO(save);
+        PromotionDTO promotionDTO = promotionsService.promotionToPromotionDTO(promotion);
+        return ApiResult.successResponse(new OrderWithPromotionDTO(orderDTO, promotionDTO));
+    }
+
     /**
      * Kurier ning bir sanadagi zakazlari ro'yxati
-     * @param id = @id
+     *
+     * @param id        = @id
      * @param localDate = @localDate
      * @return List<OrderForCurrierDTO>
      */
@@ -78,6 +137,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * Kurierning barcha zakazlari
+     *
      * @param id = @id
      * @return List<OrderForCurrierDTO>
      */
@@ -148,6 +208,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientId);
         order.setOperatorId(operatorId);
+        order.setOverAllSum(overallSum);
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
         order.setAddress(clientAddress);
@@ -405,7 +466,8 @@ public class OrderServiceImpl implements OrderService {
                         .getQuantity(),
                 product.getPrice());
     }
-    public OrderForCurrierDTO mapOrderToOrderForHistory(Order order){
+
+    public OrderForCurrierDTO mapOrderToOrderForHistory(Order order) {
         OrderForCurrierDTO orderForCurrierDTO = new OrderForCurrierDTO();
 
         Float totalProductsPrice = calculateProductsSum(order);
@@ -426,4 +488,5 @@ public class OrderServiceImpl implements OrderService {
 
         return orderForCurrierDTO;
 
+    }
 }

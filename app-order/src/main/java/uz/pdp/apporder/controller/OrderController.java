@@ -10,9 +10,7 @@ import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 
 @RequestMapping(OrderController.PATH_BASE)
@@ -37,9 +35,6 @@ public interface OrderController {
 
     String PATH_BASE = "/api/order/v1/order";
 
-
-    String ORDERS_FOR_CURRIER = "/all-orders-currier/{id}";
-    String ORDERS_FOR_CURRIER_BY_DATE = "/all-orders-currier/{id}/{date}";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -89,11 +84,4 @@ public interface OrderController {
     @PutMapping(EDIT_ORDER + "/{orderId}")
     ApiResult<?> editOrder(@RequestBody OrderWebDTO orderWebDTO, @PathVariable Long orderId);
 
-    @GetMapping(ORDERS_FOR_CURRIER)
-    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_ORDERS_OF_CURRIER})
-    ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(@PathVariable UUID id);
-
-    @GetMapping(ORDERS_FOR_CURRIER_BY_DATE)
-    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_ORDERS_OF_CURRIER_BY_DATE})
-    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(@PathVariable  UUID id, @PathVariable LocalDateTime date);
 }

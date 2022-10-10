@@ -20,6 +20,9 @@ public interface OrderService {
 
     ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId);
 
+
+    ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId);
+
     ApiResult<?> saveOrder(OrderWebDTO orderDTO);
 
     ApiResult<List<OrderDTO>> getOrdersByStatus(String orderStatus);
