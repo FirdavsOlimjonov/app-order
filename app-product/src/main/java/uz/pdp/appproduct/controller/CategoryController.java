@@ -16,7 +16,7 @@ public interface CategoryController {
     @PostMapping("/add")
     ApiResult<CategoryDTO> add(@RequestBody CategoryDTO categoryDTO);
 
-    @GetMapping(path = "/list")
+    @PostMapping(path = "/list")
     ApiResult<List<CategoryDTO>> getCategories(@RequestBody(required = false) ViewDTO viewDTO);
 
     @GetMapping("/{id}")

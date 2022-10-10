@@ -11,10 +11,13 @@ import uz.pdp.appproduct.entity.Category;
 @Getter
 public class CategoryDTO {
 
-    private String nameUz;
+    private Integer id;
 
+    private String nameUz;
 
     private String nameRu;
 
-    private Category parentCategory;
+    private CategoryDTO parent;
+
+    private Integer parentId;
 }
