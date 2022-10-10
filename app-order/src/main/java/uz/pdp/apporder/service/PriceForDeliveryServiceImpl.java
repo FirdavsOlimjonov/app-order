@@ -22,7 +22,12 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         if (priceForDeliveryRepository.existsByBranchContains(priceForDeliveryDTO.getBranch().getName())){
             throw RestException.restThrow("This branch already exists!", HttpStatus.CONFLICT);
         }
-        PriceForDelivery priceForDelivery = mapPriceForDeliveryDTOToPriceForDelivery(priceForDeliveryDTO);
+        PriceForDelivery priceForDelivery = new PriceForDelivery();
+        priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
+        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
+        priceForDelivery.setInitialDistance(priceForDeliveryDTO.getInitialDistance());
+        priceForDelivery.setInitialPrice(priceForDelivery.getInitialPrice());
+        PriceForDelivery priceForDelivery1 = mapPriceForDeliveryDTOToPriceForDelivery(priceForDeliveryDTO);
         priceForDeliveryRepository.save(priceForDelivery);
 
         return ApiResult.successResponse("Branch is successfully added!" , priceForDelivery);
@@ -68,6 +73,8 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         }
 
         PriceForDelivery priceForDelivery = priceForDeliveryRepositoryById.get();
+        priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
+        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
         PriceForDelivery priceForDelivery1 = mapPriceForDeliveryDTOToPriceForDelivery(priceForDelivery, priceForDeliveryDTO);
         priceForDeliveryRepository.save(priceForDelivery1);
         return ApiResult.successResponse("Updated!",priceForDelivery1);

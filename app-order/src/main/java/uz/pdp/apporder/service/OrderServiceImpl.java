@@ -11,10 +11,7 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
@@ -24,7 +21,10 @@ import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private final BranchRepository branchRepository;
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
+    private final BranchService branchService;
+    private final PriceForDeliveryRepository priceForDeliveryRepository;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -106,8 +108,8 @@ public class OrderServiceImpl implements OrderService {
         // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
         Float shippingPrice = findShippingPrice(branch, orderDTO.getAddress());
 
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLat(),
-                orderDTO.getAddress().getLng(),
+        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLatitude(),
+                orderDTO.getAddress().getLongitude(),
                 orderDTO.getAddress().getAddress(),
                 orderDTO.getAddress().getExtraAddress());
 
@@ -227,13 +229,54 @@ public class OrderServiceImpl implements OrderService {
 
 
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
+
+    /**
+     * Eng yaqin Branchgacha bo'lgan kesma uzunligi o'lchangan,
+     * Yandex yoki Google mapni api ni
+     * olib kelish kerak va eng yaqin
+     * branchga yo'lni topib uzunligini aniqlash kerak!
+     *
+     * @param location
+     * @return Branch
+     */
+    private Branch findNearestBranch(AddressDTO location) {
+        Branch chosenBranch = null;
+        if (Objects.nonNull(location)) {
+            List<Branch> branches = branchService.getAll().getData();
+            Double distance = null;
+            for (Branch branch : branches)
+                if (Objects.isNull(distance)) {
+                    distance = getDistance(branch, location);
+                    chosenBranch = branch;
+                } else if (distance < getDistance(branch, location)) {
+                    distance = getDistance(branch, location);
+                    chosenBranch = branch;
+                }
+        }
+        return chosenBranch;
+    }
+
+    private Double getDistance(Branch branch, AddressDTO location) {
+        return Math.sqrt(
+                Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                        + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2)
+        );
     }
 
     // TODO: 10/3/22  shipping narxini aniqlash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
-        return 500F;
+        branch = findNearestBranch(addressDTO);
+
+        Double distance = getDistance(branch, addressDTO);
+
+        var priceForDelivery = priceForDeliveryRepository.findByBranch(branch).orElseThrow(() -> RestException.restThrow("No such branch price for delivery", HttpStatus.NOT_FOUND));
+
+        if (priceForDelivery.getPriceForPerKilometre() <= distance) {
+            return priceForDelivery.getPriceForPerKilometre();
+        }
+
+        var shippingPrice = priceForDelivery.getInitialPrice() + priceForDelivery.getInitialDistance();
+        return shippingPrice;
     }
 
     private OrderDTO mapOrderToOrderDTO(Order order) {
