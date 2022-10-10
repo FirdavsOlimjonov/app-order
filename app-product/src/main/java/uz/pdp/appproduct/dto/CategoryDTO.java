@@ -1,7 +1,7 @@
 package uz.pdp.appproduct.dto;
 
-import lombok.*;
-import uz.pdp.appproduct.entity.Category;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This class is error and success returning class from api
