@@ -65,37 +65,58 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
+    /**
+     * Kurier ning bir sanadagi zakazlari ro'yxati
+     * @param id = @id
+     * @param localDate = @localDate
+     * @return List<OrderForCurrierDTO>
+     */
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
+        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).collect(Collectors.toList());();
+        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
+    }
+
+    /**
+     * Kurierning barcha zakazlari
+     * @param id = @id
+     * @return List<OrderForCurrierDTO>
+     */
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+        List<Order> orders = orderRepository.findAllByCurrierIdOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).collect(Collectors.toList());();
+        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
+    }
+
     @Override
     public ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId) {
+
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> RestException.restThrow("ORDER_NOT_FOUND", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> RestException.restThrow("ORDER NOT FOUND", HttpStatus.NOT_FOUND));
 
-        Float overallSum = order.getOverAllSum();
-        Float shippingPrice = order.getDeliverySum();
+        Float overAllSum = order.getOverAllSum();
         List<OrderProduct> orderProducts = order.getOrderProducts();
+        Float deliverySum = order.getDeliverySum();
 
-        Promotion promotion = promotionsService.get1ActivePromotion().orElse(null);
+        Promotion promotion = promotionRepository.get1ActivePromotion(System.currentTimeMillis())
+                .orElse(null);
+
 
         if (Objects.nonNull(promotion)) {
-
             DiscountPromotion discountPromotion = promotion.getDiscountPromotion();
             DeliveryPromotion deliveryPromotion = promotion.getDeliveryPromotion();
             BonusProductPromotion bonusProductPromotion = promotion.getBonusProductPromotion();
 
-            if (Objects.nonNull(discountPromotion)) {
-                Float discount = discountPromotion.getDiscount();
-                Float moreThan = discountPromotion.getMoreThan();
-                if (overallSum > moreThan) {
-                    overallSum = overallSum - (overallSum * discount / 100);
-                }
-            }
-
             if (Objects.nonNull(deliveryPromotion)) {
                 Float moreThan = deliveryPromotion.getMoreThan();
-                if (overallSum > moreThan) {
-                    if (System.currentTimeMillis() < deliveryPromotion.getEndTime()
-                            && System.currentTimeMillis() > deliveryPromotion.getStartTime()) {
-                        shippingPrice = 0F;
+                Long startTime = deliveryPromotion.getStartTime();
+                Long endTime = deliveryPromotion.getEndTime();
+                long now = System.currentTimeMillis();
+                if (overAllSum > moreThan) {
+                    if (now > startTime && now < endTime) {
+                        deliverySum = 0F;
                     }
                 }
             }
@@ -105,47 +126,28 @@ public class OrderServiceImpl implements OrderService {
                 Short bonusCount = bonusProductPromotion.getBonusCount();
                 Product product = bonusProductPromotion.getProduct();
 
-                if (overallSum > moreThan) {
-                    OrderProduct product1 = new OrderProduct(order, product, bonusCount, product.getPrice());
-                    orderProducts.add(product1);
+                if (overAllSum > moreThan) {
+                    orderProducts.add(new OrderProduct(order, product, bonusCount, product.getPrice()));
                 }
             }
+
+            if (Objects.nonNull(discountPromotion)) {
+                Float moreThan = discountPromotion.getMoreThan();
+                Float discount = discountPromotion.getDiscount();
+                if (overAllSum > moreThan) {
+                    overAllSum = overAllSum - (overAllSum * discount / 100);
+                }
+            }
+            order.setOverAllSum(overAllSum);
+            order.setDeliverySum(deliverySum);
+            order.setOrderProducts(orderProducts);
         }
 
-        order.setOverAllSum(overallSum);
-        order.setOrderProducts(orderProducts);
-        order.setDeliverySum(shippingPrice);
-        Order save = orderRepository.save(order);
-        OrderDTO orderDTO = mapOrderToOrderDTO(save);
-        PromotionDTO promotionDTO = promotionsService.promotionToPromotionDTO(promotion);
-        return ApiResult.successResponse(new OrderWithPromotionDTO(orderDTO, promotionDTO));
-    }
-
-    /**
-     * Kurier ning bir sanadagi zakazlari ro'yxati
-     *
-     * @param id        = @id
-     * @param localDate = @localDate
-     * @return List<OrderForCurrierDTO>
-     */
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
-        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
-        List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).toList();
-        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
-    }
-
-    /**
-     * Kurierning barcha zakazlari
-     *
-     * @param id = @id
-     * @return List<OrderForCurrierDTO>
-     */
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
-        List<Order> orders = orderRepository.findAllByCurrierIdOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
-        List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).toList();
-        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
+        return ApiResult.successResponse(
+                new OrderWithPromotionDTO(mapOrderToOrderDTO(order),
+                        promotionsService.promotionToPromotionDTO(promotion)
+                )
+        );
     }
 
     @Override
@@ -208,7 +210,6 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentType(orderDTO.getPaymentType());
         order.setClientId(clientId);
         order.setOperatorId(operatorId);
-        order.setOverAllSum(overallSum);
         order.setOrderProducts(orderProducts);
         order.setDeliverySum(shippingPrice);
         order.setAddress(clientAddress);

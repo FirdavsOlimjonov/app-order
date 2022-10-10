@@ -5,7 +5,6 @@ import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
 import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -16,9 +15,6 @@ public interface OrderService {
     ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate);
 
     ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id);
-
-
-    ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId);
 
 
     ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId);
