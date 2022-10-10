@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be51e4fa-7843-4112-9825-09287656413b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/util/MessageTg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea.rar" beforeDir="false" />
+    <list default="true" id="be51e4fa-7843-4112-9825-09287656413b" name="Changes" comment="Friday">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/OrderForOtabek.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/bot/CommandsBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/bot/CommandsBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/controller/WebhookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/java/uz/pdp/apporder/telegrambot/controller/WebhookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/app-order/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +97,17 @@
       <workItem from="1665028246447" duration="603000" />
       <workItem from="1665029105595" duration="3709000" />
       <workItem from="1665114542348" duration="679000" />
+      <workItem from="1665240644747" duration="369000" />
+      <workItem from="1665374186911" duration="338000" />
     </task>
+    <task id="LOCAL-00001" summary="Friday">
+      <created>1665240682913</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665240682913</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,5 +123,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Friday" />
+    <option name="LAST_COMMIT_MESSAGE" value="Friday" />
   </component>
 </project>
