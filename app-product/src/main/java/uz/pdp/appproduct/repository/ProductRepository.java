@@ -12,5 +12,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "SELECT * FROM get_result_of_query_section(:query)", nativeQuery = true)
     List<Product> getSectionsByStringQuery(String query);
 
-    boolean existsByNameAndIdNot(String name, Integer id);
+
+    boolean existsByNameAndCategoryIdAndIdNot(String name, Integer category_id, Integer id);
 }
+
+

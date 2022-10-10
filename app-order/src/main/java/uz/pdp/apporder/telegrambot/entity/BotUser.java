@@ -23,6 +23,10 @@ public class BotUser {
 
     private String name;
 
+    private String chatId;
+
+
+
     private String phoneNumber;
 
     private String smsCode;

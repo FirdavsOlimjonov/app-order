@@ -17,13 +17,17 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.starter.SpringWebhookBot;
+import uz.pdp.apporder.payload.FeedbackDTO;
+import uz.pdp.apporder.service.FeedbackService;
 import uz.pdp.apporder.telegrambot.entity.ChatPageStatus;
 import uz.pdp.apporder.telegrambot.payload.StatusEnum;
+import uz.pdp.apporder.telegrambot.repository.BotUserRepository;
 import uz.pdp.apporder.telegrambot.repository.ChatPageStatusRepository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import static uz.pdp.apporder.telegrambot.util.MessageTg.*;
 
 @Component
 @Setter
@@ -36,6 +40,11 @@ public class CommandsBot extends SpringWebhookBot {
     String oneTimeCode = "";
     @Autowired
     ChatPageStatusRepository repository;
+    @Autowired
+    BotUserRepository botUserRepository;
+
+    @Autowired
+    FeedbackService feedbackService;
 
     Map<Long, StatusEnum> longStatusEnumMap = new HashMap<>();
 
@@ -58,7 +67,7 @@ public class CommandsBot extends SpringWebhookBot {
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         Message updateMessage = update.getMessage();
         Long chatId = updateMessage.getChatId();
-        if ( !repository.existsById(chatId)){
+        if (!repository.existsById(chatId)) {
 
             repository.save(new ChatPageStatus(chatId, StatusEnum.STATUS_START));
         }
@@ -66,8 +75,14 @@ public class CommandsBot extends SpringWebhookBot {
 
         ChatPageStatus pageStatus = repository.findById(chatId).get();
         StatusEnum status = pageStatus.getStatus();
+        if(status.equals(StatusEnum.STATUS_FEEDBACK)){
+            if(updateMessage.hasText()){
+                pageStatus.setStatus(StatusEnum.STATUS_FEEDBACK);
+                return feedback(updateMessage, pageStatus);
+            }
+        }
 
-        if (status.equals(StatusEnum.STATUS_REGISTERED)) {
+        else if (status.equals(StatusEnum.STATUS_REGISTERED)) {
             if (updateMessage.hasText()) {
                 switch (updateMessage.getText()) {
                     case "ℹ️ Biz haqimizda":
@@ -92,6 +107,9 @@ public class CommandsBot extends SpringWebhookBot {
 
                     case "⚙️ Sozlamalar":
                         return send(updateMessage, "Sozlamalar menusi", settingsMenu());
+                    case "Taklif va shikoyatlar":
+                        pageStatus.setStatus(StatusEnum.STATUS_FEEDBACK);
+                        return send(updateMessage, "Iltimos, taklif va shikoyatlaringizni kiriting", backMenu());
 
                 }
 
@@ -105,12 +123,8 @@ public class CommandsBot extends SpringWebhookBot {
             }
         } else if (update.hasMessage() && updateMessage.hasText()) {
             String messageText = updateMessage.getText();
-            Message command = updateMessage;
-
-            switch (messageText) {
-                case "/start":
-                    return startAnswer(command);
-
+            if ("/start".equals(messageText)) {
+                return startAnswer(updateMessage);
             }
         } else if (update.hasMessage() && updateMessage.hasContact()) {
             Message message = sendCode(updateMessage, pageStatus);
@@ -118,6 +132,14 @@ public class CommandsBot extends SpringWebhookBot {
 
         }
         return null;
+    }
+
+    private BotApiMethod<?> feedback(Message updateMessage, ChatPageStatus pageStatus) {
+        pageStatus.setStatus(StatusEnum.STATUS_REGISTERED);
+        repository.save(pageStatus);
+        feedbackService.add(new FeedbackDTO(updateMessage.getText(),
+                botUserRepository.findBotUserByChatId(updateMessage.getChatId()).getPhoneNumber()));
+        return send(updateMessage, "Taklif va shikoyatlaringiz yuborildi.", homeMenu());
     }
 
     private Message sendCode(Message updateMessage, ChatPageStatus pageStatus) {
@@ -156,10 +178,11 @@ public class CommandsBot extends SpringWebhookBot {
         KeyboardButton contactButton = new KeyboardButton("Biz bilan boglaning");
         KeyboardButton myAddressesButton = new KeyboardButton("\uD83C\uDFE0 Mening manzillarim");
         KeyboardButton settingsButton = new KeyboardButton("⚙️ Sozlamalar");
+        KeyboardButton feedbackButton = new KeyboardButton("Taklif va shikoyatlar");
         KeyboardButton orderButton = new KeyboardButton("\uD83D\uDECD Buyurtma berish");
         KeyboardRow row1 = new KeyboardRow(List.of(orderButton));
         KeyboardRow row2 = new KeyboardRow(List.of(promotionButton, aboutButton));
-        KeyboardRow row3 = new KeyboardRow(List.of(contactButton, settingsButton, myAddressesButton));
+        KeyboardRow row3 = new KeyboardRow(List.of(contactButton, settingsButton, myAddressesButton, feedbackButton));
         ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup(List.of(row1, row2, row3));
         markup.setSelective(true);
         markup.setResizeKeyboard(true);
@@ -181,18 +204,19 @@ public class CommandsBot extends SpringWebhookBot {
 
     @SneakyThrows
     public BotApiMethod<?> startAnswer(Message message) {
-        String text = "Ro'yxatdan o'tish uchun telefon raqamingizni";
-        return send(message, text, getMenuForStart());
+        return send(message, SHARE_CONTACT, getMenuForStart());
     }
 
-    private BotApiMethod<?> send(Message message, String text1, ReplyKeyboardMarkup buttonMenu) throws TelegramApiException {
-        SendMessage markdown = SendMessage.builder()
+    private BotApiMethod<?> send(Message message,
+                                 String text,
+                                 ReplyKeyboardMarkup buttonMenu) {
+        SendMessage sendMessage = new SendMessage();
+        return SendMessage.builder()
                 .chatId(String.valueOf(message.getChatId()))
-                .parseMode("Markdown")
-                .text(text1)
+                .parseMode("MarkdownV2")
+                .text(text)
                 .replyMarkup(buttonMenu)
                 .build();
-        return markdown;
     }
 
     private static ReplyKeyboardMarkup getMenuForStart() {

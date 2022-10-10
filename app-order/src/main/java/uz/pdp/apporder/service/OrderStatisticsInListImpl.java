@@ -11,10 +11,12 @@ import uz.pdp.apporder.payload.*;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 import uz.pdp.apporder.repository.BranchRepository;
 import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.*;
+import uz.pdp.apporder.repository.OrderRepository;
 import uz.pdp.appproduct.aop.AuthFeign;
+import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
+import uz.pdp.appproduct.dto.enums.PermissionEnum;
 import uz.pdp.appproduct.util.CommonUtils;
 
 import java.util.ArrayList;
@@ -36,9 +38,12 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
     /**
      * <p>Show Statistics for admin with list</p>
      *
-     * @param viewDTO
+     * @param viewDTO for filtering, searching and sorting
+     * @param page    for pagination
+     * @param size    for pagination
      * @return List of OrderStatisticsDTO
      */
+    @CheckAuthEmpl(permissions = PermissionEnum.SHOW_STATISTICS_FOR_LIST)
     @Override
     public ApiResult<List<OrderStatisticsDTO>> getStatisticsForList(ViewDTO viewDTO, int page, int size) {
 
@@ -77,6 +82,12 @@ public class OrderStatisticsInListImpl implements OrderStatisticsInList {
         return ApiResult.successResponse(orderStatisticsDTOList);
     }
 
+    /**
+     * this method sorts the list of orders according to entered values
+     *
+     * @param query       to write query for native query
+     * @param sortingDTOS sorting values
+     */
     private void sortByRequest(StringBuilder query, List<SortingDTO> sortingDTOS) {
         if (sortingDTOS.size() > 0) {
             query

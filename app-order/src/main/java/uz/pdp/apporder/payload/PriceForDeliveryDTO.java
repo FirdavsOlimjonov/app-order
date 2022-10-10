@@ -15,6 +15,7 @@ public class PriceForDeliveryDTO {
     private Branch branch;
 
     private Float priceForPerKilometr;
+    private Double priceForPerKilometre;
 
     private Float initialPrice;
 

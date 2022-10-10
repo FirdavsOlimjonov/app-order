@@ -11,7 +11,9 @@ import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 import uz.pdp.apporder.service.OrderStatisticsInList;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,6 +39,7 @@ public class OrderControllerImpl implements OrderController {
 
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsOrder(OrderChartDTO orderChartDTO) {
         return orderServiceChart.getStatisticsOrder(orderChartDTO);
     }
@@ -48,6 +51,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
+    @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
     public ApiResult<OrderStatisticsChartDTO> showStatisticsPayment(OrderChartPaymentDTO orderChartPaymentDTO) {
         return orderServiceChart.getStatisticsPayment(orderChartPaymentDTO);
     }
@@ -83,6 +87,16 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<?> editOrder(OrderWebDTO order, Long id) {
         return orderService.editOrder(order, id);
+    }
+
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+        return orderService.getAllOrdersForCurrier(id);
+    }
+
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+        return orderService.getOrdersForCurrierByOrderedDate(id, localDate);
     }
 
 }
