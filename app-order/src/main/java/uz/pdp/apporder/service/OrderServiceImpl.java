@@ -21,6 +21,7 @@ import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -62,8 +63,8 @@ public class OrderServiceImpl implements OrderService {
      * @return List<OrderForCurrierDTO>
      */
     @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
-        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
+        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
         List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).toList();
         return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
     }
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
-        List<Order> orders = orderRepository.findAllByCurrierIdOrderOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
+        List<Order> orders = orderRepository.findAllByCurrierIdOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
         List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).toList();
         return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
     }

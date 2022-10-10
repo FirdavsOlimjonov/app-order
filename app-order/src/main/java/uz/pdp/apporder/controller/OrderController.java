@@ -9,6 +9,7 @@ import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -85,5 +86,5 @@ public interface OrderController {
 
     @GetMapping(ORDERS_FOR_CURRIER_BY_DATE)
     @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_ORDERS_OF_CURRIER_BY_DATE})
-    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(@PathVariable  UUID id, @PathVariable LocalDate date);
+    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(@PathVariable  UUID id, @PathVariable LocalDateTime date);
 }

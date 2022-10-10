@@ -1,7 +1,7 @@
 server:
-    port: 80
+    port: 8096
 spring:
     application:
-        name: ORDER-SERVICE
+        name: ORDER-PARENT-SERVICE
     profiles:
         active: dev

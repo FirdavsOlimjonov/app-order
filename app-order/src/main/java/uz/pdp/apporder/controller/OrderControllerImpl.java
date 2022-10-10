@@ -11,7 +11,7 @@ import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 import uz.pdp.apporder.service.OrderStatisticsInList;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -95,7 +95,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
         return orderService.getOrdersForCurrierByOrderedDate(id, localDate);
     }
 

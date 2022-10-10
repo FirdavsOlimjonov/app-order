@@ -4,13 +4,14 @@ import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 public interface OrderService {
 
     ApiResult<?> saveOrder(OrderUserDTO orderDTO);
-    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate);
+    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate);
 
     ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id);
 
