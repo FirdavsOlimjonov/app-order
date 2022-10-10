@@ -53,30 +53,48 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+        return null;
+    }
+
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+        return null;
+    }
+
     /**
      * Kurier ning bir sanadagi zakazlari ro'yxati
      * @param id = @id
      * @param localDate = @localDate
      * @return List<OrderForCurrierDTO>
      */
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
-        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
-        List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).toList();
-        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
-    }
+//    @Override
+//    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+//        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
+//        List<OrderForCurrierDTO> orderForCurrierDTOList = new ArrayList<>();
+//        for (Order order : ordersList) {
+//            OrderForCurrierDTO orderForCurrierDTO = mapOrderToOrderForHistory(order);
+//            orderForCurrierDTOList.add(orderForCurrierDTO);
+//        }
+//        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
+//    }
 
     /**
      * Kurierning barcha zakazlari
-     * @param id = @id
-     * @return List<OrderForCurrierDTO>
+     * @param
+     * * @return List<OrderForCurrierDTO>
      */
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
-        List<Order> orders = orderRepository.findAllByCurrierIdOrderOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
-        List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).toList();
-        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
-    }
+//    @Override
+//    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+//        List<Order> orders = orderRepository.findAllByCurrierIdOrderOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
+//        List<OrderForCurrierDTO> orderForCurrierDTOList = new ArrayList<>();
+//        for (Order order : orders) {
+//            OrderForCurrierDTO orderForCurrierDTO = mapOrderToOrderForHistory(order);
+//            orderForCurrierDTOList.add(orderForCurrierDTO);
+//        }
+//        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
+//    }
 
     @Override
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {

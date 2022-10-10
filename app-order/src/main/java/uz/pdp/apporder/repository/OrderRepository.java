@@ -18,9 +18,9 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
     List<Order> findAllByStatusEnumEquals(OrderStatusEnum statusEnum);
-     Optional<List<Order>> findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(UUID id, LocalDate localDate);
-
-     Optional<List<Order>> findAllByCurrierIdOrderOrderByOrderedAtDesc(UUID id);
+//     Optional<List<Order>> findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(UUID id, LocalDate localDate);
+//
+//     Optional<List<Order>> findAllByCurrierIdOrderOrderByOrderedAtDesc(UUID id);
     List<Order> findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(LocalDateTime begin, LocalDateTime end);
 
     List<Order> getOrdersByOrderByOrderedAt();
