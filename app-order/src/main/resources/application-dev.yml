@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/order_parent
     username: postgres
-    password: 2222
+    password: yusupov2002
 
   jpa:
     hibernate:
@@ -22,6 +22,6 @@ eureka:
     hostname: localhost
 
 telegram:
-  webhook-path: "https://76e9-178-218-201-90.in.ngrok.io/api/order/v1/telegram"
+  webhook-path: "https://b084-188-113-204-30.in.ngrok.io"
   bot-name: "@maxway_deliverybot"
   bot-token: "5511026470:AAHT-D1EXn447o_DdGh5F0PfrAI-iV9DzSQ"

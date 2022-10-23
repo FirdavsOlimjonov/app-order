@@ -8,6 +8,7 @@ import uz.pdp.appproduct.dto.*;
 import uz.pdp.appproduct.entity.Category;
 import uz.pdp.appproduct.exceptions.RestException;
 import uz.pdp.appproduct.repository.CategoryRepository;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
 
@@ -33,16 +34,19 @@ public class CategoryServiceImpl implements CategoryService{
     public ApiResult<CategoryDTO> add(CategoryDTO categoryDTO) {
 
         if (categoryRepository.existsByNameUzIgnoreCase(categoryDTO.getNameUz()))
-            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
+            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.BAD_REQUEST);
 
         if (categoryRepository.existsByNameRuIgnoreCase(categoryDTO.getNameRu()))
-            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.ALREADY_REPORTED);
+            throw RestException.restThrow("ALREADY_EXISTS", HttpStatus.BAD_REQUEST);
+
 
         Category category = getCategoryFromCategoryDTO(categoryDTO);
 
         categoryRepository.save(category);
 
-       return ApiResult.successResponse("SUCCESSFULLY_SAVED", categoryDTO);
+        return ApiResult.successResponse("SUCCESSFULLY_SAVED",
+                getCategoryDTOFromCategory(category)
+        );
     }
 
     @Override
@@ -50,18 +54,18 @@ public class CategoryServiceImpl implements CategoryService{
 
         List<Category> categoriesAfterSearching = searchingCategory(viewDTO);
 
-        List<CategoryDTO> categoryDTOListAfterSort=sortCategories(viewDTO,categoriesAfterSearching);
+        List<CategoryDTO> categoryDTOListAfterSort = sortCategories(viewDTO, categoriesAfterSearching);
 
-        return ApiResult.successResponse("SUCCESSFULLY_SEARCHED-SORTED",categoryDTOListAfterSort);
+        return ApiResult.successResponse("SUCCESSFULLY_SEARCHED-SORTED", categoryDTOListAfterSort);
     }
 
     @Override
     public ApiResult<CategoryDTO> get(Integer id) {
         Category category = categoryRepository.findById(id).orElseThrow(() ->
                 RestException.restThrow("This id category not found", HttpStatus.NOT_FOUND)
-                );
+        );
 
-        CategoryDTO categoryDTO= getCategoryDTOFromCategory(category);
+        CategoryDTO categoryDTO = getCategoryDTOFromCategory(category);
 
         return ApiResult.successResponse(categoryDTO);
     }
@@ -77,10 +81,17 @@ public class CategoryServiceImpl implements CategoryService{
 
 
         Category category = categoryRepository.findById(id).orElseThrow(() ->
-            RestException.restThrow("Category not founded in this id", HttpStatus.NOT_FOUND)
+                RestException.restThrow("Category not founded in this id", HttpStatus.NOT_FOUND)
         );
 
-        category.setParentCategory(categoryDTO.getParentCategory());
+        Category parent = null;
+        if (Objects.nonNull(categoryDTO.getParentId()))
+            parent = categoryRepository
+                    .findById(categoryDTO.getParentId())
+                    .orElseThrow(() -> RestException
+                            .restThrow("", HttpStatus.BAD_REQUEST));
+
+        category.setParentCategory(parent);
         category.setNameUz(categoryDTO.getNameUz());
         category.setNameRu(categoryDTO.getNameRu());
 
@@ -92,50 +103,59 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public ApiResult<?> delete(Integer id) {
         categoryRepository.findById(id).orElseThrow(
-                 () ->RestException.restThrow("CATEGORY_NOT_FOUND", HttpStatus.NOT_FOUND)
+                () -> RestException.restThrow("CATEGORY_NOT_FOUND", HttpStatus.NOT_FOUND)
         );
         categoryRepository.deleteById(id);
-         return ApiResult.successResponse();
+        return ApiResult.successResponse();
     }
 
     private Category getCategoryFromCategoryDTO(CategoryDTO categoryDTO) {
         Category category = new Category();
 
+        Category parent = null;
+        if (Objects.nonNull(categoryDTO.getParentId()))
+            parent = categoryRepository
+                    .findById(categoryDTO.getParentId())
+                    .orElseThrow(() -> RestException
+                            .restThrow("", HttpStatus.BAD_REQUEST));
+
         category.setNameUz(categoryDTO.getNameUz());
         category.setNameRu(categoryDTO.getNameRu());
-        category.setParentCategory(categoryDTO.getParentCategory());
+        category.setParentCategory(parent);
         return category;
     }
 
     private CategoryDTO getCategoryDTOFromCategory(Category category) {
-        CategoryDTO categoryDTO=new CategoryDTO();
+        CategoryDTO categoryDTO = new CategoryDTO();
 
-        categoryDTO.setParentCategory(category.getParentCategory());
+        categoryDTO.setId(category.getId());
+        if (Objects.nonNull(category.getParentCategory()))
+            categoryDTO.setParent(getCategoryDTOFromCategory(category.getParentCategory()));
         categoryDTO.setNameRu(category.getNameRu());
         categoryDTO.setNameUz(category.getNameUz());
 
         return categoryDTO;
     }
 
-    private List<Integer> mapLanguageToCategoryIds(List<Category> categoryList){
-        List<Integer> categoryIds=new ArrayList<>();
+    private List<Integer> mapLanguageToCategoryIds(List<Category> categoryList) {
+        List<Integer> categoryIds = new ArrayList<>();
         for (Category language : categoryList) {
             categoryIds.add(language.getId());
         }
         return categoryIds;
     }
 
-    private List<Category> searchingCategory(ViewDTO viewDTO){
-        List<Category> categories=categoryRepository.findAll();
+    private List<Category> searchingCategory(ViewDTO viewDTO) {
+        List<Category> categories = categoryRepository.findAll();
 
-        if (!Objects.isNull(viewDTO.getSearching())) {
+        if (Objects.nonNull(viewDTO) && Objects.nonNull(viewDTO.getSearching())) {
             for (String column : viewDTO.getSearching().getColumns()) {
                 List<Integer> idList = mapLanguageToCategoryIds(categories);
                 switch (column) {
-                    case "nameUz" :
+                    case "nameUz":
                         categories = categoryRepository.findAllByNameUzContainingIgnoreCaseAndIdIn(viewDTO.getSearching().getValue(), idList);
                         break;
-                    case "nameRu" :
+                    case "nameRu":
                         categories = categoryRepository.findAllByNameRuContainingIgnoreCaseAndIdIn(viewDTO.getSearching().getValue(), idList);
                         break;
                 }
@@ -143,35 +163,39 @@ public class CategoryServiceImpl implements CategoryService{
         }
         return categories;
     }
+
     private List<CategoryDTO> sortCategories(ViewDTO viewDTO, List<Category> categoryList) {
 
-        if(!Objects.isNull(viewDTO.getSorting())){
+        if (Objects.nonNull(viewDTO) && Objects.nonNull(viewDTO.getSorting())) {
             for (SortingDTO sortingDTO : viewDTO.getSorting()) {
                 List<Integer> idList = mapLanguageToCategoryIds(categoryList);
-                switch (sortingDTO.getType()){
-                    case ASC :
+                switch (sortingDTO.getType()) {
+                    case ASC:
                         switch (sortingDTO.getName()) {
-                            case "nameUz" :
-                                categoryList=categoryRepository.findAllByIdInAndNameUzOrderByNameUzAsc(idList,sortingDTO.getName());
+                            case "nameUz":
+                                categoryList = categoryRepository.findAllByIdInAndNameUzOrderByNameUzAsc(idList, sortingDTO.getName());
                                 break;
-                            case "nameRU" :
-                                categoryList=categoryRepository.findAllByIdInAndNameRuOrderByNameRuAsc(idList,sortingDTO.getName());
+                            case "nameRU":
+                                categoryList = categoryRepository.findAllByIdInAndNameRuOrderByNameRuAsc(idList, sortingDTO.getName());
                                 break;
                         }
                         break;
                     case DESC:
                         switch (sortingDTO.getName()) {
-                            case "nameUz" :
-                                categoryList=categoryRepository.findAllByIdInAndNameUzOrderByNameUzDesc(idList,sortingDTO.getName());
+                            case "nameUz":
+                                categoryList = categoryRepository.findAllByIdInAndNameUzOrderByNameUzDesc(idList, sortingDTO.getName());
                                 break;
-                            case "nameRU" :
-                                categoryList=categoryRepository.findAllByIdInAndNameRuOrderByNameRuDesc(idList,sortingDTO.getName());
+                            case "nameRU":
+                                categoryList = categoryRepository.findAllByIdInAndNameRuOrderByNameRuDesc(idList, sortingDTO.getName());
                                 break;
                         }
                         break;
                 }
             }
         }
-        return categoryList.stream().map(this::getCategoryDTOFromCategory).collect(Collectors.toList());
+        return categoryList
+                .stream()
+                .map(this::getCategoryDTOFromCategory)
+                .collect(Collectors.toList());
     }
 }

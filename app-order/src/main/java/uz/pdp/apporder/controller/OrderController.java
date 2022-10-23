@@ -3,14 +3,14 @@ package uz.pdp.apporder.controller;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.payload.*;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
 import uz.pdp.apporder.utils.RestConstants;
 import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 
 @RequestMapping(OrderController.PATH_BASE)
@@ -28,13 +28,13 @@ public interface OrderController {
     String SAVE_MOB_APP = "/save-mob-app";
 
     String SAVE_WEB = "/save-web";
+    String GET_ORDER_PROMOTIONS = "/discount_promotions{orderId}";
+    String ACCEPT_PROMOTION_PATH = "/accept";
 
     String EDIT_ORDER = "/editOrder";
 
     String PATH_BASE = "/api/order/v1/order";
 
-    String ORDERS_FOR_CURRIER = "/all-orders-currier/{id}";
-    String ORDERS_FOR_CURRIER_BY_DATE = "/all-orders-currier/{id}/{date}";
 
     @PostMapping(SAVE_MOB_APP)
     ApiResult<?> saveOrderFromApp(@Valid @RequestBody OrderUserDTO order);
@@ -43,6 +43,11 @@ public interface OrderController {
     @CheckAuthEmpl(permissions = {PermissionEnum.ADD_ORDER})
     ApiResult<?> saveOrderFromWeb(@Valid @RequestBody OrderWebDTO order);
 
+    @GetMapping(GET_ORDER_PROMOTIONS)
+    ApiResult<OrderWithPromotionDTO> getOrderPromotions(@PathVariable Long orderId);
+
+    @PostMapping(ACCEPT_PROMOTION_PATH)
+    ApiResult<OrderDTO> getOrderPromotions(@Valid @RequestBody AcceptPromotionDTO acceptPromotionDTO );
 
     ApiResult<?> getOrderForCourier(@Valid @RequestBody OrderStatusEnum orderStatusEnum);
 
@@ -79,11 +84,4 @@ public interface OrderController {
     @PutMapping(EDIT_ORDER + "/{orderId}")
     ApiResult<?> editOrder(@RequestBody OrderWebDTO orderWebDTO, @PathVariable Long orderId);
 
-    @GetMapping(ORDERS_FOR_CURRIER)
-    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_ORDERS_OF_CURRIER})
-    ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(@PathVariable UUID id);
-
-    @GetMapping(ORDERS_FOR_CURRIER_BY_DATE)
-    @CheckAuthEmpl(permissions = {PermissionEnum.GET_ALL_ORDERS_OF_CURRIER_BY_DATE})
-    ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(@PathVariable  UUID id, @PathVariable LocalDate date);
 }

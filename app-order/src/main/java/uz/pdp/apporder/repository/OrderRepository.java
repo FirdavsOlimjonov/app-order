@@ -8,19 +8,20 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.projection.StatisticsOrderDTOProjection;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order,Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByStatusEnumEquals(OrderStatusEnum statusEnum);
-//     Optional<List<Order>> findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(UUID id, LocalDate localDate);
-//
-//     Optional<List<Order>> findAllByCurrierIdOrderOrderByOrderedAtDesc(UUID id);
+
+    Optional<List<Order>> findAllByCurrierIdAndOrderedAtOrderByOrderedAtDesc(UUID currierId, LocalDateTime orderedAt);
+
+    Optional<List<Order>> findAllByCurrierIdOrderByOrderedAtDesc(UUID id);
+
     List<Order> findAllByClosedAtGreaterThanEqualAndClosedAtLessThanEqual(LocalDateTime begin, LocalDateTime end);
 
     List<Order> getOrdersByOrderByOrderedAt();
@@ -38,8 +39,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     @Query(value = "SELECT * FROM get_result_of_query(:query)", nativeQuery = true)
     List<StatisticsOrderDTOProjection> getOrdersByStringQuery(@Param("query") String query);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM Order o WHERE o.id = :id and (" +
-            "o.statusEnum =:statusEnum or o.statusEnum =:statusEnum2 or o.statusEnum =:statusEnum3)")
+    @Query(value = "FROM Order WHERE id = :id and (statusEnum = :statusEnum or statusEnum = :statusEnum2 or statusEnum = :statusEnum3)")
     Optional<Order> getOrderIdAndStatus(
             Long id,
             OrderStatusEnum statusEnum,

@@ -1,28 +1,24 @@
-package uz.pdp.appproduct.dto;
+package uz.pdp.apporder.payload.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.pdp.apporder.payload.OrderDTO;
 
 /**
  * Me: muhammadqodir
  * Project: app-order-parent/IntelliJ IDEA
- * Date:Thu 06/10/22 22:27
+ * Date:Sun 09/10/22 23:02
  */
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddDiscountDTO {
+public class OrderWithPromotionDTO {
 
-    private String name;
-
-    private Short percent;
-
-    private Long startDate;
-
-    private Long endDate;
+    private OrderDTO order;
+    private PromotionDTO promotion;
 
 }

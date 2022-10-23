@@ -22,7 +22,11 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         if (priceForDeliveryRepository.existsByBranchContains(priceForDeliveryDTO.getBranch().getName())){
             throw RestException.restThrow("This branch already exists!", HttpStatus.CONFLICT);
         }
-        PriceForDelivery priceForDelivery = mapPriceForDeliveryDTOToPriceForDelivery(priceForDeliveryDTO);
+        PriceForDelivery priceForDelivery = new PriceForDelivery();
+        priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
+        priceForDelivery.setPriceForPerKilometr(priceForDeliveryDTO.getPriceForPerKilometr());
+        priceForDelivery.setInitialDistance(priceForDeliveryDTO.getInitialDistance());
+        priceForDelivery.setInitialPrice(priceForDelivery.getInitialPrice());
         priceForDeliveryRepository.save(priceForDelivery);
 
         return ApiResult.successResponse("Branch is successfully added!" , priceForDelivery);
@@ -68,24 +72,12 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         }
 
         PriceForDelivery priceForDelivery = priceForDeliveryRepositoryById.get();
-        PriceForDelivery priceForDelivery1 = mapPriceForDeliveryDTOToPriceForDelivery(priceForDelivery, priceForDeliveryDTO);
-        priceForDeliveryRepository.save(priceForDelivery1);
-        return ApiResult.successResponse("Updated!",priceForDelivery1);
-    }
+        priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
+        priceForDelivery.setPriceForPerKilometr(priceForDeliveryDTO.getPriceForPerKilometr());
+        priceForDelivery.setInitialPrice(priceForDeliveryDTO.getInitialPrice());
+        priceForDelivery.setInitialDistance(priceForDeliveryDTO.getInitialDistance());
 
-    public PriceForDelivery mapPriceForDeliveryDTOToPriceForDelivery(PriceForDeliveryDTO priceForDeliveryDTO){
-        PriceForDelivery priceForDelivery = new PriceForDelivery();
-        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
-        priceForDelivery.setInitialPrice(priceForDeliveryDTO.getInitialPrice());
-        priceForDelivery.setInitialDistance(priceForDelivery.getInitialDistance());
-        priceForDelivery.setBranch(priceForDelivery.getBranch());
-        return priceForDelivery;
-    }
-    public PriceForDelivery mapPriceForDeliveryDTOToPriceForDelivery(PriceForDelivery priceForDelivery, PriceForDeliveryDTO priceForDeliveryDTO){
-        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
-        priceForDelivery.setInitialPrice(priceForDeliveryDTO.getInitialPrice());
-        priceForDelivery.setInitialDistance(priceForDelivery.getInitialDistance());
-        priceForDelivery.setBranch(priceForDelivery.getBranch());
-        return priceForDelivery;
+        priceForDeliveryRepository.save(priceForDelivery);
+        return ApiResult.successResponse("Updated!",priceForDelivery);
     }
 }

@@ -47,6 +47,8 @@ public class Order {
 
     private Float deliverySum;
 
+    private Float overAllSum;
+
     private Integer number;
 
     @ManyToOne

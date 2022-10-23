@@ -2,6 +2,8 @@ package uz.pdp.apporder.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
 import uz.pdp.appproduct.aop.CheckAuth;
 import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
@@ -11,7 +13,7 @@ import uz.pdp.apporder.service.OrderService;
 import uz.pdp.apporder.service.OrderServiceChart;
 import uz.pdp.apporder.service.OrderStatisticsInList;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +39,16 @@ public class OrderControllerImpl implements OrderController {
         return orderService.saveOrder(order);
     }
 
+    @Override
+    public ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId) {
+        return orderService.getOrderPromotions(orderId);
+    }
+
+    @Override
+    public ApiResult<OrderDTO> getOrderPromotions(AcceptPromotionDTO acceptPromotionDTO) {
+        return orderService.acceptOrderPromotion(acceptPromotionDTO);
+    }
+
 
     @Override
     @CheckAuthEmpl(permissions = {PermissionEnum.SHOW_STATISTICS})
@@ -47,7 +59,6 @@ public class OrderControllerImpl implements OrderController {
     @Override
     public ApiResult<List<OrderStatisticsDTO>> showStatisticsOrderInList(ViewDTO viewDTO, Integer page, Integer size) {
         return orderStatisticsInList.getStatisticsForList(viewDTO, page, size);
-
     }
 
     @Override
@@ -95,7 +106,7 @@ public class OrderControllerImpl implements OrderController {
     }
 
     @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
         return orderService.getOrdersForCurrierByOrderedDate(id, localDate);
     }
 

@@ -9,12 +9,12 @@ import uz.pdp.apporder.entity.Order;
 import uz.pdp.apporder.entity.OrderProduct;
 import uz.pdp.apporder.entity.enums.OrderStatusEnum;
 import uz.pdp.apporder.entity.enums.PaymentType;
+import uz.pdp.apporder.entity.promotion.*;
 import uz.pdp.apporder.exceptions.RestException;
 import uz.pdp.apporder.payload.*;
-import uz.pdp.apporder.repository.BranchRepository;
-import uz.pdp.apporder.repository.ClientRepository;
-import uz.pdp.apporder.repository.OrderProductRepository;
-import uz.pdp.apporder.repository.OrderRepository;
+import uz.pdp.apporder.payload.promotion.AcceptPromotionDTO;
+import uz.pdp.apporder.payload.promotion.OrderWithPromotionDTO;
+import uz.pdp.apporder.repository.*;
 import uz.pdp.appproduct.aop.AuthFeign;
 import uz.pdp.appproduct.dto.ClientDTO;
 import uz.pdp.appproduct.dto.EmployeeDTO;
@@ -23,8 +23,11 @@ import uz.pdp.appproduct.repository.ProductRepository;
 import uz.pdp.appproduct.util.CommonUtils;
 import uz.pdp.appproduct.util.RestConstants;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +40,13 @@ public class OrderServiceImpl implements OrderService {
     private final BranchRepository branchRepository;
     private final ClientRepository clientRepository;
     private final AuthFeign openFeign;
+    private final BranchService branchService;
+    private final PriceForDeliveryRepository priceForDeliveryRepository;
+
+    private final PromotionsService promotionsService;
+    private final DiscountService discountService;
+
+    private final PromotionRepository promotionRepository;
 
     @Override
     public ApiResult<?> saveOrder(OrderUserDTO orderDTO) {
@@ -53,48 +63,90 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully saved!");
     }
 
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
-        return null;
-    }
-
-    @Override
-    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
-        return null;
-    }
-
     /**
      * Kurier ning bir sanadagi zakazlari ro'yxati
      * @param id = @id
      * @param localDate = @localDate
      * @return List<OrderForCurrierDTO>
      */
-//    @Override
-//    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDate localDate) {
-//        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
-//        List<OrderForCurrierDTO> orderForCurrierDTOList = new ArrayList<>();
-//        for (Order order : ordersList) {
-//            OrderForCurrierDTO orderForCurrierDTO = mapOrderToOrderForHistory(order);
-//            orderForCurrierDTOList.add(orderForCurrierDTO);
-//        }
-//        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
-//    }
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate) {
+        List<Order> ordersList = orderRepository.findAllByCurrierIdAndOrderedAtOrderByOrderedAtDesc(id, localDate).orElseThrow(() -> RestException.restThrow("Bu sanada hech qanaqa zakaz bo'lmagan", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = ordersList.stream().map(this::mapOrderToOrderForHistory).collect(Collectors.toList());
+        return ApiResult.successResponse("All orders of Currier in this Date ", orderForCurrierDTOList);
+    }
 
     /**
      * Kurierning barcha zakazlari
-     * @param
-     * * @return List<OrderForCurrierDTO>
+     * @param id = @id
+     * @return List<OrderForCurrierDTO>
      */
-//    @Override
-//    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
-//        List<Order> orders = orderRepository.findAllByCurrierIdOrderOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
-//        List<OrderForCurrierDTO> orderForCurrierDTOList = new ArrayList<>();
-//        for (Order order : orders) {
-//            OrderForCurrierDTO orderForCurrierDTO = mapOrderToOrderForHistory(order);
-//            orderForCurrierDTOList.add(orderForCurrierDTO);
-//        }
-//        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
-//    }
+    @Override
+    public ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id) {
+        List<Order> orders = orderRepository.findAllByCurrierIdOrderByOrderedAtDesc(id).orElseThrow(() -> RestException.restThrow("Bu currierning zakazlari yo'q", HttpStatus.NOT_FOUND));
+        List<OrderForCurrierDTO> orderForCurrierDTOList = orders.stream().map(this::mapOrderToOrderForHistory).collect(Collectors.toList());
+        return ApiResult.successResponse("Currier ning barcha zakazlari ro'yxati", orderForCurrierDTOList);
+    }
+
+    @Override
+    public ApiResult<OrderWithPromotionDTO> getOrderPromotions(Long orderId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> RestException.restThrow("ORDER NOT FOUND", HttpStatus.NOT_FOUND));
+
+        Float overAllSum = order.getOverAllSum();
+        List<OrderProduct> orderProducts = order.getOrderProducts();
+        Float deliverySum = order.getDeliverySum();
+
+        Promotion promotion = promotionRepository.get1ActivePromotion(System.currentTimeMillis())
+                .orElse(null);
+
+
+        if (Objects.nonNull(promotion)) {
+            DiscountPromotion discountPromotion = promotion.getDiscountPromotion();
+            DeliveryPromotion deliveryPromotion = promotion.getDeliveryPromotion();
+            BonusProductPromotion bonusProductPromotion = promotion.getBonusProductPromotion();
+
+            if (Objects.nonNull(deliveryPromotion)) {
+                Float moreThan = deliveryPromotion.getMoreThan();
+                Long startTime = deliveryPromotion.getStartTime();
+                Long endTime = deliveryPromotion.getEndTime();
+                long now = System.currentTimeMillis();
+                if (overAllSum > moreThan) {
+                    if (now > startTime && now < endTime) {
+                        deliverySum = 0F;
+                    }
+                }
+            }
+
+            if (Objects.nonNull(bonusProductPromotion)) {
+                Float moreThan = bonusProductPromotion.getMoreThan();
+                Short bonusCount = bonusProductPromotion.getBonusCount();
+                Product product = bonusProductPromotion.getProduct();
+
+                if (overAllSum > moreThan) {
+                    orderProducts.add(new OrderProduct(order, product, bonusCount, product.getPrice()));
+                }
+            }
+
+            if (Objects.nonNull(discountPromotion)) {
+                Float moreThan = discountPromotion.getMoreThan();
+                Float discount = discountPromotion.getDiscount();
+                if (overAllSum > moreThan) {
+                    overAllSum = overAllSum - (overAllSum * discount / 100);
+                }
+            }
+            order.setOverAllSum(overAllSum);
+            order.setDeliverySum(deliverySum);
+            order.setOrderProducts(orderProducts);
+        }
+
+        return ApiResult.successResponse(
+                new OrderWithPromotionDTO(mapOrderToOrderDTO(order),
+                        promotionsService.promotionToPromotionDTO(promotion)
+                )
+        );
+    }
 
     @Override
     public ApiResult<?> saveOrder(OrderWebDTO orderDTO) {
@@ -124,8 +176,8 @@ public class OrderServiceImpl implements OrderService {
         // TODO: 9/28/22 kardinatalardan shipping narxini xisoblash
         Float shippingPrice = findShippingPrice(branch, orderDTO.getAddress());
 
-        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLat(),
-                orderDTO.getAddress().getLng(),
+        ClientAddress clientAddress = new ClientAddress(orderDTO.getAddress().getLatitude(),
+                orderDTO.getAddress().getLongitude(),
                 orderDTO.getAddress().getAddress(),
                 orderDTO.getAddress().getExtraAddress());
 
@@ -149,6 +201,8 @@ public class OrderServiceImpl implements OrderService {
             order.setStatusEnum(OrderStatusEnum.NEW);
         else
             order.setStatusEnum(OrderStatusEnum.PAYMENT_WAITING);
+
+        Float overallSum = calculateProductsSum(order);
 
         order.setBranch(branch);
         order.setPaymentType(orderDTO.getPaymentType());
@@ -243,15 +297,91 @@ public class OrderServiceImpl implements OrderService {
         return ApiResult.successResponse("Order successfully updated");
     }
 
+    @Override
+    public ApiResult<OrderDTO> acceptOrderPromotion(AcceptPromotionDTO acceptPromotionDTO) {
+        Long promotionId = acceptPromotionDTO.getPromotionId();
+        Promotion promotion = promotionRepository.findById(promotionId)
+                .orElseThrow(() -> RestException.restThrow("PROMOTION_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        Long orderId = acceptPromotionDTO.getOrderId();
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> RestException.restThrow("ORDER_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+        if (acceptPromotionDTO.isProductPromotion()) {
+
+            ProductPromotion productPromotion = promotion.getProductPromotion();
+
+            Product product = productPromotion
+                    .getBonusProducts()
+                    .stream()
+                    .filter(p -> p.getId().equals(acceptPromotionDTO.getChosenProductId()))
+                    .findFirst()
+                    .orElseThrow(() -> RestException.restThrow("PRODUCT_NOT_FOUND", HttpStatus.NOT_FOUND));
+
+
+            if (Objects.nonNull(product)) {
+                List<OrderProduct> orderProducts = order.getOrderProducts();
+
+                orderProducts.add(new OrderProduct(order, product, (short) 1, product.getPrice()));
+                order.setOrderProducts(orderProducts);
+            }
+        }
+
+        return ApiResult.successResponse(mapOrderToOrderDTO(order));
+
+    }
+
 
     // TODO: 10/3/22 Eng yaqin branchni aniqlash
-    private Branch findNearestBranch(AddressDTO addressDTO) {
-        return branchRepository.findById(1).orElseThrow();
+
+    /**
+     * Eng yaqin Branchgacha bo'lgan kesma uzunligi o'lchangan,
+     * Yandex yoki Google mapni api ni
+     * olib kelish kerak va eng yaqin
+     * branchga yo'lni topib uzunligini aniqlash kerak!
+     *
+     * @param location
+     * @return Branch
+     */
+    private Branch findNearestBranch(AddressDTO location) {
+        Branch chosenBranch = null;
+        if (Objects.nonNull(location)) {
+            List<Branch> branches = branchService.getAll().getData();
+            Double distance = null;
+            for (Branch branch : branches)
+                if (Objects.isNull(distance)) {
+                    distance = getDistance(branch, location);
+                    chosenBranch = branch;
+                } else if (distance < getDistance(branch, location)) {
+                    distance = getDistance(branch, location);
+                    chosenBranch = branch;
+                }
+        }
+        return chosenBranch;
+    }
+
+    private Double getDistance(Branch branch, AddressDTO location) {
+        return Math.sqrt(
+                Math.pow(branch.getAddress().getLat() - location.getLatitude(), 2)
+                        + Math.pow(branch.getAddress().getLon() - location.getLongitude(), 2)
+        );
     }
 
     // TODO: 10/3/22  shipping narxini aniqlash
     private Float findShippingPrice(Branch branch, AddressDTO addressDTO) {
-        return 500F;
+        branch = findNearestBranch(addressDTO);
+
+        Double distance = getDistance(branch, addressDTO);
+
+        var priceForDelivery = priceForDeliveryRepository.findByBranch(branch).orElseThrow(() -> RestException.restThrow("No such branch price for delivery", HttpStatus.NOT_FOUND));
+
+        if (priceForDelivery.getPriceForPerKilometre() <= distance) {
+            return priceForDelivery.getPriceForPerKilometre();
+        }
+
+        var shippingPrice = priceForDelivery.getInitialPrice() + priceForDelivery.getInitialDistance();
+        return shippingPrice;
     }
 
     private OrderDTO mapOrderToOrderDTO(Order order) {
@@ -266,6 +396,8 @@ public class OrderServiceImpl implements OrderService {
 
         orderDTO.setProductsSum(calculateProductsSum(order));
 
+        orderDTO.setDiscountSum(calculateDiscountSumForOrder(order));
+
         String token = CommonUtils.getCurrentRequest().getHeader(RestConstants.AUTHORIZATION_HEADER);
 
         orderDTO.setClientDTO(Objects.requireNonNull(openFeign.getClientDTO(order.getClientId(), token).getData()));
@@ -279,12 +411,23 @@ public class OrderServiceImpl implements OrderService {
         return orderDTO;
     }
 
+    private Float calculateDiscountSumForOrder(Order order) {
+
+        List<Integer> collect = order.getOrderProducts()
+                .stream()
+                .map(OrderProduct::getId)
+                .collect(Collectors.toList());
+
+        return discountService.getDiscountsSumOfProducts(collect).orElse(0F);
+    }
+
     private Float calculateProductsSum(Order order) {
-        float sum = 0F;
-        for (OrderProduct orderProduct : order.getOrderProducts()) {
-            sum += orderProduct.getUnitPrice();
-        }
-        return sum;
+        double sum = order
+                .getOrderProducts()
+                .stream()
+                .mapToDouble(value -> value.getUnitPrice() * value.getQuantity())
+                .sum();
+        return (float) sum;
     }
 
     private void setOrderTimeByStatus(Order order, OrderDTO orderDTO) {
@@ -322,7 +465,8 @@ public class OrderServiceImpl implements OrderService {
                         .getQuantity(),
                 product.getPrice());
     }
-    public OrderForCurrierDTO mapOrderToOrderForHistory(Order order){
+
+    public OrderForCurrierDTO mapOrderToOrderForHistory(Order order) {
         OrderForCurrierDTO orderForCurrierDTO = new OrderForCurrierDTO();
 
         Float totalProductsPrice = calculateProductsSum(order);
@@ -344,6 +488,4 @@ public class OrderServiceImpl implements OrderService {
         return orderForCurrierDTO;
 
     }
-
-
 }

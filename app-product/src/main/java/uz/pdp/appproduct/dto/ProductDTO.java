@@ -19,5 +19,4 @@ public class ProductDTO {
     private boolean active;
 
     private String description;
-
 }
