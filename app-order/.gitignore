@@ -16,6 +16,7 @@ target/
 ### IntelliJ IDEA ###
 .idea
 .idea/workspace.xml
+.idea/modules.xml
 *.iws
 *.iml
 *.ipr
@@ -32,6 +33,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-modules.xml
-workspace.xml

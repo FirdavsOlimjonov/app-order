@@ -17,3 +17,14 @@ Content-Type: application/json
   "fromDate": "2019-01-05",
   "branchId": "1"
 }
+
+####
+
+POST http://54.209.172.146:8090/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "admin@codingbat",
+  "password": "root123"
+}
+

@@ -10,7 +10,9 @@ import uz.pdp.appproduct.aop.CheckAuthEmpl;
 import uz.pdp.appproduct.dto.enums.PermissionEnum;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 
 @RequestMapping(OrderController.PATH_BASE)
@@ -83,5 +85,10 @@ public interface OrderController {
     @CheckAuthEmpl(permissions = {PermissionEnum.EDIT_ORDER})
     @PutMapping(EDIT_ORDER + "/{orderId}")
     ApiResult<?> editOrder(@RequestBody OrderWebDTO orderWebDTO, @PathVariable Long orderId);
+
+
+     ApiResult<List<OrderForCurrierDTO>> getOrdersForCurrierByOrderedDate(UUID id, LocalDateTime localDate);
+
+     ApiResult<List<OrderForCurrierDTO>> getAllOrdersForCurrier(UUID id);
 
 }

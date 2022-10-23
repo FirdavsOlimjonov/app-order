@@ -24,7 +24,7 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
         }
         PriceForDelivery priceForDelivery = new PriceForDelivery();
         priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
-        priceForDelivery.setPriceForPerKilometr(priceForDeliveryDTO.getPriceForPerKilometr());
+        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
         priceForDelivery.setInitialDistance(priceForDeliveryDTO.getInitialDistance());
         priceForDelivery.setInitialPrice(priceForDelivery.getInitialPrice());
         priceForDeliveryRepository.save(priceForDelivery);
@@ -73,7 +73,7 @@ public class PriceForDeliveryServiceImpl implements PriceForDeliveryService {
 
         PriceForDelivery priceForDelivery = priceForDeliveryRepositoryById.get();
         priceForDelivery.setBranch(priceForDeliveryDTO.getBranch());
-        priceForDelivery.setPriceForPerKilometr(priceForDeliveryDTO.getPriceForPerKilometr());
+        priceForDelivery.setPriceForPerKilometre(priceForDeliveryDTO.getPriceForPerKilometre());
         priceForDelivery.setInitialPrice(priceForDeliveryDTO.getInitialPrice());
         priceForDelivery.setInitialDistance(priceForDeliveryDTO.getInitialDistance());
 
